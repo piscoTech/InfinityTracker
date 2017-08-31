@@ -2,7 +2,7 @@
 
 ## Overview:
 
-Run tracker app that uses CoreLocation to track user location in realtime, and MapKit to display it on a map.
+Run tracker app that uses iOS CoreLocation API to track user location in realtime, and iOS MapKit API to display it on a map. Store the locations/runs data locally using CoreData.
 
 ## Dependencies: 
 
@@ -13,10 +13,12 @@ Run tracker app that uses CoreLocation to track user location in realtime, and M
 
 - Track user's GPS location using CoreLocation.
 - Render user location on a map in realtime using MapKit.
-- Display total distance ran and calories burnt.
 - Use of CoreData to save user's past runs.
+- Display total distance ran and calories burnt.
 
 ## Screenshots:
+
+
 
 ## Compatibility:
 

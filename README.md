@@ -30,7 +30,7 @@ This project is written in Swift 4.0 and requires Xcode 8.0 to build and run.
 
 Alexandre Linares
 
-##License:
+## License:
 
 Copyright 2017 Alexandre Linares
 Licensed under MIT License: 

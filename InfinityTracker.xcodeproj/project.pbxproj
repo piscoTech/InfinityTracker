@@ -34,7 +34,7 @@
 		FA3F0A1A1F580E9000DCA109 /* RunTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3F0A181F580E9000DCA109 /* RunTableCell.swift */; };
 		FA3F0A1B1F580E9000DCA109 /* RunTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3F0A191F580E9000DCA109 /* RunTableCell.xib */; };
 		FA3F0A1D1F58192F00DCA109 /* Counter+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3F0A1C1F58192F00DCA109 /* Counter+Helper.swift */; };
-		FA3F0A1F1F58195000DCA109 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3F0A1E1F58195000DCA109 /* CoreDataManager.swift */; };
+		FA6D3DD81F581BB0002C342C /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D3DD71F581BB0002C342C /* CoreDataStackManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,7 +67,7 @@
 		FA3F0A181F580E9000DCA109 /* RunTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunTableCell.swift; sourceTree = "<group>"; };
 		FA3F0A191F580E9000DCA109 /* RunTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RunTableCell.xib; sourceTree = "<group>"; };
 		FA3F0A1C1F58192F00DCA109 /* Counter+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Counter+Helper.swift"; sourceTree = "<group>"; };
-		FA3F0A1E1F58195000DCA109 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		FA6D3DD71F581BB0002C342C /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				FA0FE3AF1F58059F002B84D7 /* InfinityTracker.xcdatamodeld */,
-				FA3F0A1E1F58195000DCA109 /* CoreDataManager.swift */,
+				FA6D3DD71F581BB0002C342C /* CoreDataStackManager.swift */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -315,12 +315,12 @@
 				FA0FE3DD1F5807AB002B84D7 /* Date+Helper.swift in Sources */,
 				FA0FE3C91F580677002B84D7 /* EmptyStateView.swift in Sources */,
 				FA0FE3E31F5807C1002B84D7 /* UIColor+Helper.swift in Sources */,
-				FA3F0A1F1F58195000DCA109 /* CoreDataManager.swift in Sources */,
 				FA0FE3B11F58059F002B84D7 /* InfinityTracker.xcdatamodeld in Sources */,
 				FA0FE3CF1F5806B7002B84D7 /* Images.swift in Sources */,
 				FA0FE3D31F580713002B84D7 /* RunDetailController.swift in Sources */,
 				FA0FE3CB1F58069B002B84D7 /* Colors.swift in Sources */,
 				FA0FE3D51F580743002B84D7 /* HomeController.swift in Sources */,
+				FA6D3DD81F581BB0002C342C /* CoreDataStackManager.swift in Sources */,
 				FA0FE3A91F58059F002B84D7 /* AppDelegate.swift in Sources */,
 				FA0FE3C71F58066F002B84D7 /* CurvedView.swift in Sources */,
 				FA0FE3E11F5807B9002B84D7 /* Int+Helper.swift in Sources */,

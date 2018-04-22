@@ -24,36 +24,28 @@ class PastRunDetailController: UIViewController {
     
     // MARK: Properties
     
-    var run: Run?
+    var run: Run!
     var locationsArray: [CLLocation] = []
-    
-    // MARK: LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleEditName))
-        
+		
         guard run != nil else {
             return
         }
+		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleEditName))
         
-        let locations = run!.locations
-        
+        let locations = run.locations
         for location in locations! {
             let loc = location as! Location
             locationsArray.append(CLLocation(latitude: loc.latitude, longitude: loc.longitude))
         }
         
         addPolyLineToMap(locations: locationsArray)
-        
         setupViews()
     }
     
-    // MARK: Setup Views
-    
     private func setupViews() {
-        
         title = "Run Detail"
         
         whiteViewOne.layer.masksToBounds = true
@@ -64,11 +56,10 @@ class PastRunDetailController: UIViewController {
         
         whiteViewThree.layer.masksToBounds = true
         whiteViewThree.layer.cornerRadius = whiteViewThree.frame.height/2
+		
+        durationLabel.text = run?.duration.getDuration()
         
-        let duration = Int(run!.duration)
-        durationLabel.text = setupCounter(duration: duration)
-        
-        let distance = run!.distance
+        let distance = run?.distance ?? 0
         let distanceKM = distance.metersToKilometers().rounded(to: 3)
         distanceLabel.text = "\(distanceKM) km"
         
@@ -76,30 +67,21 @@ class PastRunDetailController: UIViewController {
         caloriesLabel.text = "\(calories) kcal"
     }
     
-    // MARK: Add Polyline Helper
-    
     fileprivate func addPolyLineToMap(locations: [CLLocation]) {
         var coordinates = locations.map({ (location: CLLocation!) -> CLLocationCoordinate2D in
             return location.coordinate
         })
         
         let polyline = MKPolyline(coordinates: &coordinates, count: locationsArray.count)
-        
         let rect = polyline.boundingMapRect
         
         mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
-        
         mapView.add(polyline)
     }
     
-    // MARK: User Interaction - Edit Walk Name
-    
-    func handleEditName() {
-        
+    @objc func handleEditName() {
         let alertController = UIAlertController(title: "Type in a new name:", message: "", preferredStyle: .alert)
-        
         let updateAction = UIAlertAction(title: "Update", style: .default, handler: { [weak self] alert in
-            
             guard let newName = alertController.textFields?.first?.text else {
                 return
             }
@@ -113,18 +95,13 @@ class PastRunDetailController: UIViewController {
             }
             
             CoreDataManager.updateRunName(currentValue: runName, newValue: newName)
-            
             self?.navigationController?.popViewController(animated: true)
-            
         })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
-            (action : UIAlertAction!) in
-            
-        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
         
         alertController.addTextField { (textField : UITextField!) in
-            textField.placeholder = "Type the run name here.."
+            textField.placeholder = "Type the run name here..."
         }
         
         alertController.addAction(updateAction)
@@ -135,9 +112,9 @@ class PastRunDetailController: UIViewController {
     
 }
 
+// MARK: - MKMapViewDelegate
+
 extension PastRunDetailController: MKMapViewDelegate {
-    
-    // MARK: MKMapViewDelegate
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         

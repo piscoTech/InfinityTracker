@@ -37,12 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().isTranslucent = true
         UINavigationBar.appearance().barTintColor = UIColor.white
         UINavigationBar.appearance().tintColor = Colors.orangeDark
-        UINavigationBar.appearance().titleTextAttributes = [NSFontAttributeName: UIFont(name: Font.mainFontMedium, size: Font.regularSize)!, NSForegroundColorAttributeName: UIColor.orange]
-        
-        let backButtonImage = Image.backArrow.withRenderingMode(.alwaysTemplate).resizableImage(withCapInsets: UIEdgeInsets(top: 3,left: 3,bottom: 3,right: 3), resizingMode: .stretch)
-        UINavigationBar.appearance().backIndicatorImage = backButtonImage
-        UINavigationBar.appearance().backIndicatorTransitionMaskImage = backButtonImage
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(-60, -60), for: .default)
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.orange]
     }
     
     private func setWindowBackgroundColor() {

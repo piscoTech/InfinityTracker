@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 import CoreData
+import MBLibrary
 
 class NewRunController: UIViewController {
     
@@ -38,7 +39,7 @@ class NewRunController: UIViewController {
     fileprivate var locationsArray: [CLLocation] = []
     fileprivate var coordinates: [CLLocationCoordinate2D] = []
     fileprivate var previousLocation: CLLocation?
-    fileprivate var duration: Int = 0
+    fileprivate var duration: TimeInterval = 0
     fileprivate var distance: Double = 0.0
     fileprivate var speed: Double = 0.0
     fileprivate let averageWeight: Double = 132.0
@@ -49,8 +50,6 @@ class NewRunController: UIViewController {
     // MARK: Delegates
     
     weak var newRunDismissDelegate: DismissDelegate?
-    
-    // MARK: LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,29 +72,25 @@ class NewRunController: UIViewController {
         timer.invalidate()
     }
     
-    // MARK: User Interaction - Start
-    
     @IBAction func handleStartTapped() {
         didStart = true
         startRun()
     }
     
-    // MARK: User Interaction - Stop
-    
     @IBAction func handleStopTapped() {
-        
         let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to stop?", preferredStyle: .actionSheet)
         
         let stopAction = UIAlertAction(title: "Stop", style: .destructive) { [weak self] (action) in
             self?.didStart = false
             self?.stopRun()
-            self?.saveCurrentTrack()
-            self?.performSegue(withIdentifier: "RunDetailController", sender: self)
+			if self?.saveCurrentTrack() ?? false {
+            	self?.performSegue(withIdentifier: "RunDetailController", sender: self)
+			} else {
+				self?.dismiss(animated: true)
+			}
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         actionSheet.addAction(stopAction)
         actionSheet.addAction(cancelAction)
@@ -103,10 +98,7 @@ class NewRunController: UIViewController {
         self.present(actionSheet, animated: true, completion: nil)
     }
     
-    // MARK: User Interaction - Zoom Slider
-    
     @IBAction func sliderDidChangeValue() {
-        
         let miles = Double(sliderControl.value)
         mapDelta = miles / 69.0
         
@@ -115,14 +107,9 @@ class NewRunController: UIViewController {
         mapView.region = currentRegion
     }
     
-    // MARK: User Interaction - Dismiss Controller
-    
-    func handleDismissController() {
-        
+    @objc func handleDismissController() {
         let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to leave this screen?", preferredStyle: .actionSheet)
-        
         let stopAction = UIAlertAction(title: "Leave", style: .destructive) { [weak self] (action) in
-            
             guard self != nil else {
                 return
             }
@@ -130,9 +117,7 @@ class NewRunController: UIViewController {
             self?.newRunDismissDelegate?.shouldDismiss(self!)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         actionSheet.addAction(stopAction)
         actionSheet.addAction(cancelAction)
@@ -140,43 +125,37 @@ class NewRunController: UIViewController {
         self.present(actionSheet, animated: true, completion: nil)
     }
     
-    // MARK: Start Run
-    
     private func startRun() {
-        
         startButton.isEnabled = false
         startButton.alpha = 1.0
         
         startButtonCenterXConstraint.constant -= 300
-        stopButtonCenterXConstraint.constant -= 80
+        stopButtonCenterXConstraint.constant = 0
         
         UIView.animate(withDuration: 0.60, animations: {
             self.view.layoutIfNeeded()
             self.startButton.alpha = 0.0
             self.stopButton.alpha = 1.0
-        }, completion : { (finished) in
+        }) { (finished) in
             self.startButton.removeFromSuperview()
             self.stopButton.isEnabled = true
-        })
+        }
         
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-        
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(stepTimer), userInfo: nil, repeats: true)
     }
     
-    // MARK: Update Timer
-    
-    func updateTimer(){
+    @objc func stepTimer() {
         duration += 1
-        durationLabel.text = setupCounter(duration: duration)
+        updateTimer()
     }
-    
-    // MARK: Stop Run
+	
+	private func updateTimer() {
+		durationLabel.text = duration.getDuration()
+	}
     
     private func stopRun() {
         locationManager.stopUpdatingLocation()
     }
-    
-    // MARK: Setup Map
     
     private func setupMap() {
         mapView.delegate = self
@@ -185,8 +164,6 @@ class NewRunController: UIViewController {
         mapView.userTrackingMode = .follow
     }
     
-    // MARK: Update Locations
-    
     private func startUpdatingLocations() {
         locationManager.delegate = self
         locationManager.activityType = .fitness
@@ -194,8 +171,6 @@ class NewRunController: UIViewController {
         locationManager.distanceFilter = 0.1
         locationManager.startUpdatingLocation()
     }
-    
-    // MARK: Add Polyline Helper
     
     fileprivate func addPolyLineToMap(locations: [CLLocation]) {
         var coordinates = locations.map({ (location: CLLocation!) -> CLLocationCoordinate2D in
@@ -206,20 +181,17 @@ class NewRunController: UIViewController {
         mapView.add(polyline)
     }
     
-    // MARK: CoreData - Save Current Track
-    
-    private func saveCurrentTrack() {
-        
-        guard let runsCount = CoreDataManager.getRunsCount() else {
-            return
+    private func saveCurrentTrack() -> Bool {
+        guard let runsCount = CoreDataManager.getRunsCount(), locationsArray.count > 0 else {
+            return false
         }
         
         let newTrack = Run(context: CoreDataManager.context)
         
         newTrack.name = "Run \(runsCount+1)"
         newTrack.distance = distance
-        newTrack.duration = Int32(duration)
-        newTrack.timestamp = NSDate()
+        newTrack.duration = duration
+        newTrack.timestamp = Date()
         newTrack.calories = calories
         
         for location in locationsArray {
@@ -230,10 +202,8 @@ class NewRunController: UIViewController {
         }
         
         CoreDataManager.saveContext()
-        
-    }
-    
-    // MARK: Update UI
+		return true
+	}
     
     fileprivate func updateUI() {
         
@@ -241,22 +211,15 @@ class NewRunController: UIViewController {
         distanceLabel.text = "\(distanceKM) km"
     }
     
-    // MARK: PrepareForSegue
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         guard let navigationController = segue.destination as? UINavigationController, let destinationController = navigationController.viewControllers.first as? RunDetailController else {
             return
         }
         destinationController.locationsArray = locationsArray
         destinationController.runDetailDismissDelegate = self
-        
     }
     
-    // MARK: Setup Views
-    
     private func setupViews() {
-        
         stopButton.isEnabled = false
         stopButton.alpha = 0.25
         
@@ -274,37 +237,28 @@ class NewRunController: UIViewController {
         
         stopButton.layer.cornerRadius = stopButton.frame.height/2
         stopButton.layer.masksToBounds = true
+		
+		updateTimer()
     }
     
-    // MARK: Setup Navigation Bar
-    
     private func setupNavigationBar() {
-        
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
         imageView.contentMode = .scaleAspectFit
         let image = Image.navbarLogo
         imageView.image = image
         navigationItem.titleView = imageView
         
-        let leftButton = UIButton(type: .system)
-        let quitButtonImage = Image.quitButton.withRenderingMode(.alwaysTemplate)
-        leftButton.setImage(quitButtonImage, for: UIControlState.normal)
-        leftButton.frame = CGRect(x:0, y:0, width:25, height:25)
-        leftButton.addTarget(self, action: #selector(handleDismissController), for: .touchUpInside)
-        let leftBarButton = UIBarButtonItem(customView: leftButton)
+        let leftBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(handleDismissController))
         navigationItem.leftBarButtonItem = leftBarButton
     }
     
-    
 }
 
+// MARK: - CLLocationManagerDelegate
 
 extension NewRunController: CLLocationManagerDelegate {
     
-    // MARK: CLLocationManagerDelegate
-    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
         guard let currentLocation = locations.last else {
             return
         }
@@ -312,40 +266,33 @@ extension NewRunController: CLLocationManagerDelegate {
         let currentLocationCoordinates = currentLocation.coordinate
         
         if didStart {
-            
             if locationsArray.count > 0 {
                 previousLocation = locationsArray[locationsArray.count - 1]
             }
             
             if let previousLocation = self.previousLocation {
-                
                 let delta = currentLocation.distance(from: previousLocation)
                 distance += delta
                 calories = distance.metersToKilometers()*1.6*0.72*averageWeight.rounded(to: 0)
                 addPolyLineToMap(locations: [previousLocation, currentLocation])
                 updateUI()
             }
-            
+			
+			locationsArray.append(currentLocation)
         }
-        
-        let center = CLLocationCoordinate2D(latitude: currentLocationCoordinates.latitude, longitude: currentLocationCoordinates.longitude)
-        
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: mapDelta, longitudeDelta: mapDelta))
-        
-        mapView.setRegion(region, animated: true)
-        
-        locationsArray.append(currentLocation)
+		
+		let region = MKCoordinateRegion(center: currentLocationCoordinates, span: MKCoordinateSpan(latitudeDelta: mapDelta, longitudeDelta: mapDelta))
+		mapView.setRegion(region, animated: true)
     }
     
 }
 
+// MARK: - MKMapViewDelegate
+
 extension NewRunController: MKMapViewDelegate {
     
-    // MARK: MKMapViewDelegate
-    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        
-        if overlay is MKPolyline{
+        if overlay is MKPolyline {
             let polylineRenderer = MKPolylineRenderer(overlay: overlay)
             polylineRenderer.strokeColor = Colors.orangeDark
             polylineRenderer.lineWidth = 6.0
@@ -357,13 +304,12 @@ extension NewRunController: MKMapViewDelegate {
     
 }
 
+// MARK: - DismissDelegate
+
 extension NewRunController: DismissDelegate {
-    
-    // MARK: DismissDelegate
     
     func shouldDismiss(_ viewController: UIViewController) {
         viewController.dismiss(animated: true, completion: { [weak self] in
-            
             guard let strongSelf = self else {
                 return
             }
@@ -371,9 +317,5 @@ extension NewRunController: DismissDelegate {
             self?.newRunDismissDelegate?.shouldDismiss(strongSelf)
         })
     }
-    
-    
+	
 }
-
-
-

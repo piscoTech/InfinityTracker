@@ -10,8 +10,6 @@ import UIKit
 
 class PastRunsListController: UITableViewController {
     
-    // MARK: Private Properties
-    
     private var runs: [Run] = []
     private let cellIdentifier = "RunTableCell"
     
@@ -20,8 +18,6 @@ class PastRunsListController: UITableViewController {
         emptyStateView.contentMode = .scaleAspectFit
         return emptyStateView
     }()
-    
-    // MARK: LifeCycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -39,8 +35,6 @@ class PastRunsListController: UITableViewController {
         tableView.register(UINib(nibName: "RunTableCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
     }
     
-    // MARK: UITableViewDataSource
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if runs.count > 0 {
             hideEmptyState()
@@ -55,12 +49,9 @@ class PastRunsListController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RunTableCell
         let run = runs[indexPath.row]
         cell.nameLabel.text = run.name
-        let date = run.timestamp! as Date
-        cell.timestampLabel.text = "\(date.formatDate())"
+        cell.timestampLabel.text = run.timestamp?.getFormattedDateTime()
         return cell
     }
-    
-    // MARK: UITableViewDelegate
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath)
@@ -71,10 +62,7 @@ class PastRunsListController: UITableViewController {
         return 60.0
     }
     
-    // MARK: PrepareForSegue
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if let destinationController = segue.destination as? PastRunDetailController {
             let selectedCell = sender as! UITableViewCell
             let selectedIndex = tableView.indexPath(for: selectedCell)!
@@ -83,10 +71,7 @@ class PastRunsListController: UITableViewController {
         }
     }
     
-    // MARK: User Interaction
-    
     @IBAction func handleRemoveAllTracks() {
-        
         let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to remove all run history from Core Data?", preferredStyle: .actionSheet)
         
         let stopAction = UIAlertAction(title: "Remove All", style: .destructive) { [weak self] (action) in
@@ -95,9 +80,7 @@ class PastRunsListController: UITableViewController {
             self?.navigationController?.popToRootViewController(animated: true)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
-            
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         
         actionSheet.addAction(stopAction)
         actionSheet.addAction(cancelAction)
@@ -105,10 +88,7 @@ class PastRunsListController: UITableViewController {
         self.present(actionSheet, animated: true, completion: nil)
     }
     
-    // MARK: Setup Navigation Bar
-    
     private func setupNavigationBar() {
-        
         title = "Past Runs"
         
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
@@ -119,17 +99,12 @@ class PastRunsListController: UITableViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
-    // MARK: Show Empty State
-    
     private func showEmptyState() {
         tableView.backgroundView = emptyStateView
     }
     
-    // MARK: Hide Empty State
-    
     private func hideEmptyState() {
         tableView.backgroundView = nil
     }
-    
-    
+	
 }

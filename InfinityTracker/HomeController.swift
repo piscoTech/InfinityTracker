@@ -82,7 +82,6 @@ class HomeController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == newRunSegueIdentifier {
-            
             guard let navigationController = segue.destination as? UINavigationController, let destinationController = navigationController.viewControllers.first as? NewRunController  else {
                 return
             }

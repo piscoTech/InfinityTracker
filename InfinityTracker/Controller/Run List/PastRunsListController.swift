@@ -31,8 +31,6 @@ class PastRunsListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.register(UINib(nibName: "RunTableCell", bundle: nil), forCellReuseIdentifier: cellIdentifier)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -52,20 +50,14 @@ class PastRunsListController: UITableViewController {
         cell.timestampLabel.text = run.timestamp?.getFormattedDateTime()
         return cell
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCell = tableView.cellForRow(at: indexPath)
-        performSegue(withIdentifier: "PastTrackDetailSegueIdentifier", sender: selectedCell)
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
-    }
-    
+	
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let destinationController = segue.destination as? PastRunDetailController {
-            let selectedCell = sender as! UITableViewCell
-            let selectedIndex = tableView.indexPath(for: selectedCell)!
+		if let destinationController = segue.destination as? PastRunDetailController {
+			guard let selectedCell = sender as? RunTableCell,
+				let selectedIndex = tableView.indexPath(for: selectedCell) else {
+				return
+			}
+			
             destinationController.title = runs[selectedIndex.row].name
             destinationController.run = runs[selectedIndex.row]
         }

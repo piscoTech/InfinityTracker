@@ -10,8 +10,6 @@ import UIKit
 
 class EmptyStateView: UIView {
     
-    // MARK: Properties
-    
     lazy var imageView: UIImageView = {
         var imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -21,7 +19,7 @@ class EmptyStateView: UIView {
         return imageView
     }()
     
-    lazy var descriptionTextView : UITextView = {
+    lazy var descriptionTextView: UITextView = {
         var descriptionTextView = UITextView()
         descriptionTextView.text = "It's time to start Running!"
         descriptionTextView.backgroundColor = UIColor.clear
@@ -40,8 +38,6 @@ class EmptyStateView: UIView {
         return descriptionTextView
     }()
     
-    // MARK: LifeCycle
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLayout()
@@ -52,10 +48,7 @@ class EmptyStateView: UIView {
         setupLayout()
     }
     
-    // MARK: Layout
-    
-    func setupLayout(){
-        
+    func setupLayout() {
         imageView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -125).isActive = true
         imageView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 200).isActive = true
@@ -65,9 +58,6 @@ class EmptyStateView: UIView {
         descriptionTextView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 5).isActive = true
         descriptionTextView.leftAnchor.constraint(equalTo: leftAnchor, constant: 25).isActive = true
         descriptionTextView.rightAnchor.constraint(equalTo: rightAnchor, constant: -25).isActive = true
-        
     }
-    
-    
     
 }

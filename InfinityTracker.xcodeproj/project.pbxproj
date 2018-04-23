@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		7A0D8504208CD0D300340670 /* MBLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0D84FB208CCEBD00340670 /* MBLibrary.framework */; };
 		7A0D8505208CD0D300340670 /* MBLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0D84FB208CCEBD00340670 /* MBLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7A323C1B208E645D00B6E4A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A323C19208E645C00B6E4A7 /* LaunchScreen.storyboard */; };
+		7A323C1C208E645D00B6E4A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A323C1A208E645C00B6E4A7 /* Main.storyboard */; };
 		FA0FE3A91F58059F002B84D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3A81F58059F002B84D7 /* AppDelegate.swift */; };
-		FA0FE3AE1F58059F002B84D7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA0FE3AC1F58059F002B84D7 /* Main.storyboard */; };
 		FA0FE3B11F58059F002B84D7 /* InfinityTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3AF1F58059F002B84D7 /* InfinityTracker.xcdatamodeld */; };
 		FA0FE3B31F58059F002B84D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA0FE3B21F58059F002B84D7 /* Assets.xcassets */; };
-		FA0FE3B61F58059F002B84D7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA0FE3B41F58059F002B84D7 /* LaunchScreen.storyboard */; };
 		FA0FE3C71F58066F002B84D7 /* CurvedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3C61F58066F002B84D7 /* CurvedView.swift */; };
 		FA0FE3C91F580677002B84D7 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3C81F580677002B84D7 /* EmptyStateView.swift */; };
 		FA0FE3CB1F58069B002B84D7 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3CA1F58069B002B84D7 /* Colors.swift */; };
@@ -27,11 +27,7 @@
 		FA0FE3E31F5807C1002B84D7 /* UIColor+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3E21F5807C1002B84D7 /* UIColor+Helper.swift */; };
 		FA0FE3E61F5807F9002B84D7 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3E51F5807F9002B84D7 /* GradientButton.swift */; };
 		FA0FE3F01F5808D3002B84D7 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3EF1F5808D3002B84D7 /* Protocols.swift */; };
-		FA3F0A131F5809A100DCA109 /* RunsList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3F0A121F5809A100DCA109 /* RunsList.storyboard */; };
-		FA3F0A151F5809E500DCA109 /* RunSummary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3F0A141F5809E500DCA109 /* RunSummary.storyboard */; };
-		FA3F0A171F580A0300DCA109 /* NewRun.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA3F0A161F580A0300DCA109 /* NewRun.storyboard */; };
 		FA3F0A1A1F580E9000DCA109 /* RunTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3F0A181F580E9000DCA109 /* RunTableCell.swift */; };
-		FA3F0A1B1F580E9000DCA109 /* RunTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA3F0A191F580E9000DCA109 /* RunTableCell.xib */; };
 		FA3F0A1D1F58192F00DCA109 /* Counter+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3F0A1C1F58192F00DCA109 /* Counter+Helper.swift */; };
 		FA6D3DD81F581BB0002C342C /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D3DD71F581BB0002C342C /* CoreDataStackManager.swift */; };
 /* End PBXBuildFile section */
@@ -90,12 +86,12 @@
 
 /* Begin PBXFileReference section */
 		7A0D84F3208CCEBD00340670 /* MBLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MBLibrary.xcodeproj; path = ../MBLibrary/MBLibrary.xcodeproj; sourceTree = "<group>"; };
+		7A323C19208E645C00B6E4A7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7A323C1A208E645C00B6E4A7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		FA0FE3A51F58059F002B84D7 /* InfinityTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinityTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA0FE3A81F58059F002B84D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FA0FE3AD1F58059F002B84D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FA0FE3B01F58059F002B84D7 /* InfinityTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InfinityTracker.xcdatamodel; sourceTree = "<group>"; };
 		FA0FE3B21F58059F002B84D7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		FA0FE3B51F58059F002B84D7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FA0FE3B71F58059F002B84D7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA0FE3C61F58066F002B84D7 /* CurvedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurvedView.swift; sourceTree = "<group>"; };
 		FA0FE3C81F580677002B84D7 /* EmptyStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
@@ -110,11 +106,7 @@
 		FA0FE3E21F5807C1002B84D7 /* UIColor+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Helper.swift"; sourceTree = "<group>"; };
 		FA0FE3E51F5807F9002B84D7 /* GradientButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 		FA0FE3EF1F5808D3002B84D7 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		FA3F0A121F5809A100DCA109 /* RunsList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RunsList.storyboard; sourceTree = "<group>"; };
-		FA3F0A141F5809E500DCA109 /* RunSummary.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RunSummary.storyboard; sourceTree = "<group>"; };
-		FA3F0A161F580A0300DCA109 /* NewRun.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NewRun.storyboard; sourceTree = "<group>"; };
 		FA3F0A181F580E9000DCA109 /* RunTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunTableCell.swift; sourceTree = "<group>"; };
-		FA3F0A191F580E9000DCA109 /* RunTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RunTableCell.xib; sourceTree = "<group>"; };
 		FA3F0A1C1F58192F00DCA109 /* Counter+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Counter+Helper.swift"; sourceTree = "<group>"; };
 		FA6D3DD71F581BB0002C342C /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,6 +141,85 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		7A323C14208E639400B6E4A7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FA3F0A181F580E9000DCA109 /* RunTableCell.swift */,
+				FA0FE3E51F5807F9002B84D7 /* GradientButton.swift */,
+				FA0FE3C81F580677002B84D7 /* EmptyStateView.swift */,
+				FA0FE3C61F58066F002B84D7 /* CurvedView.swift */,
+				7A323C1A208E645C00B6E4A7 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7A323C18208E642A00B6E4A7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FA0FE3AF1F58059F002B84D7 /* InfinityTracker.xcdatamodeld */,
+				FA6D3DD71F581BB0002C342C /* CoreDataStackManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7A323C1D208E648B00B6E4A7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FA0FE3B71F58059F002B84D7 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7A323C1F208E64AE00B6E4A7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FA0FE3B21F58059F002B84D7 /* Assets.xcassets */,
+				7A323C19208E645C00B6E4A7 /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7A323C21208E64E200B6E4A7 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				FA0FE3D41F580742002B84D7 /* HomeController.swift */,
+				7A323C23208E651600B6E4A7 /* New Run */,
+				7A323C24208E652200B6E4A7 /* Run List */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		7A323C23208E651600B6E4A7 /* New Run */ = {
+			isa = PBXGroup;
+			children = (
+				FA0FE3D01F5806E8002B84D7 /* NewRunController.swift */,
+				FA0FE3D21F580713002B84D7 /* RunDetailController.swift */,
+			);
+			path = "New Run";
+			sourceTree = "<group>";
+		};
+		7A323C24208E652200B6E4A7 /* Run List */ = {
+			isa = PBXGroup;
+			children = (
+				FA0FE3D61F580763002B84D7 /* PastRunsListController.swift */,
+				FA0FE3D81F580787002B84D7 /* PastRunDetailController.swift */,
+			);
+			path = "Run List";
+			sourceTree = "<group>";
+		};
+		7A323C25208E657E00B6E4A7 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				FA0FE3EF1F5808D3002B84D7 /* Protocols.swift */,
+				FA0FE3DA1F5807A2002B84D7 /* Double+Helper.swift */,
+				FA0FE3E21F5807C1002B84D7 /* UIColor+Helper.swift */,
+				FA3F0A1C1F58192F00DCA109 /* Counter+Helper.swift */,
+				FA0FE3CA1F58069B002B84D7 /* Colors.swift */,
+				FA0FE3CE1F5806B7002B84D7 /* Images.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		FA0FE39C1F58059E002B84D7 = {
 			isa = PBXGroup;
 			children = (
@@ -170,122 +241,15 @@
 		FA0FE3A71F58059F002B84D7 /* InfinityTracker */ = {
 			isa = PBXGroup;
 			children = (
+				7A323C25208E657E00B6E4A7 /* Helper */,
+				7A323C21208E64E200B6E4A7 /* Controller */,
+				7A323C18208E642A00B6E4A7 /* Model */,
+				7A323C14208E639400B6E4A7 /* View */,
 				FA0FE3A81F58059F002B84D7 /* AppDelegate.swift */,
-				FA0FE3EE1F5808C5002B84D7 /* Protocols */,
-				FA0FE3C31F5805FC002B84D7 /* Helpers */,
-				FA0FE3C01F5805DB002B84D7 /* CoreData */,
-				FA0FE3BF1F5805D5002B84D7 /* Constants */,
-				FA0FE3BE1F5805C1002B84D7 /* Controllers */,
-				FA0FE3BD1F5805B1002B84D7 /* Views */,
-				FA0FE3C21F5805F4002B84D7 /* Resources */,
+				7A323C1F208E64AE00B6E4A7 /* Resources */,
+				7A323C1D208E648B00B6E4A7 /* Supporting Files */,
 			);
 			path = InfinityTracker;
-			sourceTree = "<group>";
-		};
-		FA0FE3BD1F5805B1002B84D7 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				FA0FE3E91F58081D002B84D7 /* UITableViewCells */,
-				FA0FE3E41F5807EE002B84D7 /* UIButtons */,
-				FA0FE3E81F580811002B84D7 /* Storyboards */,
-				FA0FE3E71F580809002B84D7 /* UIViews */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		FA0FE3BE1F5805C1002B84D7 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				FA0FE3D01F5806E8002B84D7 /* NewRunController.swift */,
-				FA0FE3D81F580787002B84D7 /* PastRunDetailController.swift */,
-				FA0FE3D41F580742002B84D7 /* HomeController.swift */,
-				FA0FE3D61F580763002B84D7 /* PastRunsListController.swift */,
-				FA0FE3D21F580713002B84D7 /* RunDetailController.swift */,
-			);
-			name = Controllers;
-			sourceTree = "<group>";
-		};
-		FA0FE3BF1F5805D5002B84D7 /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-				FA0FE3CA1F58069B002B84D7 /* Colors.swift */,
-				FA0FE3CE1F5806B7002B84D7 /* Images.swift */,
-			);
-			name = Constants;
-			sourceTree = "<group>";
-		};
-		FA0FE3C01F5805DB002B84D7 /* CoreData */ = {
-			isa = PBXGroup;
-			children = (
-				FA0FE3AF1F58059F002B84D7 /* InfinityTracker.xcdatamodeld */,
-				FA6D3DD71F581BB0002C342C /* CoreDataStackManager.swift */,
-			);
-			name = CoreData;
-			sourceTree = "<group>";
-		};
-		FA0FE3C21F5805F4002B84D7 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				FA0FE3B21F58059F002B84D7 /* Assets.xcassets */,
-				FA0FE3B71F58059F002B84D7 /* Info.plist */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		FA0FE3C31F5805FC002B84D7 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				FA0FE3DA1F5807A2002B84D7 /* Double+Helper.swift */,
-				FA0FE3E21F5807C1002B84D7 /* UIColor+Helper.swift */,
-				FA3F0A1C1F58192F00DCA109 /* Counter+Helper.swift */,
-			);
-			name = Helpers;
-			sourceTree = "<group>";
-		};
-		FA0FE3E41F5807EE002B84D7 /* UIButtons */ = {
-			isa = PBXGroup;
-			children = (
-				FA0FE3E51F5807F9002B84D7 /* GradientButton.swift */,
-			);
-			name = UIButtons;
-			sourceTree = "<group>";
-		};
-		FA0FE3E71F580809002B84D7 /* UIViews */ = {
-			isa = PBXGroup;
-			children = (
-				FA0FE3C81F580677002B84D7 /* EmptyStateView.swift */,
-				FA0FE3C61F58066F002B84D7 /* CurvedView.swift */,
-			);
-			name = UIViews;
-			sourceTree = "<group>";
-		};
-		FA0FE3E81F580811002B84D7 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				FA0FE3AC1F58059F002B84D7 /* Main.storyboard */,
-				FA3F0A141F5809E500DCA109 /* RunSummary.storyboard */,
-				FA3F0A161F580A0300DCA109 /* NewRun.storyboard */,
-				FA0FE3B41F58059F002B84D7 /* LaunchScreen.storyboard */,
-				FA3F0A121F5809A100DCA109 /* RunsList.storyboard */,
-			);
-			name = Storyboards;
-			sourceTree = "<group>";
-		};
-		FA0FE3E91F58081D002B84D7 /* UITableViewCells */ = {
-			isa = PBXGroup;
-			children = (
-				FA3F0A181F580E9000DCA109 /* RunTableCell.swift */,
-				FA3F0A191F580E9000DCA109 /* RunTableCell.xib */,
-			);
-			name = UITableViewCells;
-			sourceTree = "<group>";
-		};
-		FA0FE3EE1F5808C5002B84D7 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				FA0FE3EF1F5808D3002B84D7 /* Protocols.swift */,
-			);
-			name = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -393,13 +357,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA0FE3B61F58059F002B84D7 /* LaunchScreen.storyboard in Resources */,
-				FA3F0A151F5809E500DCA109 /* RunSummary.storyboard in Resources */,
-				FA3F0A1B1F580E9000DCA109 /* RunTableCell.xib in Resources */,
+				7A323C1C208E645D00B6E4A7 /* Main.storyboard in Resources */,
 				FA0FE3B31F58059F002B84D7 /* Assets.xcassets in Resources */,
-				FA3F0A131F5809A100DCA109 /* RunsList.storyboard in Resources */,
-				FA0FE3AE1F58059F002B84D7 /* Main.storyboard in Resources */,
-				FA3F0A171F580A0300DCA109 /* NewRun.storyboard in Resources */,
+				7A323C1B208E645D00B6E4A7 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,25 +400,6 @@
 			targetProxy = 7A0D8506208CD0D300340670 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		FA0FE3AC1F58059F002B84D7 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA0FE3AD1F58059F002B84D7 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		FA0FE3B41F58059F002B84D7 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				FA0FE3B51F58059F002B84D7 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		FA0FE3B81F58059F002B84D7 /* Debug */ = {
@@ -576,7 +517,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = C8D57YLUAC;
-				INFOPLIST_FILE = InfinityTracker/Info.plist;
+				INFOPLIST_FILE = "InfinityTracker/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Marco-Boschi.ios.InfinityTracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -590,7 +531,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = C8D57YLUAC;
-				INFOPLIST_FILE = InfinityTracker/Info.plist;
+				INFOPLIST_FILE = "InfinityTracker/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Marco-Boschi.ios.InfinityTracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";

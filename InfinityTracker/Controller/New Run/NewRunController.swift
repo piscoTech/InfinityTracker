@@ -34,15 +34,18 @@ class NewRunController: UIViewController {
     
     // MARK: FilePrivate Properties
     
-    fileprivate var locationsArray: [CLLocation] = []
-    fileprivate var coordinates: [CLLocationCoordinate2D] = []
-    fileprivate var duration: TimeInterval = 0
-    fileprivate var distance: Double = 0.0
-    fileprivate var speed: Double = 0.0
-    fileprivate let averageWeight: Double = 132.0
-    fileprivate var calories: Double = 0.0
-    fileprivate var mapDelta: Double = 0.0050
-    fileprivate var didStart: Bool = false
+    private var locationsArray: [CLLocation] = []
+	/// The last registered position when the workout was not yet started or paused
+    private var previousLocation: CLLocation?
+    private var duration: TimeInterval = 0
+    private var distance: Double = 0.0
+    private var speed: Double = 0.0
+    private let averageWeight: Double = 132.0
+    private var calories: Double = 0.0
+    private var mapDelta: Double = 0.0050
+	
+    private var didStart: Bool = false
+	private var didEnd = false
     
     // MARK: Delegates
     
@@ -50,6 +53,8 @@ class NewRunController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		(UIApplication.shared.delegate as? AppDelegate)?.newRunController = self
         
         setupNavigationBar()
         setupViews()
@@ -78,13 +83,7 @@ class NewRunController: UIViewController {
         let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to stop?", preferredStyle: .actionSheet)
         
         let stopAction = UIAlertAction(title: "Stop", style: .destructive) { [weak self] (action) in
-            self?.didStart = false
-            self?.stopRun()
-			if self?.saveCurrentTrack() ?? false {
-            	self?.performSegue(withIdentifier: "RunDetailController", sender: self)
-			} else {
-				self?.dismiss(animated: true)
-			}
+            self?.manualStop()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
@@ -94,6 +93,32 @@ class NewRunController: UIViewController {
         
         self.present(actionSheet, animated: true, completion: nil)
     }
+	
+	private func manualStop() {
+		guard !didEnd else {
+			return
+		}
+		
+		self.didStart = false
+		self.didEnd = true
+		self.stopRun()
+		if self.saveCurrentTrack() {
+			self.performSegue(withIdentifier: "RunDetailController", sender: self)
+		} else {
+			self.dismiss(animated: true)
+		}
+	}
+	
+	func checkIfStopNeeded() {
+		if CLLocationManager.locationServicesEnabled() {
+			let status = CLLocationManager.authorizationStatus()
+			if status == .authorizedWhenInUse || status == .authorizedAlways {
+				return
+			}
+		}
+		
+		manualStop()
+	}
     
     @IBAction func sliderDidChangeValue() {
         let miles = Double(sliderControl.value)
@@ -260,7 +285,15 @@ extension NewRunController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		if didStart {
-			for l in locations {
+			let locList: [CLLocation]
+			if let prev = previousLocation {
+				locList = [prev] + locations
+				previousLocation = nil
+			} else {
+				locList = locations
+			}
+			
+			for l in locList {
 				if let previousLocation = locationsArray.last {
 					let delta = l.distance(from: previousLocation)
 					distance += delta
@@ -268,9 +301,11 @@ extension NewRunController: CLLocationManagerDelegate {
 					addPolyLineToMap(locations: [previousLocation, l])
 					updateUI()
 				}
+				
+				locationsArray.append(l)
 			}
-			
-			locationsArray += locations
+		} else {
+			previousLocation = locations.last
 		}
 		
 		if let current = locations.last {

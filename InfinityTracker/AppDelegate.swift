@@ -14,16 +14,19 @@ import CoreLocation
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    let locationManager = CLLocationManager()
+	weak var newRunController: NewRunController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.allowsBackgroundLocationUpdates = true
         configureNavigationBar()
         setWindowBackgroundColor()
+		
         return true
     }
+	
+	func applicationDidBecomeActive(_ application: UIApplication) {
+		((window?.rootViewController as? UINavigationController)?.viewControllers.first as? HomeController)?.setupLocationPermission(updateView: true)
+		newRunController?.checkIfStopNeeded()
+	}
 
     func applicationDidEnterBackground(_ application: UIApplication) {
         CoreDataManager.saveContext()

@@ -11,6 +11,7 @@
 		7A0D8505208CD0D300340670 /* MBLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0D84FB208CCEBD00340670 /* MBLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		7A323C1B208E645D00B6E4A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A323C19208E645C00B6E4A7 /* LaunchScreen.storyboard */; };
 		7A323C1C208E645D00B6E4A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A323C1A208E645C00B6E4A7 /* Main.storyboard */; };
+		7AA024BF2090E77E007AA704 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7AA024BE2090E77E007AA704 /* Localizable.strings */; };
 		FA0FE3A91F58059F002B84D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3A81F58059F002B84D7 /* AppDelegate.swift */; };
 		FA0FE3B11F58059F002B84D7 /* InfinityTracker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3AF1F58059F002B84D7 /* InfinityTracker.xcdatamodeld */; };
 		FA0FE3B31F58059F002B84D7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA0FE3B21F58059F002B84D7 /* Assets.xcassets */; };
@@ -88,6 +89,7 @@
 		7A0D84F3208CCEBD00340670 /* MBLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MBLibrary.xcodeproj; path = ../MBLibrary/MBLibrary.xcodeproj; sourceTree = "<group>"; };
 		7A323C19208E645C00B6E4A7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A323C1A208E645C00B6E4A7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		7AA024BE2090E77E007AA704 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		FA0FE3A51F58059F002B84D7 /* InfinityTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinityTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA0FE3A81F58059F002B84D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA0FE3B01F58059F002B84D7 /* InfinityTracker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InfinityTracker.xcdatamodel; sourceTree = "<group>"; };
@@ -99,7 +101,7 @@
 		FA0FE3CE1F5806B7002B84D7 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		FA0FE3D01F5806E8002B84D7 /* NewRunController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NewRunController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0FE3D21F580713002B84D7 /* RunDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunDetailController.swift; sourceTree = "<group>"; };
-		FA0FE3D41F580742002B84D7 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		FA0FE3D41F580742002B84D7 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; usesTabs = 1; };
 		FA0FE3D61F580763002B84D7 /* PastRunsListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PastRunsListController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0FE3D81F580787002B84D7 /* PastRunDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PastRunDetailController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0FE3DA1F5807A2002B84D7 /* Double+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Helper.swift"; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			children = (
 				FA0FE3B21F58059F002B84D7 /* Assets.xcassets */,
 				7A323C19208E645C00B6E4A7 /* LaunchScreen.storyboard */,
+				7AA024BE2090E77E007AA704 /* Localizable.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -282,7 +285,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0930;
-				ORGANIZATIONNAME = AleksZilla;
+				ORGANIZATIONNAME = "Marco Boschi";
 				TargetAttributes = {
 					FA0FE3A41F58059F002B84D7 = {
 						CreatedOnToolsVersion = 8.3.3;
@@ -358,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A323C1C208E645D00B6E4A7 /* Main.storyboard in Resources */,
+				7AA024BF2090E77E007AA704 /* Localizable.strings in Resources */,
 				FA0FE3B31F58059F002B84D7 /* Assets.xcassets in Resources */,
 				7A323C1B208E645D00B6E4A7 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -516,6 +520,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = C8D57YLUAC;
 				INFOPLIST_FILE = "InfinityTracker/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -530,6 +535,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEVELOPMENT_TEAM = C8D57YLUAC;
 				INFOPLIST_FILE = "InfinityTracker/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

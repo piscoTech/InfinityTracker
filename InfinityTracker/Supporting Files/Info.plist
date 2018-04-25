@@ -28,7 +28,6 @@
 	<string>This app needs to know your location to work properly.</string>
 	<key>UIBackgroundModes</key>
 	<array>
-		<string>Register for location updates.</string>
 		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

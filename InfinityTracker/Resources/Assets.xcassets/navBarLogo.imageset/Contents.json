@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "navBarLogo.png",
+      "filename" : "Navigation Bar Logo.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "navBarLogo@2x.png",
+      "filename" : "Navigation Bar Logo@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "navBarLogo@3x.png",
+      "filename" : "Navigation Bar Logo@3x.png",
       "scale" : "3x"
     }
   ],

@@ -19,8 +19,6 @@ class NewRunController: UIViewController {
     @IBOutlet weak var whiteViewOne: UIView!
     @IBOutlet weak var whiteViewTwo: UIView!
     @IBOutlet weak var whiteViewThree: UIView!
-    @IBOutlet weak var startButtonCenterXConstraint: NSLayoutConstraint!
-    @IBOutlet weak var stopButtonCenterXConstraint: NSLayoutConstraint!
     @IBOutlet weak var startButton: GradientButton!
     @IBOutlet weak var stopButton: GradientButton!
     @IBOutlet weak var mapView: MKMapView!
@@ -38,7 +36,6 @@ class NewRunController: UIViewController {
     
     fileprivate var locationsArray: [CLLocation] = []
     fileprivate var coordinates: [CLLocationCoordinate2D] = []
-    fileprivate var previousLocation: CLLocation?
     fileprivate var duration: TimeInterval = 0
     fileprivate var distance: Double = 0.0
     fileprivate var speed: Double = 0.0
@@ -126,18 +123,20 @@ class NewRunController: UIViewController {
     }
     
     private func startRun() {
+		// Remove next lines, and change Start to Pause
         startButton.isEnabled = false
         startButton.alpha = 1.0
         
-        startButtonCenterXConstraint.constant -= 300
-        stopButtonCenterXConstraint.constant = 0
-        
+//		startButtonCenterXConstraint.constant -= 300
+//		stopButtonCenterXConstraint.constant = 0
+		
         UIView.animate(withDuration: 0.60, animations: {
             self.view.layoutIfNeeded()
-            self.startButton.alpha = 0.0
+			// Remove next line, Start should remain enabled as Pause
+            self.startButton.alpha = 0.25
             self.stopButton.alpha = 1.0
         }) { (finished) in
-            self.startButton.removeFromSuperview()
+//			self.startButton.removeFromSuperview()
             self.stopButton.isEnabled = true
         }
         
@@ -169,6 +168,7 @@ class NewRunController: UIViewController {
         locationManager.activityType = .fitness
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.distanceFilter = 0.1
+		locationManager.allowsBackgroundLocationUpdates = true
         locationManager.startUpdatingLocation()
     }
     
@@ -259,30 +259,24 @@ class NewRunController: UIViewController {
 extension NewRunController: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let currentLocation = locations.last else {
-            return
-        }
-        
-        let currentLocationCoordinates = currentLocation.coordinate
-        
-        if didStart {
-            if locationsArray.count > 0 {
-                previousLocation = locationsArray[locationsArray.count - 1]
-            }
-            
-            if let previousLocation = self.previousLocation {
-                let delta = currentLocation.distance(from: previousLocation)
-                distance += delta
-                calories = distance.metersToKilometers()*1.6*0.72*averageWeight.rounded(to: 0)
-                addPolyLineToMap(locations: [previousLocation, currentLocation])
-                updateUI()
-            }
+		if didStart {
+			for l in locations {
+				if let previousLocation = locationsArray.last {
+					let delta = l.distance(from: previousLocation)
+					distance += delta
+					calories = distance.metersToKilometers()*1.6*0.72*averageWeight.rounded(to: 0)
+					addPolyLineToMap(locations: [previousLocation, l])
+					updateUI()
+				}
+			}
 			
-			locationsArray.append(currentLocation)
-        }
+			locationsArray += locations
+		}
 		
-		let region = MKCoordinateRegion(center: currentLocationCoordinates, span: MKCoordinateSpan(latitudeDelta: mapDelta, longitudeDelta: mapDelta))
-		mapView.setRegion(region, animated: true)
+		if let current = locations.last {
+			let region = MKCoordinateRegion(center: current.coordinate, span: MKCoordinateSpan(latitudeDelta: mapDelta, longitudeDelta: mapDelta))
+			mapView.setRegion(region, animated: true)
+		}
     }
     
 }

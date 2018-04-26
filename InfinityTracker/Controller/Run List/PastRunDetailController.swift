@@ -25,7 +25,6 @@ class PastRunDetailController: UIViewController {
     // MARK: Properties
     
     var run: Run!
-    var locationsArray: [CLLocation] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,15 +32,9 @@ class PastRunDetailController: UIViewController {
         guard run != nil else {
             return
         }
-		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleEditName))
-        
-        let locations = run.locations
-        for location in locations! {
-            let loc = location as! Location
-            locationsArray.append(CLLocation(latitude: loc.latitude, longitude: loc.longitude))
-        }
-        
-        addPolyLineToMap(locations: locationsArray)
+		
+		self.title = run.start.getFormattedDateTime()
+        mapView.addOverlays(run.route)
         setupViews()
     }
     
@@ -59,55 +52,12 @@ class PastRunDetailController: UIViewController {
 		
         durationLabel.text = run?.duration.getDuration()
         
-        let distance = run?.distance ?? 0
+        let distance = run?.totalDistance ?? 0
         let distanceKM = distance.metersToKilometers().rounded(to: 3)
         distanceLabel.text = "\(distanceKM) km"
         
-        let calories = run!.calories.rounded(to: 0)
+        let calories = (run?.totalCalories ?? 0).rounded(to: 0)
         caloriesLabel.text = "\(calories) kcal"
-    }
-    
-    fileprivate func addPolyLineToMap(locations: [CLLocation]) {
-        var coordinates = locations.map({ (location: CLLocation!) -> CLLocationCoordinate2D in
-            return location.coordinate
-        })
-        
-        let polyline = MKPolyline(coordinates: &coordinates, count: locationsArray.count)
-        let rect = polyline.boundingMapRect
-        
-        mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
-        mapView.add(polyline)
-    }
-    
-    @objc func handleEditName() {
-        let alertController = UIAlertController(title: "Type in a new name:", message: "", preferredStyle: .alert)
-        let updateAction = UIAlertAction(title: "Update", style: .default, handler: { [weak self] alert in
-            guard let newName = alertController.textFields?.first?.text else {
-                return
-            }
-            
-            guard !newName.isEmpty else {
-                return
-            }
-            
-            guard let runName = self?.run?.name else {
-                return
-            }
-            
-            CoreDataManager.updateRunName(currentValue: runName, newValue: newName)
-            self?.navigationController?.popViewController(animated: true)
-        })
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .default)
-        
-        alertController.addTextField { (textField : UITextField!) in
-            textField.placeholder = "Type the run name here..."
-        }
-        
-        alertController.addAction(updateAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
     }
     
 }
@@ -117,8 +67,7 @@ class PastRunDetailController: UIViewController {
 extension PastRunDetailController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        
-        if overlay is MKPolyline{
+        if overlay is MKPolyline {
             let polylineRenderer = MKPolylineRenderer(overlay: overlay)
             polylineRenderer.strokeColor = Colors.orangeDark
             polylineRenderer.lineWidth = 6.0

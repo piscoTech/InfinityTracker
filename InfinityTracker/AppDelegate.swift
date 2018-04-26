@@ -27,14 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		((window?.rootViewController as? UINavigationController)?.viewControllers.first as? HomeController)?.setupLocationPermission(updateView: true)
 		newRunController?.checkIfStopNeeded()
 	}
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        CoreDataManager.saveContext()
-    }
-    
-    func applicationWillTerminate(_ application: UIApplication) {
-        CoreDataManager.saveContext()
-    }
     
     private func configureNavigationBar() {
         UINavigationBar.appearance().isTranslucent = true

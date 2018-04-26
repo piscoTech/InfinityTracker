@@ -24,7 +24,7 @@ class PastRunsListController: UITableViewController {
         
         setupNavigationBar()
         
-        runs = CoreDataManager.fetchObjects(entity: Run.self, predicate: nil, context: CoreDataManager.context)
+        runs = []
         
         tableView.reloadData()
     }
@@ -46,8 +46,9 @@ class PastRunsListController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RunTableCell
         let run = runs[indexPath.row]
-        cell.nameLabel.text = run.name
-        cell.timestampLabel.text = run.timestamp?.getFormattedDateTime()
+        cell.nameLabel.text = run.start.getFormattedDateTime()
+        cell.timestampLabel.text = "\(run.totalDistance)"
+		
         return cell
     }
 	
@@ -58,26 +59,8 @@ class PastRunsListController: UITableViewController {
 				return
 			}
 			
-            destinationController.title = runs[selectedIndex.row].name
             destinationController.run = runs[selectedIndex.row]
         }
-    }
-    
-    @IBAction func handleRemoveAllTracks() {
-        let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to remove all run history from Core Data?", preferredStyle: .actionSheet)
-        
-        let stopAction = UIAlertAction(title: "Remove All", style: .destructive) { [weak self] (action) in
-            CoreDataManager.removeAllCoreDataEntriesFor("Run")
-            CoreDataManager.removeAllCoreDataEntriesFor("Location")
-            self?.navigationController?.popToRootViewController(animated: true)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        actionSheet.addAction(stopAction)
-        actionSheet.addAction(cancelAction)
-        
-        self.present(actionSheet, animated: true, completion: nil)
     }
     
     private func setupNavigationBar() {

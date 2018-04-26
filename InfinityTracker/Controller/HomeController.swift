@@ -79,10 +79,10 @@ class HomeController: UIViewController {
 		newRunButton.layer.cornerRadius = newRunButton.frame.height/2
 		newRunButton.alpha = locationEnabled ? 1 : 0.25
 		
-		let distance = CoreDataManager.getDistanceTotal()
+		let distance = HealthKitManager.getDistanceTotal()
 		distanceLabel.text = "\(distance.metersToKilometers().rounded(to: 1))"
 		
-		let calories = CoreDataManager.getCaloriesTotal()
+		let calories = HealthKitManager.getCaloriesTotal()
 		caloriesLabel.text = "\(calories.rounded(to: 1))"
 	}
 	

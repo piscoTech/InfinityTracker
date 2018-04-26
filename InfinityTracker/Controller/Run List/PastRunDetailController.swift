@@ -36,11 +36,46 @@ class PastRunDetailController: UIViewController {
 		navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(handleEditName))
         
         let locations = run.locations
+		var smoothDistance = 0.0
+		var smoothCalories = 0.0
+		
+		let dropThreshold = 1.0
+		let moveCloserThreshold = 3.0
+		/// The weight of the origin when computing the average between two locations. Must be between 0 and 1 inclusive.
+		let moveCloserOriginWeight = 0.8
+		
         for location in locations! {
-            let loc = location as! Location
-            locationsArray.append(CLLocation(latitude: loc.latitude, longitude: loc.longitude))
+            let tmp = location as! Location
+			let loc = CLLocation(latitude: tmp.latitude, longitude: tmp.longitude)
+			let smoothLoc: CLLocation
+			if let prev = locationsArray.last {
+				let delta = loc.distance(from: prev)
+				let deltaT = loc.timestamp.timeIntervalSince(prev.timestamp)
+				let smoothDelta: Double
+				
+				if delta <= dropThreshold {
+					continue
+				} else if delta < moveCloserThreshold {
+					smoothLoc = moveCloser(to: prev, target: loc, originWeight: moveCloserOriginWeight)
+					smoothDelta = smoothLoc.distance(from: prev)
+				} else {
+					smoothLoc = loc
+					smoothDelta = delta
+				}
+				
+				smoothDistance += smoothDelta
+				// FIXME: This needs to be parametric
+				let deltaC = Activity.walking.caloriesFor(time: deltaT, distance: smoothDelta, weight: 67)
+				smoothCalories += deltaC
+			} else {
+				smoothLoc = loc
+			}
+			
+            locationsArray.append(smoothLoc)
         }
-        
+		
+		print("Smoothed distance: \(smoothDistance)")
+		print("Smoothed calories: \(smoothCalories)")
         addPolyLineToMap(locations: locationsArray)
         setupViews()
     }
@@ -110,6 +145,49 @@ class PastRunDetailController: UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
+}
+
+extension PastRunDetailController {
+	
+	private func degreeToRadian(_ angle: CLLocationDegrees) -> Double {
+		return angle / 180.0 * .pi
+	}
+	
+	private func radianToDegree(_ radian: Double) -> CLLocationDegrees {
+		return radian * 180.0 / .pi
+	}
+	
+	private func moveCloser(to origin: CLLocation, target: CLLocation, originWeight: Double) -> CLLocation {
+		precondition(originWeight >= 0 && originWeight <= 1, "Weight must be in 0...1")
+		var x = 0.0
+		var y = 0.0
+		var z = 0.0
+		var h = 0.0
+		
+		let list = [(origin, originWeight), (target, 1-originWeight)]
+		for (coord, weight) in list {
+			let lat = degreeToRadian(coord.coordinate.latitude)
+			let lon = degreeToRadian(coord.coordinate.longitude)
+			
+			x += cos(lat) * cos(lon) * weight
+			y += cos(lat) * sin(lon) * weight
+			z += sin(lat) * weight
+			h += coord.altitude * weight
+		}
+		
+		// Sum of weights is 1
+//		x = x/CGFloat(listCoords.count)
+//		y = y/CGFloat(listCoords.count)
+//		z = z/CGFloat(listCoords.count)
+		
+		let lon = atan2(y, x)
+		let hyp = sqrt(x*x + y*y)
+		let lat = atan2(z, hyp)
+		
+		let res = CLLocationCoordinate2D(latitude: radianToDegree(lat), longitude: radianToDegree(lon))
+		return CLLocation(coordinate: res, altitude: h, horizontalAccuracy: target.horizontalAccuracy, verticalAccuracy: target.verticalAccuracy, course: target.course, speed: target.speed, timestamp: target.timestamp)
+	}
+	
 }
 
 // MARK: - MKMapViewDelegate

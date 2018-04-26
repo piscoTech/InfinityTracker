@@ -221,8 +221,7 @@ class NewRunController: UIViewController {
         
         for location in locationsArray {
             let locationObject = Location(context: CoreDataManager.context)
-            locationObject.latitude = location.coordinate.latitude
-            locationObject.longitude = location.coordinate.longitude
+            locationObject.rawData = NSKeyedArchiver.archivedData(withRootObject: location)
             newTrack.addToLocations(locationObject)
         }
         

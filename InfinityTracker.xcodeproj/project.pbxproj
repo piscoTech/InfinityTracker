@@ -94,6 +94,8 @@
 		7A4FF61E2092029F0054FED0 /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		7A4FF62320920A620054FED0 /* InfinityTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InfinityTracker.entitlements; sourceTree = "<group>"; };
 		7A4FF62420920A620054FED0 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		7A4FF62620922C640054FED0 /* InfinityTracker 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "InfinityTracker 2.xcdatamodel"; sourceTree = "<group>"; };
+		7A4FF62720927F900054FED0 /* InfinityTracker 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "InfinityTracker 3.xcdatamodel"; sourceTree = "<group>"; };
 		7AA024BE2090E77E007AA704 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		FA0FE3A51F58059F002B84D7 /* InfinityTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinityTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA0FE3A81F58059F002B84D7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -591,9 +593,11 @@
 		FA0FE3AF1F58059F002B84D7 /* InfinityTracker.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				7A4FF62720927F900054FED0 /* InfinityTracker 3.xcdatamodel */,
+				7A4FF62620922C640054FED0 /* InfinityTracker 2.xcdatamodel */,
 				FA0FE3B01F58059F002B84D7 /* InfinityTracker.xcdatamodel */,
 			);
-			currentVersion = FA0FE3B01F58059F002B84D7 /* InfinityTracker.xcdatamodel */;
+			currentVersion = 7A4FF62720927F900054FED0 /* InfinityTracker 3.xcdatamodel */;
 			path = InfinityTracker.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

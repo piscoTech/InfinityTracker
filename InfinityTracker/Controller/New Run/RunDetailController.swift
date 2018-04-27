@@ -16,15 +16,18 @@ class RunDetailController: UIViewController {
 	@IBOutlet weak var mapView: MKMapView!
 	
 	var run: Run!
+	var displayCannotSaveAlert = false
 	
 	weak var runDetailDismissDelegate: DismissDelegate?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		title = "Run Detail"
-		
 		setupViews()
+		
+		if displayCannotSaveAlert {
+			// TODO: Dispaly alert
+		}
 	}
 	
 	override func viewWillAppear(_ animated: Bool) {

@@ -8,13 +8,48 @@
 
 import HealthKit
 
+enum HealthWritePermission {
+	case none, partial, full
+}
+
 class HealthKitManager {
 	
 	static let healthStore = HKHealthStore()
 	static let workoutTypes = [HKWorkoutActivityType.running, .walking]
 	
+	static let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
+	static let calorieType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+	static let routeType = HKQuantityType.seriesType(forIdentifier: HKWorkoutRouteTypeIdentifier)!
+	static let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass)!
+	
+	///Keep track of the version of health authorization required, increase this number to automatically display an authorization request.
+	static private let authRequired = 1
+	///List of health data to require read access to.
+	static private let healthReadData: Set<HKObjectType> = [.workoutType(), distanceType, calorieType, routeType, weightType]
+	///List of health data to require write access to.
+	static private let healthWriteData: Set<HKSampleType> = [.workoutType(), distanceType, calorieType, routeType]
+	
 	static func requestAuthorization() {
-		
+		if !Preferences.authorized || Preferences.authVersion < authRequired {
+			healthStore.requestAuthorization(toShare: healthWriteData, read: healthReadData) { success, _ in
+				if success {
+					Preferences.authorized = true
+					Preferences.authVersion = authRequired
+				}
+			}
+		}
+	}
+	
+	static func canSaveWorkout() -> HealthWritePermission {
+		if healthStore.authorizationStatus(for: .workoutType()) == .sharingAuthorized && healthStore.authorizationStatus(for: routeType) == .sharingAuthorized {
+			if healthStore.authorizationStatus(for: distanceType) == .sharingAuthorized && healthStore.authorizationStatus(for: calorieType) == .sharingAuthorized {
+				return .full
+			} else {
+				return .partial
+			}
+		} else {
+			return .none
+		}
 	}
 	
 	/// Get the total distance saved by the app in meters.

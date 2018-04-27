@@ -14,6 +14,7 @@ class RunBuilder {
 	static let averageWeight = HKQuantity(unit: .pound(), doubleValue: 132)
 	
 	private let run: CompletedRun
+	private let activityType = HKWorkoutActivityType.walking
 	private(set) var completed = false
 	private(set) var invalidated = false
 	
@@ -48,6 +49,8 @@ class RunBuilder {
 	init(start: Date, weight: HKQuantity? = nil) {
 		run = CompletedRun(start: start)
 		self.weight = weight
+		// TODO: Add parameter for activity type: run/walk
+//		self.activityType = ...
 	}
 	
 	func add(locations: [CLLocation]) -> [MKPolyline] {
@@ -56,13 +59,14 @@ class RunBuilder {
 		var polylines = [MKPolyline]()
 		for l in locations {
 			if let prev = previousLocation {
+				// FIXME: Move here the filtering algorithm
 				let deltaD = l.distance(from: prev)
 				let deltaC = deltaD.metersToKilometers() * 1.6*0.72 * (weight ?? RunBuilder.averageWeight).doubleValue(for: .pound()).rounded(to: 0)
 				run.totalDistance += deltaD
 				run.totalCalories += deltaC
 				
-				distance.append(HKQuantitySample(type: distanceType, quantity: HKQuantity(unit: .meter(), doubleValue: deltaD), start: prev.timestamp, end: l.timestamp))
-				calories.append(HKQuantitySample(type: calorieType, quantity: HKQuantity(unit: .kilocalorie(), doubleValue: deltaC), start: prev.timestamp, end: l.timestamp))
+				distance.append(HKQuantitySample(type: HealthKitManager.distanceType, quantity: HKQuantity(unit: .meter(), doubleValue: deltaD), start: prev.timestamp, end: l.timestamp))
+				calories.append(HKQuantitySample(type: HealthKitManager.calorieType, quantity: HKQuantity(unit: .kilocalorie(), doubleValue: deltaC), start: prev.timestamp, end: l.timestamp))
 				
 				do {
 					var coord = [prev, l].map { $0.coordinate }
@@ -109,10 +113,54 @@ class RunBuilder {
 			
 			self.completed = true
 			self.invalidated = true
-			// TODO: Save the run
 			
-			self.route.discard()
-			completion(self.run)
+			if HealthKitManager.canSaveWorkout() != .none {
+				let totalCalories = HKQuantity(unit: .kilocalorie(), doubleValue: self.run.totalCalories)
+				let totalDistance = HKQuantity(unit: .meter(), doubleValue: self.run.totalCalories)
+				let workout = HKWorkout(activityType: self.activityType,
+										start: self.run.start,
+										end: self.run.end,
+										duration: self.run.duration,
+										totalEnergyBurned: totalCalories,
+										totalDistance: totalDistance,
+										device: HKDevice.local(),
+										metadata: [HKMetadataKeyIndoorWorkout: false]
+				)
+				HealthKitManager.healthStore.save(workout) { success, _ in
+					if success {
+						// Save the route only if workout has been saved
+						self.route.finishRoute(with: workout, metadata: nil) { route, _ in
+							var linkData = [HKSample]()
+							HealthKitManager.healthStore.save(self.calories) { success, _ in
+								if success {
+									linkData.append(contentsOf: self.calories)
+								}
+								HealthKitManager.healthStore.save(self.distance) { success, _ in
+									if success {
+										linkData.append(contentsOf: self.distance)
+									}
+									
+									if linkData.isEmpty {
+										completion(self.run)
+									} else {
+										HealthKitManager.healthStore.add(linkData, to: workout) { _, _ in
+											completion(self.run)
+										}
+									}
+								}
+							}
+						}
+					} else {
+						// Workout failed to save, discard other data
+						self.route.discard()
+						completion(self.run)
+					}
+				}
+			} else {
+				// Required data cannot be saved, return immediately
+				self.route.discard()
+				completion(self.run)
+			}
 		}
 	}
 	

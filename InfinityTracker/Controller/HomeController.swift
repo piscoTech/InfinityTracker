@@ -36,6 +36,12 @@ class HomeController: UIViewController {
 		setupNavigationBar()
 	}
 	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
+		HealthKitManager.requestAuthorization()
+	}
+	
 	func setupLocationPermission(updateView: Bool = false) {
 		if CLLocationManager.locationServicesEnabled() {
 			switch CLLocationManager.authorizationStatus() {

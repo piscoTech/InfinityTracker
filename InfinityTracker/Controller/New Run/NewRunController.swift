@@ -48,6 +48,7 @@ class NewRunController: UIViewController {
 		return run != nil
 	}
 	private var didEnd = false
+	private var cannotSaveAlertDisplayed = false
 	
 	// MARK: Delegates
 	
@@ -62,6 +63,13 @@ class NewRunController: UIViewController {
 		setupViews()
 		startUpdatingLocations()
 		setupMap()
+		
+		DispatchQueue.main.async {
+			if HealthKitManager.canSaveWorkout() != .full {
+				// TODO: If no health write permission, show alert no data will be saved
+				self.cannotSaveAlertDisplayed = true
+			}
+		}
 	}
 	
 	override func viewWillDisappear(_ animated: Bool) {
@@ -103,10 +111,12 @@ class NewRunController: UIViewController {
 		self.didEnd = true
 		self.stopRun()
 		run.finishRun(end: Date()) { res in
-			if let run = res {
-				self.performSegue(withIdentifier: "RunDetailController", sender: run)
-			} else {
-				self.dismiss(animated: true)
+			DispatchQueue.main.async {
+				if let run = res {
+					self.performSegue(withIdentifier: "RunDetailController", sender: run)
+				} else {
+					self.dismiss(animated: true)
+				}
 			}
 		}
 	}
@@ -204,8 +214,10 @@ class NewRunController: UIViewController {
 		guard let navigationController = segue.destination as? UINavigationController, let destinationController = navigationController.viewControllers.first as? RunDetailController, let run = sender as? Run else {
 			return
 		}
+		
 		destinationController.run = run
 		destinationController.runDetailDismissDelegate = self
+		destinationController.displayCannotSaveAlert = HealthKitManager.canSaveWorkout() != .full
 	}
 	
 	private func setupViews() {

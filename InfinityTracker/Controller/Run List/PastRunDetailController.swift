@@ -43,7 +43,7 @@ class PastRunDetailController: UIViewController {
 		/// Ranges in which move location point closer to the origin, the weight of the origin must be between 0 and 1 inclusive.
 		let moveCloserThreshold: [(range: ClosedRange<Double>, originWeight: Double)] = [(7.5 ... 15.0, 0.875), (15.0 ... 30.0, 0.7)]
 		/// Maximum allowed speed, in m/s.
-		let thresholdSpeed = 6.0
+		let thresholdSpeed = 6.5
 		
 		for location in locations! {
 			guard let tmp = location as? Location,
@@ -54,19 +54,23 @@ class PastRunDetailController: UIViewController {
 			
 			let smoothLoc: CLLocation
 			if let prev = self.locationsArray.last {
-				let delta = loc.distance(from: prev)
+				let deltaAcc = loc.horizontalAccuracy * 0.6
+				let deltaD = loc.distance(from: prev)
+				let delta = deltaD - deltaAcc
 				let deltaT = loc.timestamp.timeIntervalSince(prev.timestamp)
 				let smoothDelta: Double
+				var smoothWeight: Double?
 				let speed = delta / deltaT
 				if speed > thresholdSpeed || delta < dropThreshold {
 					continue
 				} else if let (_, weight) = moveCloserThreshold.first(where: { $0.range.contains(delta) }) {
-					smoothLoc = self.moveCloser(to: prev, target: loc, originWeight: weight)
-					smoothDelta = smoothLoc.distance(from: prev)
-				} else {
-					smoothLoc = loc
-					smoothDelta = delta
+					smoothWeight = weight
 				}
+				
+				// Correct the weight of the origin to move the other point closer by deltaAcc
+				let weight = 1 - (smoothWeight ?? 1) * (1 - deltaAcc / deltaD)
+				smoothLoc = self.moveCloser(to: prev, target: loc, originWeight: weight)
+				smoothDelta = smoothLoc.distance(from: prev)
 				
 				smoothDistance += smoothDelta
 				if smoothDelta > 0 {

@@ -27,11 +27,9 @@
 		FA0FE3D71F580763002B84D7 /* PastRunsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3D61F580763002B84D7 /* PastRunsListController.swift */; };
 		FA0FE3D91F580787002B84D7 /* PastRunDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3D81F580787002B84D7 /* PastRunDetailController.swift */; };
 		FA0FE3DB1F5807A2002B84D7 /* Double+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3DA1F5807A2002B84D7 /* Double+Helper.swift */; };
-		FA0FE3E31F5807C1002B84D7 /* UIColor+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3E21F5807C1002B84D7 /* UIColor+Helper.swift */; };
 		FA0FE3E61F5807F9002B84D7 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3E51F5807F9002B84D7 /* GradientButton.swift */; };
 		FA0FE3F01F5808D3002B84D7 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3EF1F5808D3002B84D7 /* Protocols.swift */; };
 		FA3F0A1A1F580E9000DCA109 /* RunTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3F0A181F580E9000DCA109 /* RunTableCell.swift */; };
-		FA3F0A1D1F58192F00DCA109 /* Counter+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3F0A1C1F58192F00DCA109 /* Counter+Helper.swift */; };
 		FA6D3DD81F581BB0002C342C /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6D3DD71F581BB0002C342C /* CoreDataStackManager.swift */; };
 /* End PBXBuildFile section */
 
@@ -112,11 +110,9 @@
 		FA0FE3D61F580763002B84D7 /* PastRunsListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PastRunsListController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0FE3D81F580787002B84D7 /* PastRunDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PastRunDetailController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0FE3DA1F5807A2002B84D7 /* Double+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Helper.swift"; sourceTree = "<group>"; };
-		FA0FE3E21F5807C1002B84D7 /* UIColor+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Helper.swift"; sourceTree = "<group>"; };
 		FA0FE3E51F5807F9002B84D7 /* GradientButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 		FA0FE3EF1F5808D3002B84D7 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		FA3F0A181F580E9000DCA109 /* RunTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunTableCell.swift; sourceTree = "<group>"; };
-		FA3F0A1C1F58192F00DCA109 /* Counter+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Counter+Helper.swift"; sourceTree = "<group>"; };
 		FA6D3DD71F581BB0002C342C /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -226,8 +222,6 @@
 			children = (
 				FA0FE3EF1F5808D3002B84D7 /* Protocols.swift */,
 				FA0FE3DA1F5807A2002B84D7 /* Double+Helper.swift */,
-				FA0FE3E21F5807C1002B84D7 /* UIColor+Helper.swift */,
-				FA3F0A1C1F58192F00DCA109 /* Counter+Helper.swift */,
 				FA0FE3CA1F58069B002B84D7 /* Colors.swift */,
 				FA0FE3CE1F5806B7002B84D7 /* Images.swift */,
 			);
@@ -393,12 +387,10 @@
 				FA0FE3D91F580787002B84D7 /* PastRunDetailController.swift in Sources */,
 				FA3F0A1A1F580E9000DCA109 /* RunTableCell.swift in Sources */,
 				FA0FE3F01F5808D3002B84D7 /* Protocols.swift in Sources */,
-				FA3F0A1D1F58192F00DCA109 /* Counter+Helper.swift in Sources */,
 				FA0FE3DB1F5807A2002B84D7 /* Double+Helper.swift in Sources */,
 				FA0FE3E61F5807F9002B84D7 /* GradientButton.swift in Sources */,
 				FA0FE3C91F580677002B84D7 /* EmptyStateView.swift in Sources */,
 				7A4FF61F209202A00054FED0 /* Activity.swift in Sources */,
-				FA0FE3E31F5807C1002B84D7 /* UIColor+Helper.swift in Sources */,
 				FA0FE3B11F58059F002B84D7 /* InfinityTracker.xcdatamodeld in Sources */,
 				FA0FE3CF1F5806B7002B84D7 /* Images.swift in Sources */,
 				FA0FE3D31F580713002B84D7 /* RunDetailController.swift in Sources */,

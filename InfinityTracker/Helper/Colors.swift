@@ -9,6 +9,8 @@
 import UIKit
 
 struct Colors {
-    static let orangeLight = UIColor.rgb(233, green: 197, blue: 74, alpha: 1)
+	
+	static let orangeLight = #colorLiteral(red: 0.9137254902, green: 0.7725490196, blue: 0.2901960784, alpha: 1)
     static let orangeDark = UIColor.orange
+	
 }

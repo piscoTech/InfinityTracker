@@ -33,7 +33,10 @@ class SavedRun: Run {
 		return raw.duration
 	}
 	
-	private(set) var route: [MKPolyline] = []
+	private var cachedRoute: [MKPolyline]?
+	var route: [MKPolyline] {
+		return cachedRoute ?? updateRouteCache()
+	}
 	
 	init?(raw: HKWorkout) {
 		if !HealthKitManager.workoutTypes.contains(raw.workoutActivityType) {
@@ -41,6 +44,15 @@ class SavedRun: Run {
 		}
 		
 		self.raw = raw
+	}
+	
+	private func updateRouteCache() -> [MKPolyline] {
+		let res: [MKPolyline] = []
+		
+		// FIXME: Implement me :(
+		
+		cachedRoute = res
+		return res
 	}
 	
 }

@@ -24,3 +24,11 @@ protocol Run {
 	var route: [MKPolyline] { get }
 
 }
+
+extension Run {
+	
+	var name: String {
+		return start.getFormattedDateTime()
+	}
+	
+}

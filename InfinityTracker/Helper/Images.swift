@@ -9,7 +9,9 @@
 import UIKit
 
 struct Image {
+	
     static let appLogo: UIImage = #imageLiteral(resourceName: "infinityLogo")
     static let emptyState: UIImage = #imageLiteral(resourceName: "emptyState")
     static let navbarLogo: UIImage = #imageLiteral(resourceName: "navBarLogo")
+	
 }

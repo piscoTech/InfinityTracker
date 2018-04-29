@@ -70,7 +70,7 @@ class HomeController: UIViewController {
 	
 	private func setupBackgroundGradient() {
 		let gradientLayer = CAGradientLayer()
-		gradientLayer.colors = [Colors.orangeDark.cgColor, Colors.orangeLight.cgColor]
+		gradientLayer.colors = [Appearance.orangeDark.cgColor, Appearance.orangeLight.cgColor]
 		gradientLayer.startPoint = CGPoint(x: 0, y: 0)
 		gradientLayer.endPoint = CGPoint(x: 1, y: 0)
 		view.layer.insertSublayer(gradientLayer, at: 0)
@@ -125,6 +125,8 @@ class HomeController: UIViewController {
 			}
 			
 			destinationController.newRunDismissDelegate = self
+			// FIXME: Make changeable from UI
+			destinationController.activityType = .walking
 		}
 	}
 	

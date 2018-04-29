@@ -12,13 +12,13 @@ import UIKit
     
     // MARK: Properties
     
-    @IBInspectable var startColor: UIColor = Colors.orangeDark {
+    @IBInspectable var startColor: UIColor = Appearance.orangeDark {
         didSet{
             setupView()
         }
     }
     
-    @IBInspectable var endColor: UIColor = Colors.orangeLight {
+    @IBInspectable var endColor: UIColor = Appearance.orangeLight {
         didSet{
             setupView()
         }

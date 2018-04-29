@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -356,60 +357,6 @@
             </objects>
             <point key="canvasLocation" x="4660" y="-184"/>
         </scene>
-        <!--Run Detail-->
-        <scene sceneID="Zrx-8L-wi9">
-            <objects>
-                <viewController id="QUn-i6-IyU" customClass="RunDetailController" customModule="InfinityTracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ZaB-6q-7QK"/>
-                        <viewControllerLayoutGuide type="bottom" id="9o0-DQ-TZL"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="YRc-5i-KDW">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" rotateEnabled="NO" pitchEnabled="NO" showsBuildings="NO" showsCompass="NO" showsPointsOfInterest="NO" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BwZ-0P-Ia1">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                                <connections>
-                                    <outlet property="delegate" destination="QUn-i6-IyU" id="od6-o9-bkn"/>
-                                </connections>
-                            </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7s3-52-Jqh">
-                                <rect key="frame" x="16" y="493" width="288" height="60"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="CUY-9p-ObC"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                <state key="normal" title="Done">
-                                    <color key="titleColor" red="1" green="0.45515950519999998" blue="0.19390190970000001" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="handleDismissController:" destination="QUn-i6-IyU" eventType="touchUpInside" id="JwB-65-QHJ"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="BwZ-0P-Ia1" firstAttribute="leading" secondItem="YRc-5i-KDW" secondAttribute="leadingMargin" constant="-16" id="O8T-Bc-QVy"/>
-                            <constraint firstItem="9o0-DQ-TZL" firstAttribute="top" secondItem="BwZ-0P-Ia1" secondAttribute="bottom" id="P1C-qt-vBu"/>
-                            <constraint firstItem="9o0-DQ-TZL" firstAttribute="top" secondItem="7s3-52-Jqh" secondAttribute="bottom" constant="15" id="Vn8-8R-ElO"/>
-                            <constraint firstItem="BwZ-0P-Ia1" firstAttribute="top" secondItem="ZaB-6q-7QK" secondAttribute="bottom" id="X9j-qt-TeQ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="7s3-52-Jqh" secondAttribute="trailing" id="jcJ-gl-URR"/>
-                            <constraint firstItem="7s3-52-Jqh" firstAttribute="leading" secondItem="YRc-5i-KDW" secondAttribute="leadingMargin" id="jii-ZJ-mxK"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="BwZ-0P-Ia1" secondAttribute="trailing" constant="-16" id="kks-fh-VYl"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Run Detail" id="0aT-LP-FMN"/>
-                    <connections>
-                        <outlet property="doneButton" destination="7s3-52-Jqh" id="Iuh-WD-mO7"/>
-                        <outlet property="mapView" destination="BwZ-0P-Ia1" id="FPO-0j-is3"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gMQ-UD-Wlq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="7062" y="-185"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="cFs-L9-6t7">
             <objects>
@@ -424,7 +371,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="QUn-i6-IyU" kind="relationship" relationship="rootViewController" id="lLH-Wj-IxQ"/>
+                        <segue destination="BWu-8Z-jNk" kind="relationship" relationship="rootViewController" id="BGH-gN-Sl0"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j9b-7q-1P4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -483,10 +430,10 @@
             </objects>
             <point key="canvasLocation" x="4660" y="-899"/>
         </scene>
-        <!--Track Detail-->
+        <!--[Track Date]-->
         <scene sceneID="Fe7-9p-C93">
             <objects>
-                <viewController id="BWu-8Z-jNk" customClass="PastRunDetailController" customModule="InfinityTracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BWu-8Z-jNk" customClass="RunDetailController" customModule="InfinityTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Zkn-AY-8VP"/>
                         <viewControllerLayoutGuide type="bottom" id="IzX-Sh-cK4"/>
@@ -497,9 +444,6 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" mapType="standard" pitchEnabled="NO" showsBuildings="NO" showsCompass="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxa-w4-U9p">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BWu-8Z-jNk" id="TTZ-SD-tu8"/>
-                                </connections>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LzF-Hp-T6n">
                                 <rect key="frame" x="16" y="485" width="288" height="65"/>
@@ -603,7 +547,7 @@
                             <constraint firstItem="IzX-Sh-cK4" firstAttribute="top" secondItem="Kxa-w4-U9p" secondAttribute="bottom" id="oRl-mc-0WL"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Track Detail" id="irO-YM-7on"/>
+                    <navigationItem key="navigationItem" title="[Track Date]" id="irO-YM-7on"/>
                     <connections>
                         <outlet property="caloriesLabel" destination="6CB-eU-6NB" id="VRe-N0-dya"/>
                         <outlet property="distanceLabel" destination="Wpt-37-b8S" id="lEr-ih-VGT"/>
@@ -616,10 +560,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MeO-v4-AO0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5436" y="-899"/>
+            <point key="canvasLocation" x="7380" y="-900"/>
         </scene>
     </scenes>
     <resources>
         <image name="infinityLogo" width="512" height="512"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="BGH-gN-Sl0"/>
+    </inferredMetricsTieBreakers>
 </document>

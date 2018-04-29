@@ -22,6 +22,9 @@ class HealthKitManager {
 	static let routeType = HKQuantityType.seriesType(forIdentifier: HKWorkoutRouteTypeIdentifier)!
 	static let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass)!
 	
+	// https://en.wikipedia.org/wiki/Human_body_weight @ 29/04/2018
+	static let averageWeight = HKQuantity(unit: .gramUnit(with: .kilo), doubleValue: 62)
+	
 	///Keep track of the version of health authorization required, increase this number to automatically display an authorization request.
 	static private let authRequired = 1
 	///List of health data to require read access to.
@@ -52,8 +55,14 @@ class HealthKitManager {
 		}
 	}
 	
+	static func getWeight(completion: (HKQuantity) -> Void) {
+		// FIXME: Implement me :(
+		completion(averageWeight)
+	}
+	
 	/// Get the total distance saved by the app in meters.
 	public static func getDistanceTotal() -> Double {
+		// FIXME: Implement me :(
 		return 0
 //
 //		var totalDistance: Double = 0.0
@@ -69,6 +78,7 @@ class HealthKitManager {
 	
 	/// Get the total energy burned saved by the app in kilocalories.
 	public static func getCaloriesTotal() -> Double {
+		// FIXME: Implement me :(
 		return 0
 //
 //		var caloriesTotal: Double = 0.0

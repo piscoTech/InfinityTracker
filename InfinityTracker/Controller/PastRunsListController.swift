@@ -53,9 +53,8 @@ class PastRunsListController: UITableViewController {
     }
 	
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if let destinationController = segue.destination as? PastRunDetailController {
-			guard let selectedCell = sender as? RunTableCell,
-				let selectedIndex = tableView.indexPath(for: selectedCell) else {
+		if let destinationController = segue.destination as? RunDetailController {
+			guard let selectedCell = sender as? RunTableCell, let selectedIndex = tableView.indexPath(for: selectedCell) else {
 				return
 			}
 			

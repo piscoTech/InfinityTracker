@@ -15,6 +15,8 @@ import HealthKit
 
 class NewRunController: UIViewController {
 	
+	var activityType: Activity!
+	
 	// MARK: IBOutlets
 	
 	@IBOutlet weak var whiteViewOne: UIView!
@@ -29,6 +31,7 @@ class NewRunController: UIViewController {
 	
 	// MARK: Private Properties
 	
+	private var weight: HKQuantity?
 	private var timer: Timer?
 	private var run: RunBuilder! {
 		willSet {
@@ -63,6 +66,13 @@ class NewRunController: UIViewController {
 		setupViews()
 		startUpdatingLocations()
 		setupMap()
+		HealthKitManager.getWeight { w in
+			DispatchQueue.main.async {
+				self.weight = w
+				self.startButton.isEnabled = true
+				self.startButton.alpha = 1
+			}
+		}
 		
 		DispatchQueue.main.async {
 			if HealthKitManager.canSaveWorkout() != .full {
@@ -84,9 +94,39 @@ class NewRunController: UIViewController {
 		timer.invalidate()
 	}
 	
+	// MARK: - Manage Run Start
+	
 	@IBAction func handleStartTapped() {
 		startRun()
 	}
+	
+	private func startRun() {
+		guard let weight = self.weight else {
+			return
+		}
+		
+		// Remove next lines, and change Start to Pause
+		startButton.isEnabled = false
+		startButton.alpha = 1.0
+		
+		//		startButtonCenterXConstraint.constant -= 300
+		//		stopButtonCenterXConstraint.constant = 0
+		
+		UIView.animate(withDuration: 0.60, animations: {
+			self.view.layoutIfNeeded()
+			// FIXME: Remove next line, Start should remain enabled as Pause
+			self.startButton.alpha = Appearance.disabledAlpha
+			self.stopButton.alpha = 1.0
+		}) { (finished) in
+			//			self.startButton.removeFromSuperview()
+			self.stopButton.isEnabled = true
+		}
+		
+		run = RunBuilder(start: Date(), activityType: activityType, weight: weight)
+		timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+	}
+	
+	// MARK: - Manage Run Stop
 	
 	@IBAction func handleStopTapped() {
 		let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to stop?", preferredStyle: .actionSheet)
@@ -132,6 +172,12 @@ class NewRunController: UIViewController {
 		manualStop()
 	}
 	
+	private func stopRun() {
+		locationManager.stopUpdatingLocation()
+	}
+	
+	// MARK: - UI Interaction
+	
 	@IBAction func sliderDidChangeValue() {
 		let miles = Double(sliderControl.value)
 		mapDelta = miles / 69.0
@@ -141,56 +187,8 @@ class NewRunController: UIViewController {
 		mapView.region = currentRegion
 	}
 	
-	@objc func handleDismissController() {
-		let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to leave this screen?", preferredStyle: .actionSheet)
-		let stopAction = UIAlertAction(title: "Leave", style: .destructive) { [weak self] (action) in
-			guard self != nil else {
-				return
-			}
-			
-			self?.newRunDismissDelegate?.shouldDismiss(self!)
-		}
-		
-		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-		
-		actionSheet.addAction(stopAction)
-		actionSheet.addAction(cancelAction)
-		
-		self.present(actionSheet, animated: true, completion: nil)
-	}
-	
-	private func startRun() {
-		// Remove next lines, and change Start to Pause
-		startButton.isEnabled = false
-		startButton.alpha = 1.0
-		
-//		startButtonCenterXConstraint.constant -= 300
-//		stopButtonCenterXConstraint.constant = 0
-		
-		UIView.animate(withDuration: 0.60, animations: {
-			self.view.layoutIfNeeded()
-			// Remove next line, Start should remain enabled as Pause
-			self.startButton.alpha = 0.25
-			self.stopButton.alpha = 1.0
-		}) { (finished) in
-//			self.startButton.removeFromSuperview()
-			self.stopButton.isEnabled = true
-		}
-		
-		run = RunBuilder(start: Date())
-		timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
-	}
-	
-	@objc func updateTimer() {
-		durationLabel.text = (run?.totalDistance ?? 0).getDuration()
-	}
-	
-	private func stopRun() {
-		locationManager.stopUpdatingLocation()
-	}
-	
 	private func setupMap() {
-		mapView.delegate = self
+		mapView.delegate = Appearance.mapViewDelegate
 		mapView.showsUserLocation = true
 		mapView.mapType = .standard
 		mapView.userTrackingMode = .follow
@@ -205,24 +203,22 @@ class NewRunController: UIViewController {
 		locationManager.startUpdatingLocation()
 	}
 	
-	fileprivate func updateUI() {
+	private func updateUI() {
 		let distanceKM = run.totalDistance.metersToKilometers().rounded(to: 1)
 		distanceLabel.text = "\(distanceKM) km"
+		
+		// FIXME: Also display calories
 	}
 	
-	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		guard let navigationController = segue.destination as? UINavigationController, let destinationController = navigationController.viewControllers.first as? RunDetailController, let run = sender as? Run else {
-			return
-		}
-		
-		destinationController.run = run
-		destinationController.runDetailDismissDelegate = self
-		destinationController.displayCannotSaveAlert = HealthKitManager.canSaveWorkout() != .full
+	@objc func updateTimer() {
+		durationLabel.text = (run?.totalDistance ?? 0).getDuration()
 	}
 	
 	private func setupViews() {
 		stopButton.isEnabled = false
-		stopButton.alpha = 0.25
+		stopButton.alpha = Appearance.disabledAlpha
+		startButton.isEnabled = false
+		stopButton.alpha = Appearance.disabledAlpha
 		
 		whiteViewOne.layer.cornerRadius = whiteViewOne.frame.height/2
 		whiteViewOne.layer.masksToBounds = true
@@ -240,6 +236,7 @@ class NewRunController: UIViewController {
 		stopButton.layer.masksToBounds = true
 		
 		updateTimer()
+		updateUI()
 	}
 	
 	private func setupNavigationBar() {
@@ -251,6 +248,37 @@ class NewRunController: UIViewController {
 		
 		let leftBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(handleDismissController))
 		navigationItem.leftBarButtonItem = leftBarButton
+	}
+	
+	// MARK: - Navigation
+	
+	@objc func handleDismissController() {
+		let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to leave this screen?", preferredStyle: .actionSheet)
+		let stopAction = UIAlertAction(title: "Leave", style: .destructive) { [weak self] (action) in
+			guard self != nil else {
+				return
+			}
+			
+			self?.run?.discard()
+			self?.newRunDismissDelegate?.shouldDismiss(self!)
+		}
+		
+		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+		
+		actionSheet.addAction(stopAction)
+		actionSheet.addAction(cancelAction)
+		
+		self.present(actionSheet, animated: true, completion: nil)
+	}
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		guard let navigationController = segue.destination as? UINavigationController, let destinationController = navigationController.viewControllers.first as? RunDetailController, let run = sender as? Run else {
+			return
+		}
+		
+		destinationController.run = run
+		destinationController.runDetailDismissDelegate = self
+		destinationController.displayCannotSaveAlert = HealthKitManager.canSaveWorkout() != .full
 	}
 	
 }
@@ -282,23 +310,6 @@ extension NewRunController: CLLocationManagerDelegate {
 		} else if let loc = locations.last {
 			previousLocation = loc
 		}
-	}
-	
-}
-
-// MARK: - MKMapViewDelegate
-
-extension NewRunController: MKMapViewDelegate {
-	
-	func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-		if overlay is MKPolyline {
-			let polylineRenderer = MKPolylineRenderer(overlay: overlay)
-			polylineRenderer.strokeColor = Colors.orangeDark
-			polylineRenderer.lineWidth = 6.0
-			return polylineRenderer
-		}
-		
-		return MKPolylineRenderer()
 	}
 	
 }

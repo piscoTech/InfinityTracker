@@ -22,10 +22,14 @@
 	<string>2</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSHealthShareUsageDescription</key>
+	<string>This app needs to read data from Health to load your completed workouts and properly calculate burned calories.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>This app needs to write data to Health to save your completed workouts.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs to know your location to work properly.</string>
+	<string>This app needs to know your location to track your workouts.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs to know your location to work properly.</string>
+	<string>This app needs to know your location to track your workouts.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

@@ -204,14 +204,14 @@ class NewRunController: UIViewController {
 	}
 	
 	private func updateUI() {
-		let distanceKM = run.totalDistance.metersToKilometers().rounded(to: 1)
+		let distanceKM = (run?.totalDistance ?? 0).metersToKilometers().rounded(to: 1)
 		distanceLabel.text = "\(distanceKM) km"
 		
-		// FIXME: Also display calories
+		// TODO: Also display calories
 	}
 	
 	@objc func updateTimer() {
-		durationLabel.text = (run?.totalDistance ?? 0).getDuration()
+		durationLabel.text = (run?.duration ?? 0).getDuration()
 	}
 	
 	private func setupViews() {

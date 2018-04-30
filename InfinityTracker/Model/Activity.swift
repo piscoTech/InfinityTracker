@@ -35,11 +35,11 @@ enum Activity: Double {
 	}
 	
 	/// Calculate the number of calories for the activity.
-	/// - parameter time: The duraction in seconds
-	/// - parameter distance: The distance in kilometers
+	/// - parameter time: The duration in seconds
+	/// - parameter distance: The distance in meters
 	/// - parameter weight: The weight in kilograms
 	func caloriesFor(time: TimeInterval, distance: Double, weight: Double) -> Double {
-		let speed = distance * 1000 / time
+		let speed = distance / time
 		let factor = speed - self.referenceSpeed
 		return (self.met + factor * 0.5) * weight * time / 3600
 	}

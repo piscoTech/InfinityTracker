@@ -68,15 +68,21 @@ class RunBuilder {
 		var smoothLocations: [CLLocation] = []
 		
 		for loc in locations {
+			/// The logical position after location smoothing.
 			let smoothLoc: CLLocation
 			
 			if let prev = previousLocation {
+				/// Distance reduction considering accuracy, in meters.
 				let deltaAcc = loc.horizontalAccuracy * accuracyInfluence
+				/// Real distance between the points, in meters.
 				let deltaD = loc.distance(from: prev)
+				/// Logical distance between the points before location smoothing, in meters.
 				let delta = deltaD - deltaAcc
+				/// Temporal distance between the points, in seconds.
 				let deltaT = loc.timestamp.timeIntervalSince(prev.timestamp)
-				let smoothDelta: Double
+				/// The weight of the previous point in the weighted average between the points, percentage.
 				var smoothWeight: Double?
+				/// Logical speed of the movement between the points before location smoothing, in m/s.
 				let speed = delta / deltaT
 				if speed > thresholdSpeed || delta < dropThreshold {
 					continue
@@ -87,12 +93,13 @@ class RunBuilder {
 				// Correct the weight of the origin to move the other point closer by deltaAcc
 				let locAvgWeight = 1 - (1 - (smoothWeight ?? 0)) * (1 - deltaAcc / deltaD)
 				smoothLoc = prev.moveCloser(loc, withOriginWeight: locAvgWeight)
-				smoothDelta = smoothLoc.distance(from: prev)
+				/// Logical distance between the points after location smoothing, in meters.
+				let smoothDelta = smoothLoc.distance(from: prev)
 				
 				run.totalDistance += smoothDelta
 				distance.append(HKQuantitySample(type: HealthKitManager.distanceType, quantity: HKQuantity(unit: .meter(), doubleValue: smoothDelta), start: prev.timestamp, end: loc.timestamp))
 				if smoothDelta > 0 {
-					let deltaC = activityType.caloriesFor(time: deltaT, distance: smoothDelta/1000, weight: weight)
+					let deltaC = activityType.caloriesFor(time: deltaT, distance: smoothDelta, weight: weight)
 					run.totalCalories += deltaC
 					calories.append(HKQuantitySample(type: HealthKitManager.calorieType, quantity: HKQuantity(unit: .kilocalorie(), doubleValue: deltaC), start: prev.timestamp, end: loc.timestamp))
 				}

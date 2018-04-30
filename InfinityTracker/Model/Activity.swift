@@ -11,6 +11,17 @@ import HealthKit
 enum Activity: Double {
 	case running = 8, walking = 3.6
 	
+	static func fromHealthKitEquivalent(_ workoutType: HKWorkoutActivityType) -> Activity? {
+		switch workoutType {
+		case .running:
+			return .running
+		case .walking:
+			return .walking
+		default:
+			return nil
+		}
+	}
+	
 	/// Reference speed for MET correction, in m/s
 	var referenceSpeed: Double {
 		switch self {

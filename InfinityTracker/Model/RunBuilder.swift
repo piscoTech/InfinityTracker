@@ -56,7 +56,7 @@ class RunBuilder {
 	/// - parameter activityType: The type of activity being tracked
 	/// - parameter weight: The weight to use to calculate calories
 	init(start: Date, activityType: Activity, weight: HKQuantity) {
-		run = CompletedRun(start: start)
+		run = CompletedRun(type: activityType, start: start)
 		self.weight = weight.doubleValue(for: .gramUnit(with: .kilo))
 		self.activityType = activityType
 	}
@@ -109,6 +109,8 @@ class RunBuilder {
 					polylines.append(MKPolyline(coordinates: &coord, count: 2))
 				}
 			} else {
+				// Saving the first location
+				markPosition(loc, isStart: true)
 				smoothLoc = loc
 			}
 			
@@ -131,14 +133,31 @@ class RunBuilder {
 		return polylines
 	}
 	
+	private func markPosition(_ location: CLLocation, isStart: Bool) {
+		precondition(!invalidated, "This run builder has completed his job")
+		
+		let ann = run.annotation(for: location, isStart: isStart)
+		
+		if isStart {
+			run.startPosition = ann
+		} else {
+			run.endPosition = ann
+		}
+	}
+	
 	func finishRun(end: Date, completion: @escaping (Run?) -> Void) {
 		precondition(!invalidated, "This run builder has completed his job")
 		
 		run.end = end
-		// If the run has a single position create a dot polyline
-		if run.route.isEmpty, let prev = previousLocation {
-			var coord = [prev.coordinate]
-			run.route.append(MKPolyline(coordinates: &coord, count: 1))
+		if let prev = previousLocation {
+			if run.route.isEmpty {
+				// If the run has a single position create a dot polyline
+				var coord = [prev.coordinate]
+				run.route.append(MKPolyline(coordinates: &coord, count: 1))
+				markPosition(prev, isStart: true)
+			}
+			
+			markPosition(prev, isStart: false)
 		}
 		
 		guard !run.route.isEmpty else {
@@ -172,23 +191,14 @@ class RunBuilder {
 					if success {
 						// Save the route only if workout has been saved
 						self.route.finishRoute(with: workout, metadata: nil) { route, _ in
-							var linkData = [HKSample]()
-							HealthKitManager.healthStore.save(self.calories) { success, _ in
+							let linkData = self.calories + self.distance
+							HealthKitManager.healthStore.save(linkData) { success, _ in
 								if success {
-									linkData.append(contentsOf: self.calories)
-								}
-								HealthKitManager.healthStore.save(self.distance) { success, _ in
-									if success {
-										linkData.append(contentsOf: self.distance)
-									}
-									
-									if linkData.isEmpty {
+									HealthKitManager.healthStore.add(linkData, to: workout) { _, _ in
 										completion(self.run)
-									} else {
-										HealthKitManager.healthStore.add(linkData, to: workout) { _, _ in
-											completion(self.run)
-										}
 									}
+								} else {
+									completion(self.run)
 								}
 							}
 						}
@@ -215,9 +225,11 @@ class RunBuilder {
 
 fileprivate class CompletedRun: Run {
 	
+	let type: Activity
+	
 	var totalCalories: Double = 0
 	var totalDistance: Double = 0
-	var start: Date
+	let start: Date
 	var end: Date {
 		get {
 			return realEnd ?? Date()
@@ -229,11 +241,15 @@ fileprivate class CompletedRun: Run {
 	var duration: TimeInterval {
 		return end.timeIntervalSince(start)
 	}
+	
 	var route: [MKPolyline] = []
+	var startPosition: MKPointAnnotation?
+	var endPosition: MKPointAnnotation?
 	
 	private(set) var realEnd: Date?
 	
-	fileprivate init(start: Date) {
+	fileprivate init(type: Activity, start: Date) {
+		self.type = type
 		self.start = start
 	}
 	

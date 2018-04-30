@@ -188,7 +188,10 @@ class NewRunController: UIViewController {
 	}
 	
 	private func setupMap() {
-		mapView.delegate = Appearance.mapViewDelegate
+		let del = Appearance()
+		del.setupAppearance(for: mapView)
+		mapView.delegate = del
+		
 		mapView.showsUserLocation = true
 		mapView.mapType = .standard
 		mapView.userTrackingMode = .follow

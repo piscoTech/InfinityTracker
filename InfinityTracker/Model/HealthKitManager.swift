@@ -15,7 +15,6 @@ enum HealthWritePermission {
 class HealthKitManager {
 	
 	static let healthStore = HKHealthStore()
-	static let workoutTypes = [HKWorkoutActivityType.running, .walking]
 	
 	static let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning)!
 	static let calorieType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!

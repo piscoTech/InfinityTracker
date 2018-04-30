@@ -51,7 +51,9 @@ class RunDetailController: UIViewController {
 			navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDismissController(_:)))
 		}
 		
-		mapView.delegate = Appearance.mapViewDelegate
+		let del = Appearance()
+		del.setupAppearance(for: mapView)
+		mapView.delegate = del
 		
 		whiteViewOne.layer.masksToBounds = true
 		whiteViewOne.layer.cornerRadius = whiteViewOne.frame.height/2
@@ -82,6 +84,15 @@ class RunDetailController: UIViewController {
 		if let rect = rect {
 			mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
 			mapView.addOverlays(run.route)
+		}
+		
+		if let start = run.startPosition {
+			mapView.addAnnotation(start)
+			del.startPosition = start
+		}
+		if let end = run.endPosition {
+			mapView.addAnnotation(end)
+			del.endPosition = end
 		}
 	}
 	

@@ -8,8 +8,16 @@
 
 "CANCEL" = "Cancel";
 
+"START" = "Start";
+"END" = "End";
+
+"DISTANCE" = "Distance";
+"DURATION" = "Duration";
+"CALORIES" = "Calories";
+"PACE" = "Pace";
+
 // MARK: - Location Permissions
 
 "LOCATION_REQUIRED" = "Location Required";
-"LOCATION_REQUIRED_TEXT" = "Location data is needed to track your runs or walks";
+"LOCATION_REQUIRED_TEXT" = "Location data is needed to track your workouts";
 "LOCATION_SETTINGS_OPEN" = "Settings";

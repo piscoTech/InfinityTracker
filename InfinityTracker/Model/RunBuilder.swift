@@ -20,7 +20,10 @@ class RunBuilder {
 	/// The percentage of horizontal accuracy to subtract from the distance between two points.
 	let accuracyInfluence = 0.6
 	
-	private let run: CompletedRun
+	var run: Run {
+		return rawRun
+	}
+	private let rawRun: CompletedRun
 	private let activityType: Activity
 	private(set) var completed = false
 	private(set) var invalidated = false
@@ -34,7 +37,7 @@ class RunBuilder {
 	
 	private var pendingLocationInsertion = 0 {
 		didSet {
-			if pendingLocationInsertion == 0, let end = run.realEnd, let compl = pendingSavingCompletion {
+			if pendingLocationInsertion == 0, let end = rawRun.realEnd, let compl = pendingSavingCompletion {
 				finishRun(end: end, completion: compl)
 			}
 		}
@@ -43,20 +46,12 @@ class RunBuilder {
 	private var pendingSavingCompletion: ((Run?) -> Void)?
 	private var route = HKWorkoutRouteBuilder(healthStore: HealthKitManager.healthStore, device: nil)
 	
-	var duration: TimeInterval {
-		return run.duration
-	}
-	
-	var totalDistance: Double {
-		return run.totalDistance
-	}
-	
 	/// Begin the construction of a new run.
 	/// - parameter start: The start time of the run
 	/// - parameter activityType: The type of activity being tracked
 	/// - parameter weight: The weight to use to calculate calories
 	init(start: Date, activityType: Activity, weight: HKQuantity) {
-		run = CompletedRun(type: activityType, start: start)
+		rawRun = CompletedRun(type: activityType, start: start)
 		self.weight = weight.doubleValue(for: .gramUnit(with: .kilo))
 		self.activityType = activityType
 	}
@@ -96,11 +91,11 @@ class RunBuilder {
 				/// Logical distance between the points after location smoothing, in meters.
 				let smoothDelta = smoothLoc.distance(from: prev)
 				
-				run.totalDistance += smoothDelta
+				rawRun.totalDistance += smoothDelta
 				distance.append(HKQuantitySample(type: HealthKitManager.distanceType, quantity: HKQuantity(unit: .meter(), doubleValue: smoothDelta), start: prev.timestamp, end: loc.timestamp))
 				if smoothDelta > 0 {
 					let deltaC = activityType.caloriesFor(time: deltaT, distance: smoothDelta, weight: weight)
-					run.totalCalories += deltaC
+					rawRun.totalCalories += deltaC
 					calories.append(HKQuantitySample(type: HealthKitManager.calorieType, quantity: HKQuantity(unit: .kilocalorie(), doubleValue: deltaC), start: prev.timestamp, end: loc.timestamp))
 				}
 				
@@ -115,7 +110,7 @@ class RunBuilder {
 			previousLocation = smoothLoc
 		}
 		
-		run.route += polylines
+		rawRun.route += polylines
 		if !smoothLocations.isEmpty {
 			DispatchQueue.main.async {
 				self.pendingLocationInsertion += 1
@@ -133,31 +128,31 @@ class RunBuilder {
 	private func markPosition(_ location: CLLocation, isStart: Bool) {
 		precondition(!invalidated, "This run builder has completed his job")
 		
-		let ann = run.annotation(for: location, isStart: isStart)
+		let ann = rawRun.annotation(for: location, isStart: isStart)
 		
 		if isStart {
-			run.startPosition = ann
+			rawRun.startPosition = ann
 		} else {
-			run.endPosition = ann
+			rawRun.endPosition = ann
 		}
 	}
 	
 	func finishRun(end: Date, completion: @escaping (Run?) -> Void) {
 		precondition(!invalidated, "This run builder has completed his job")
 		
-		run.end = end
+		rawRun.end = end
 		if let prev = previousLocation {
-			if run.route.isEmpty {
+			if rawRun.route.isEmpty {
 				// If the run has a single position create a dot polyline
-				run.route.append(MKPolyline(coordinates: [prev.coordinate], count: 1))
+				rawRun.route.append(MKPolyline(coordinates: [prev.coordinate], count: 1))
 				markPosition(prev, isStart: true)
 			}
 			
 			markPosition(prev, isStart: false)
 		}
 		
-		guard !run.route.isEmpty else {
-			route.discard()
+		guard !rawRun.route.isEmpty else {
+			self.discard()
 			completion(nil)
 			return
 		}
@@ -172,12 +167,12 @@ class RunBuilder {
 			self.invalidated = true
 			
 			if HealthKitManager.canSaveWorkout() != .none {
-				let totalCalories = HKQuantity(unit: .kilocalorie(), doubleValue: self.run.totalCalories)
-				let totalDistance = HKQuantity(unit: .meter(), doubleValue: self.run.totalCalories)
+				let totalCalories = HKQuantity(unit: .kilocalorie(), doubleValue: self.rawRun.totalCalories)
+				let totalDistance = HKQuantity(unit: .meter(), doubleValue: self.rawRun.totalDistance)
 				let workout = HKWorkout(activityType: self.activityType.healthKitEquivalent,
-										start: self.run.start,
-										end: self.run.end,
-										duration: self.run.duration,
+										start: self.rawRun.start,
+										end: self.rawRun.end,
+										duration: self.rawRun.duration,
 										totalEnergyBurned: totalCalories,
 										totalDistance: totalDistance,
 										device: HKDevice.local(),
@@ -189,30 +184,31 @@ class RunBuilder {
 						self.route.finishRoute(with: workout, metadata: nil) { route, _ in
 							let linkData = self.calories + self.distance
 							if linkData.isEmpty {
-								completion(self.run)
+								completion(self.rawRun)
 							} else {
 								// This also save the samples
 								HealthKitManager.healthStore.add(linkData, to: workout) { _, _ in
-									completion(self.run)
+									completion(self.rawRun)
 								}
 							}
 						}
 					} else {
 						// Workout failed to save, discard other data
-						self.route.discard()
-						completion(self.run)
+						self.discard()
+						completion(self.rawRun)
 					}
 				}
 			} else {
 				// Required data cannot be saved, return immediately
-				self.route.discard()
-				completion(self.run)
+				self.discard()
+				completion(self.rawRun)
 			}
 		}
 	}
 	
 	func discard() {
-		route.discard()
+		// This throws a strange error if no locations have been added
+//		route.discard()
 		invalidated = true
 	}
 	

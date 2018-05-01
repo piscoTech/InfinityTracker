@@ -9,7 +9,6 @@
 import UIKit
 import CoreLocation
 import MapKit
-import CoreData
 import MBLibrary
 import HealthKit
 
@@ -19,15 +18,12 @@ class NewRunController: UIViewController {
 	
 	// MARK: IBOutlets
 	
-	@IBOutlet weak var whiteViewOne: UIView!
-	@IBOutlet weak var whiteViewTwo: UIView!
-	@IBOutlet weak var whiteViewThree: UIView!
 	@IBOutlet weak var startButton: GradientButton!
 	@IBOutlet weak var stopButton: GradientButton!
 	@IBOutlet weak var mapView: MKMapView!
-	@IBOutlet weak var sliderControl: UISlider!
-	@IBOutlet weak var distanceLabel: UILabel!
-	@IBOutlet weak var durationLabel: UILabel!
+	@IBOutlet weak var sliderBackground: UIView!
+	@IBOutlet weak var slider: UISlider!
+	@IBOutlet weak var details: DetailView!
 	
 	// MARK: Private Properties
 	
@@ -39,8 +35,6 @@ class NewRunController: UIViewController {
 		}
 	}
 	private let locationManager = CLLocationManager()
-	
-	// MARK: FilePrivate Properties
 	
 	/// The last registered position when the workout was not yet started or paused
 	private var previousLocation: CLLocation?
@@ -56,6 +50,7 @@ class NewRunController: UIViewController {
 	// MARK: Delegates
 	
 	weak var newRunDismissDelegate: DismissDelegate?
+	private let mapViewDelegate = Appearance()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -179,7 +174,7 @@ class NewRunController: UIViewController {
 	// MARK: - UI Interaction
 	
 	@IBAction func sliderDidChangeValue() {
-		let miles = Double(sliderControl.value)
+		let miles = Double(slider.value)
 		mapDelta = miles / 69.0
 		
 		var currentRegion = mapView.region
@@ -188,9 +183,8 @@ class NewRunController: UIViewController {
 	}
 	
 	private func setupMap() {
-		let del = Appearance()
-		del.setupAppearance(for: mapView)
-		mapView.delegate = del
+		mapViewDelegate.setupAppearance(for: mapView)
+		mapView.delegate = mapViewDelegate
 		
 		mapView.showsUserLocation = true
 		mapView.mapType = .standard
@@ -207,14 +201,11 @@ class NewRunController: UIViewController {
 	}
 	
 	private func updateUI() {
-		let distanceKM = (run?.totalDistance ?? 0).metersToKilometers().rounded(to: 1)
-		distanceLabel.text = "\(distanceKM) km"
-		
-		// TODO: Also display calories
+		details.update(for: run?.run)
 	}
 	
 	@objc func updateTimer() {
-		durationLabel.text = (run?.duration ?? 0).getDuration()
+		details.update(for: run?.run)
 	}
 	
 	private func setupViews() {
@@ -223,20 +214,10 @@ class NewRunController: UIViewController {
 		startButton.isEnabled = false
 		stopButton.alpha = Appearance.disabledAlpha
 		
-		whiteViewOne.layer.cornerRadius = whiteViewOne.frame.height/2
-		whiteViewOne.layer.masksToBounds = true
-		
-		whiteViewTwo.layer.cornerRadius = whiteViewTwo.frame.height/2
-		whiteViewTwo.layer.masksToBounds = true
-		
-		whiteViewThree.layer.cornerRadius = whiteViewThree.frame.height/2
-		whiteViewThree.layer.masksToBounds = true
-		
-		startButton.layer.cornerRadius = startButton.frame.height/2
-		startButton.layer.masksToBounds = true
-		
-		stopButton.layer.cornerRadius = stopButton.frame.height/2
-		stopButton.layer.masksToBounds = true
+		for v in [sliderBackground!, startButton!, stopButton!] {
+			v.layer.cornerRadius = v.frame.height/2
+			v.layer.masksToBounds = true
+		}
 		
 		updateTimer()
 		updateUI()
@@ -245,7 +226,7 @@ class NewRunController: UIViewController {
 	private func setupNavigationBar() {
 		let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
 		imageView.contentMode = .scaleAspectFit
-		let image = Image.navbarLogo
+		let image = Appearance.navBarLogo
 		imageView.image = image
 		navigationItem.titleView = imageView
 		
@@ -309,7 +290,7 @@ extension NewRunController: CLLocationManagerDelegate {
 				locList = locations
 			}
 			
-			mapView.addOverlays(run.add(locations: locList))
+			mapView.addOverlays(run.add(locations: locList), level: Appearance.overlayLevel)
 		} else if let loc = locations.last {
 			previousLocation = loc
 		}

@@ -13,7 +13,7 @@ class EmptyStateView: UIView {
     lazy var imageView: UIImageView = {
         var imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.image = Image.emptyState
+        imageView.image = Appearance.emptyState
         imageView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(imageView)
         return imageView

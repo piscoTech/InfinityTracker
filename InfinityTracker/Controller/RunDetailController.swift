@@ -12,22 +12,20 @@ import MapKit
 
 class RunDetailController: UIViewController {
 	
+	private let routePadding: CGFloat = 20
+	private let routePaddingBottom: CGFloat = 160
+	
 	// MARK: IBOutlets
 	
-	@IBOutlet weak var whiteViewThree: UIView!
-	@IBOutlet weak var whiteViewTwo: UIView!
-	@IBOutlet weak var whiteViewOne: UIView!
 	@IBOutlet weak var mapView: MKMapView!
-	@IBOutlet weak var durationLabel: UILabel!
-	@IBOutlet weak var distanceLabel: UILabel!
-	@IBOutlet weak var caloriesLabel: UILabel!
+	@IBOutlet weak var details: DetailView!
 	
 	// MARK: Properties
 	
 	var run: Run!
 	var displayCannotSaveAlert: Bool! = false
 	weak var runDetailDismissDelegate: DismissDelegate?
-	private weak var mapViewDelegate: Appearance?
+	private let mapViewDelegate = Appearance()
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -58,17 +56,17 @@ class RunDetailController: UIViewController {
 					}
 				}
 				if let rect = rect {
-					self.mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
-					self.mapView.addOverlays(self.run.route)
+					self.mapView.setVisibleMapRect(rect, edgePadding: UIEdgeInsets(top: self.routePadding * 2, left: self.routePadding, bottom: self.routePadding + self.routePaddingBottom, right: self.routePadding), animated: false)
+					self.mapView.addOverlays(self.run.route, level: Appearance.overlayLevel)
 				}
 				
 				if let start = self.run.startPosition {
 					self.mapView.addAnnotation(start)
-					self.mapViewDelegate?.startPosition = start
+					self.mapViewDelegate.startPosition = start
 				}
 				if let end = self.run.endPosition {
 					self.mapView.addAnnotation(end)
-					self.mapViewDelegate?.endPosition = end
+					self.mapViewDelegate.endPosition = end
 				}
 			}
 		}
@@ -81,27 +79,10 @@ class RunDetailController: UIViewController {
 			navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDismissController(_:)))
 		}
 		
-		mapViewDelegate = Appearance()
-		mapViewDelegate?.setupAppearance(for: mapView)
+		mapViewDelegate.setupAppearance(for: mapView)
 		mapView.delegate = mapViewDelegate
 		
-		whiteViewOne.layer.masksToBounds = true
-		whiteViewOne.layer.cornerRadius = whiteViewOne.frame.height/2
-		
-		whiteViewTwo.layer.masksToBounds = true
-		whiteViewTwo.layer.cornerRadius = whiteViewTwo.frame.height/2
-		
-		whiteViewThree.layer.masksToBounds = true
-		whiteViewThree.layer.cornerRadius = whiteViewThree.frame.height/2
-		
-		durationLabel.text = run?.duration.getDuration()
-		
-		let distance = run?.totalDistance ?? 0
-		let distanceKM = distance.metersToKilometers().rounded(to: 3)
-		distanceLabel.text = "\(distanceKM) km"
-		
-		let calories = (run?.totalCalories ?? 0).rounded(to: 0)
-		caloriesLabel.text = "\(calories) kcal"
+		details.update(for: run)
 	}
 	
 	@IBAction func handleDismissController(_ sender: AnyObject) {

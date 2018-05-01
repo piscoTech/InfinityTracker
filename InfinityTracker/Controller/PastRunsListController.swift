@@ -59,8 +59,8 @@ class PastRunsListController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! RunTableCell
         let run = runs[indexPath.row]
-        cell.nameLabel.text = run.name
-        cell.timestampLabel.text = "\(run.totalDistance) km"
+        cell.nameLbl.text = run.name
+        cell.distanceLbl.text = Appearance.format(distance: run.totalDistance)
 		
         return cell
     }

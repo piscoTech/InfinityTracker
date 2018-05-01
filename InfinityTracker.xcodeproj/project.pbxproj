@@ -18,6 +18,7 @@
 		7AB4F3E92091AA0500D528E7 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB4F3E82091AA0500D528E7 /* HealthKitManager.swift */; };
 		7AB4F3EC2091AE3400D528E7 /* SavedRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB4F3EB2091AE3400D528E7 /* SavedRun.swift */; };
 		7AB4F3EE2091B09400D528E7 /* RunBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB4F3ED2091B09400D528E7 /* RunBuilder.swift */; };
+		7AB9745320988A0400B0B95C /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB9745220988A0400B0B95C /* DetailView.swift */; };
 		7ABC5C9420934CF400460CF8 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7ABC5C9320934CF300460CF8 /* Preferences.swift */; };
 		7AFA3CE42095F2C000FB61D3 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFA3CE32095F2C000FB61D3 /* CLLocation.swift */; };
 		FA0FE3A91F58059F002B84D7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3A81F58059F002B84D7 /* AppDelegate.swift */; };
@@ -25,12 +26,10 @@
 		FA0FE3C71F58066F002B84D7 /* CurvedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3C61F58066F002B84D7 /* CurvedView.swift */; };
 		FA0FE3C91F580677002B84D7 /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3C81F580677002B84D7 /* EmptyStateView.swift */; };
 		FA0FE3CB1F58069B002B84D7 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3CA1F58069B002B84D7 /* Appearance.swift */; };
-		FA0FE3CF1F5806B7002B84D7 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3CE1F5806B7002B84D7 /* Images.swift */; };
 		FA0FE3D11F5806E8002B84D7 /* NewRunController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3D01F5806E8002B84D7 /* NewRunController.swift */; };
 		FA0FE3D51F580743002B84D7 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3D41F580742002B84D7 /* HomeController.swift */; };
 		FA0FE3D71F580763002B84D7 /* PastRunsListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3D61F580763002B84D7 /* PastRunsListController.swift */; };
 		FA0FE3D91F580787002B84D7 /* RunDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3D81F580787002B84D7 /* RunDetailController.swift */; };
-		FA0FE3DB1F5807A2002B84D7 /* Double+Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3DA1F5807A2002B84D7 /* Double+Helper.swift */; };
 		FA0FE3E61F5807F9002B84D7 /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3E51F5807F9002B84D7 /* GradientButton.swift */; };
 		FA0FE3F01F5808D3002B84D7 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FE3EF1F5808D3002B84D7 /* Protocols.swift */; };
 		FA3F0A1A1F580E9000DCA109 /* RunTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3F0A181F580E9000DCA109 /* RunTableCell.swift */; };
@@ -100,6 +99,7 @@
 		7AB4F3E82091AA0500D528E7 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		7AB4F3EB2091AE3400D528E7 /* SavedRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRun.swift; sourceTree = "<group>"; };
 		7AB4F3ED2091B09400D528E7 /* RunBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunBuilder.swift; sourceTree = "<group>"; };
+		7AB9745220988A0400B0B95C /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		7ABC5C9320934CF300460CF8 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		7AFA3CE32095F2C000FB61D3 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		FA0FE3A51F58059F002B84D7 /* InfinityTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InfinityTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -109,12 +109,10 @@
 		FA0FE3C61F58066F002B84D7 /* CurvedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurvedView.swift; sourceTree = "<group>"; };
 		FA0FE3C81F580677002B84D7 /* EmptyStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyStateView.swift; sourceTree = "<group>"; };
 		FA0FE3CA1F58069B002B84D7 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
-		FA0FE3CE1F5806B7002B84D7 /* Images.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		FA0FE3D01F5806E8002B84D7 /* NewRunController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = NewRunController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0FE3D41F580742002B84D7 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; usesTabs = 1; };
 		FA0FE3D61F580763002B84D7 /* PastRunsListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PastRunsListController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		FA0FE3D81F580787002B84D7 /* RunDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RunDetailController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		FA0FE3DA1F5807A2002B84D7 /* Double+Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Helper.swift"; sourceTree = "<group>"; };
 		FA0FE3E51F5807F9002B84D7 /* GradientButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
 		FA0FE3EF1F5808D3002B84D7 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		FA3F0A181F580E9000DCA109 /* RunTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunTableCell.swift; sourceTree = "<group>"; };
@@ -159,6 +157,7 @@
 				FA0FE3E51F5807F9002B84D7 /* GradientButton.swift */,
 				FA0FE3C81F580677002B84D7 /* EmptyStateView.swift */,
 				FA0FE3C61F58066F002B84D7 /* CurvedView.swift */,
+				7AB9745220988A0400B0B95C /* DetailView.swift */,
 				7A323C1A208E645C00B6E4A7 /* Main.storyboard */,
 			);
 			path = View;
@@ -211,9 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				FA0FE3EF1F5808D3002B84D7 /* Protocols.swift */,
-				FA0FE3DA1F5807A2002B84D7 /* Double+Helper.swift */,
 				FA0FE3CA1F58069B002B84D7 /* Appearance.swift */,
-				FA0FE3CE1F5806B7002B84D7 /* Images.swift */,
 				7AFA3CE32095F2C000FB61D3 /* CLLocation.swift */,
 			);
 			path = Helper;
@@ -378,19 +375,18 @@
 				FA0FE3D91F580787002B84D7 /* RunDetailController.swift in Sources */,
 				FA3F0A1A1F580E9000DCA109 /* RunTableCell.swift in Sources */,
 				FA0FE3F01F5808D3002B84D7 /* Protocols.swift in Sources */,
-				FA0FE3DB1F5807A2002B84D7 /* Double+Helper.swift in Sources */,
 				FA0FE3E61F5807F9002B84D7 /* GradientButton.swift in Sources */,
 				7ABC5C9420934CF400460CF8 /* Preferences.swift in Sources */,
 				FA0FE3C91F580677002B84D7 /* EmptyStateView.swift in Sources */,
 				7AB4F3EE2091B09400D528E7 /* RunBuilder.swift in Sources */,
 				7AB4F3E42091A9AA00D528E7 /* Run.swift in Sources */,
 				7A4FF61F209202A00054FED0 /* Activity.swift in Sources */,
-				FA0FE3CF1F5806B7002B84D7 /* Images.swift in Sources */,
 				7AB4F3EC2091AE3400D528E7 /* SavedRun.swift in Sources */,
 				FA0FE3CB1F58069B002B84D7 /* Appearance.swift in Sources */,
 				7AFA3CE42095F2C000FB61D3 /* CLLocation.swift in Sources */,
 				FA0FE3D51F580743002B84D7 /* HomeController.swift in Sources */,
 				FA0FE3A91F58059F002B84D7 /* AppDelegate.swift in Sources */,
+				7AB9745320988A0400B0B95C /* DetailView.swift in Sources */,
 				7AB4F3E92091AA0500D528E7 /* HealthKitManager.swift in Sources */,
 				FA0FE3C71F58066F002B84D7 /* CurvedView.swift in Sources */,
 			);

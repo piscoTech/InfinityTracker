@@ -86,10 +86,10 @@ class HomeController: UIViewController {
 		newRunButton.alpha = locationEnabled ? 1 : 0.25
 		
 		let distance = HealthKitManager.getDistanceTotal()
-		distanceLabel.text = "\(distance.metersToKilometers().rounded(to: 1))"
+		distanceLabel.text = Appearance.format(distance: distance, addUnit: false)
 		
 		let calories = HealthKitManager.getCaloriesTotal()
-		caloriesLabel.text = "\(calories.rounded(to: 1))"
+		caloriesLabel.text = Appearance.format(calories: calories, addUnit: false)
 	}
 	
 	private func setupNavigationBar() {

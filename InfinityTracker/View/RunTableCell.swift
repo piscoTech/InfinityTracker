@@ -9,16 +9,8 @@
 import UIKit
 
 class RunTableCell: UITableViewCell {
+    
+    @IBOutlet weak var nameLbl: UILabel!
+    @IBOutlet weak var distanceLbl: UILabel!
 
-    // MARK: IBOutlets
-    
-    @IBOutlet weak var timestampLabel: UILabel!
-    
-    @IBOutlet weak var nameLabel: UILabel!
-
-    // MARK: LifeCycle
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
 }

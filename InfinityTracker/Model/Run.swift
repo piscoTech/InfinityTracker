@@ -37,9 +37,15 @@ extension Run {
 		return start.getFormattedDateTime()
 	}
 	
+	/// The average pace in seconds per kilometer.
+	var pace: TimeInterval {
+		return totalDistance > 0 ? duration / totalDistance : 0
+	}
+	
 	func annotation(for location: CLLocation, isStart: Bool) -> MKPointAnnotation {
 		let ann = MKPointAnnotation()
 		ann.coordinate = location.coordinate
+		ann.title = NSLocalizedString(isStart ? "START" : "END", comment: "Start/End")
 		
 		return ann
 	}

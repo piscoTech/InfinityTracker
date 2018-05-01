@@ -224,11 +224,7 @@ class NewRunController: UIViewController {
 	}
 	
 	private func setupNavigationBar() {
-		let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-		imageView.contentMode = .scaleAspectFit
-		let image = Appearance.navBarLogo
-		imageView.image = image
-		navigationItem.titleView = imageView
+		navigationItem.title = NSLocalizedString("NEW_\(activityType.localizable)", comment: "New run/walk")
 		
 		let leftBarButton = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(handleDismissController))
 		navigationItem.leftBarButtonItem = leftBarButton

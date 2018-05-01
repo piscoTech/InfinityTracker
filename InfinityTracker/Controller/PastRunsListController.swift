@@ -42,10 +42,6 @@ class PastRunsListController: UITableViewController {
 		HealthKitManager.healthStore.execute(workoutQuery)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if runs.count > 0 {
             hideEmptyState()
@@ -76,11 +72,7 @@ class PastRunsListController: UITableViewController {
     }
     
     private func setupNavigationBar() {
-        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        navigationController?.navigationBar.shadowImage = nil
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.view.backgroundColor = .white
-        
+		Appearance.setupNavigationBar(navigationController)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     

@@ -93,12 +93,14 @@ class HomeController: UIViewController {
 	}
 	
 	private func setupNavigationBar() {
-		navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-		navigationController?.navigationBar.shadowImage = UIImage()
-		navigationController?.navigationBar.isTranslucent = true
-		navigationController?.view.backgroundColor = .clear
-		
+		Appearance.setupNavigationBar(navigationController)
 		navigationController?.setNavigationBarHidden(true, animated: false)
+	}
+	
+	@IBAction func toggleActivityType(_ sender: UILongPressGestureRecognizer) {
+		if sender.state == .ended {
+			print("Toggle")
+		}
 	}
 	
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {

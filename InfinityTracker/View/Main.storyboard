@@ -32,19 +32,19 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ajx-ig-atm" userLabel="Spacer Top">
-                                <rect key="frame" x="162.5" y="200" width="50" height="41"/>
+                                <rect key="frame" x="162.5" y="200" width="50" height="39.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="IWm-v1-R2l"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Statistics" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4AQ-QS-sC3">
-                                <rect key="frame" x="152.5" y="241" width="70.5" height="20.5"/>
+                                <rect key="frame" x="152.5" y="239.5" width="70.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="lastBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Twc-MB-njj" userLabel="Distance">
-                                <rect key="frame" x="108" y="277.5" width="159" height="50.5"/>
+                                <rect key="frame" x="108" y="276" width="159" height="50.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2,783" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NqQ-mu-yOC">
                                         <rect key="frame" x="0.0" y="0.0" width="113" height="50.5"/>
@@ -61,7 +61,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="lastBaseline" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="nIy-QE-Mj3" userLabel="Calories">
-                                <rect key="frame" x="104.5" y="336" width="166" height="50.5"/>
+                                <rect key="frame" x="104.5" y="334.5" width="166" height="50.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1,248" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IW-xK-CEY">
                                         <rect key="frame" x="0.0" y="0.0" width="109.5" height="50.5"/>
@@ -78,30 +78,32 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rWv-N2-tlE" userLabel="Spacer Bottom">
-                                <rect key="frame" x="162.5" y="386.5" width="50" height="80.5"/>
+                                <rect key="frame" x="162.5" y="385" width="50" height="78"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="50" id="ZzX-9X-dii"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I9U-vT-rCf" customClass="CurvedView" customModule="InfinityTracker" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="467" width="375" height="200"/>
+                                <rect key="frame" x="0.0" y="463" width="375" height="204"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N4a-xm-Tob" customClass="GradientButton" customModule="InfinityTracker" customModuleProvider="target">
-                                        <rect key="frame" x="27.5" y="60" width="320" height="60"/>
+                                        <rect key="frame" x="27.5" y="55" width="320" height="60"/>
                                         <color key="backgroundColor" red="1" green="0.4753146701" blue="0.38319227430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="PpJ-IK-vo3"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <state key="normal" title="New Run">
+                                        <state key="normal" title="[New Run/Walk]">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
+                                            <outletCollection property="gestureRecognizers" destination="IFD-hX-zr5" appends="YES" id="gfX-xx-uFV"/>
                                             <segue destination="76d-dZ-KWj" kind="presentation" identifier="NewRunSegueIdentifier" modalTransitionStyle="flipHorizontal" id="gI5-eF-hQh"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4S6-vD-jl5">
-                                        <rect key="frame" x="82" y="140" width="212" height="32"/>
+                                        <rect key="frame" x="82" y="144" width="212" height="32"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <state key="normal" title="Check My Previous Workouts">
@@ -111,13 +113,21 @@
                                             <segue destination="WdQ-3Y-MJo" kind="show" identifier="RunListController" id="EK2-xJ-68N"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Long press to toggle]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qFh-lI-9pH">
+                                        <rect key="frame" x="134" y="117" width="107.5" height="12"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.7788606468" green="1" blue="0.79652849619999999" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="4S6-vD-jl5" firstAttribute="top" secondItem="N4a-xm-Tob" secondAttribute="bottom" constant="20" id="Dsz-O7-zRT"/>
+                                    <constraint firstItem="qFh-lI-9pH" firstAttribute="centerX" secondItem="I9U-vT-rCf" secondAttribute="centerX" id="3OK-iU-6EW"/>
+                                    <constraint firstItem="4S6-vD-jl5" firstAttribute="top" secondItem="qFh-lI-9pH" secondAttribute="bottom" constant="15" id="JbZ-ex-w1e"/>
                                     <constraint firstItem="4S6-vD-jl5" firstAttribute="centerX" secondItem="I9U-vT-rCf" secondAttribute="centerX" id="QtK-Vm-YeN"/>
                                     <constraint firstItem="N4a-xm-Tob" firstAttribute="leading" secondItem="I9U-vT-rCf" secondAttribute="leadingMargin" constant="19.5" id="UGT-3w-6iH"/>
-                                    <constraint firstItem="N4a-xm-Tob" firstAttribute="top" secondItem="I9U-vT-rCf" secondAttribute="top" constant="60" id="UR5-5k-uxz"/>
+                                    <constraint firstItem="N4a-xm-Tob" firstAttribute="top" secondItem="I9U-vT-rCf" secondAttribute="top" constant="55" id="UR5-5k-uxz"/>
+                                    <constraint firstItem="qFh-lI-9pH" firstAttribute="top" secondItem="N4a-xm-Tob" secondAttribute="bottom" constant="2" id="WVI-yw-ksi"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="4S6-vD-jl5" secondAttribute="bottom" constant="20" id="mTW-bk-5ny"/>
                                     <constraint firstItem="N4a-xm-Tob" firstAttribute="centerX" secondItem="I9U-vT-rCf" secondAttribute="centerX" id="xvf-4B-5Su"/>
                                 </constraints>
@@ -157,6 +167,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bjn-hO-3UC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="IFD-hX-zr5">
+                    <connections>
+                        <action selector="toggleActivityType:" destination="u7X-Os-Fjy" id="m0D-Io-Dz5"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="3773.5999999999999" y="-547.37631184407803"/>
         </scene>
@@ -365,7 +380,9 @@
                             <outlet property="delegate" destination="WdQ-3Y-MJo" id="l4R-VM-EfY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Past Workouts" id="sgr-Te-P5z"/>
+                    <navigationItem key="navigationItem" title="Past Workouts" id="sgr-Te-P5z">
+                        <barButtonItem key="backBarButtonItem" title=" " id="6hf-N3-t4b"/>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcP-8D-iut" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -45,6 +45,15 @@ enum Activity: Double {
 		return self.rawValue
 	}
 	
+	var localizable: String {
+		switch self {
+		case .running:
+			return "RUN"
+		case .walking:
+			return "WALK"
+		}
+	}
+	
 	/// Calculate the number of calories for the activity.
 	/// - parameter time: The duration in seconds
 	/// - parameter distance: The distance in meters

@@ -16,6 +16,12 @@
 "CALORIES" = "Calories";
 "PACE" = "Pace";
 
+"RUN" = "Run";
+"WALK" = "Walk";
+
+"NEW_RUN" = "New Run";
+"NEW_WALK" = "New Walk";
+
 // MARK: - Location Permissions
 
 "LOCATION_REQUIRED" = "Location Required";

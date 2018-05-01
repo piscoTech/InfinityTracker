@@ -22,6 +22,20 @@ class Appearance: NSObject, MKMapViewDelegate {
 	
 	static let disabledAlpha: CGFloat = 0.25
 	
+	static func configureNavigationBar() {
+		UINavigationBar.appearance().isTranslucent = true
+		UINavigationBar.appearance().barTintColor = UIColor.white
+		UINavigationBar.appearance().tintColor = Appearance.orangeDark
+		UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: Appearance.detailsColor]
+	}
+	
+	static func setupNavigationBar(_ navigationController: UINavigationController?) {
+		navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+		navigationController?.navigationBar.shadowImage = nil
+		navigationController?.navigationBar.isTranslucent = true
+		navigationController?.view.backgroundColor = .white
+	}
+	
 	// MARK: - Formatting
 	
 	static private let missingNumber = "–"

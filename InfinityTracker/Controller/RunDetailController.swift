@@ -73,10 +73,29 @@ class RunDetailController: UIViewController {
 	}
 	
 	private func setupViews() {
-		navigationItem.title = run.name
+		let runType = UILabel()
+		runType.text = NSLocalizedString(run.type.localizable, comment: "Run/Walk")
+		runType.textColor = Appearance.detailsColor
+		runType.font = .systemFont(ofSize: 17, weight: .semibold)
+		let date = UILabel()
+		date.text = run.name
+		date.font = .systemFont(ofSize: 10, weight: .regular)
+		
+		for v in [runType, date] {
+			v.translatesAutoresizingMaskIntoConstraints = false
+			v.setContentHuggingPriority(.required, for: .vertical)
+		}
+		
+		let title = UIStackView(arrangedSubviews: [runType, date])
+		title.alignment = .center
+		title.axis = .vertical
+		title.distribution = .fill
+		navigationItem.titleView = title
+		
 		if runDetailDismissDelegate != nil {
 			// Displaying details for a just-ended run
 			navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDismissController(_:)))
+			Appearance.setupNavigationBar(navigationController)
 		}
 		
 		mapViewDelegate.setupAppearance(for: mapView)

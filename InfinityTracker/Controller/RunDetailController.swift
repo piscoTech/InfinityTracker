@@ -27,6 +27,7 @@ class RunDetailController: UIViewController {
 	var run: Run!
 	var displayCannotSaveAlert: Bool! = false
 	weak var runDetailDismissDelegate: DismissDelegate?
+	private weak var mapViewDelegate: Appearance?
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -42,6 +43,35 @@ class RunDetailController: UIViewController {
 		}
 		
 		setupViews()
+		run.loadAdditionalData { res in
+			guard res else {
+				return
+			}
+			
+			DispatchQueue.main.async {
+				var rect: MKMapRect?
+				for p in self.run.route {
+					if let r = rect {
+						rect = MKMapRectUnion(r, p.boundingMapRect)
+					} else {
+						rect = p.boundingMapRect
+					}
+				}
+				if let rect = rect {
+					self.mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
+					self.mapView.addOverlays(self.run.route)
+				}
+				
+				if let start = self.run.startPosition {
+					self.mapView.addAnnotation(start)
+					self.mapViewDelegate?.startPosition = start
+				}
+				if let end = self.run.endPosition {
+					self.mapView.addAnnotation(end)
+					self.mapViewDelegate?.endPosition = end
+				}
+			}
+		}
 	}
 	
 	private func setupViews() {
@@ -51,9 +81,9 @@ class RunDetailController: UIViewController {
 			navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(handleDismissController(_:)))
 		}
 		
-		let del = Appearance()
-		del.setupAppearance(for: mapView)
-		mapView.delegate = del
+		mapViewDelegate = Appearance()
+		mapViewDelegate?.setupAppearance(for: mapView)
+		mapView.delegate = mapViewDelegate
 		
 		whiteViewOne.layer.masksToBounds = true
 		whiteViewOne.layer.cornerRadius = whiteViewOne.frame.height/2
@@ -72,28 +102,6 @@ class RunDetailController: UIViewController {
 		
 		let calories = (run?.totalCalories ?? 0).rounded(to: 0)
 		caloriesLabel.text = "\(calories) kcal"
-		
-		var rect: MKMapRect?
-		for p in run.route {
-			if let r = rect {
-				rect = MKMapRectUnion(r, p.boundingMapRect)
-			} else {
-				rect = p.boundingMapRect
-			}
-		}
-		if let rect = rect {
-			mapView.setRegion(MKCoordinateRegionForMapRect(rect), animated: true)
-			mapView.addOverlays(run.route)
-		}
-		
-		if let start = run.startPosition {
-			mapView.addAnnotation(start)
-			del.startPosition = start
-		}
-		if let end = run.endPosition {
-			mapView.addAnnotation(end)
-			del.endPosition = end
-		}
 	}
 	
 	@IBAction func handleDismissController(_ sender: AnyObject) {

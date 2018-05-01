@@ -104,10 +104,7 @@ class RunBuilder {
 					calories.append(HKQuantitySample(type: HealthKitManager.calorieType, quantity: HKQuantity(unit: .kilocalorie(), doubleValue: deltaC), start: prev.timestamp, end: loc.timestamp))
 				}
 				
-				do {
-					var coord = [prev, loc].map { $0.coordinate }
-					polylines.append(MKPolyline(coordinates: &coord, count: 2))
-				}
+				polylines.append(MKPolyline(coordinates: [prev, loc].map { $0.coordinate }, count: 2))
 			} else {
 				// Saving the first location
 				markPosition(loc, isStart: true)
@@ -152,8 +149,7 @@ class RunBuilder {
 		if let prev = previousLocation {
 			if run.route.isEmpty {
 				// If the run has a single position create a dot polyline
-				var coord = [prev.coordinate]
-				run.route.append(MKPolyline(coordinates: &coord, count: 1))
+				run.route.append(MKPolyline(coordinates: [prev.coordinate], count: 1))
 				markPosition(prev, isStart: true)
 			}
 			
@@ -192,12 +188,11 @@ class RunBuilder {
 						// Save the route only if workout has been saved
 						self.route.finishRoute(with: workout, metadata: nil) { route, _ in
 							let linkData = self.calories + self.distance
-							HealthKitManager.healthStore.save(linkData) { success, _ in
-								if success {
-									HealthKitManager.healthStore.add(linkData, to: workout) { _, _ in
-										completion(self.run)
-									}
-								} else {
+							if linkData.isEmpty {
+								completion(self.run)
+							} else {
+								// This also save the samples
+								HealthKitManager.healthStore.add(linkData, to: workout) { _, _ in
 									completion(self.run)
 								}
 							}

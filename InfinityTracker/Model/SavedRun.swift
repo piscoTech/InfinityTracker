@@ -35,10 +35,8 @@ class SavedRun: Run {
 		return raw.duration
 	}
 	
-	private var cachedRoute: [MKPolyline]?
-	var route: [MKPolyline] {
-		return cachedRoute ?? updateRouteCache()
-	}
+	private var rawRoute: HKWorkoutRoute?
+	private(set) var route: [MKPolyline] = []
 	
 	private(set) var startPosition: MKPointAnnotation?
 	private(set) var endPosition: MKPointAnnotation?
@@ -52,13 +50,44 @@ class SavedRun: Run {
 		self.type = type
 	}
 	
-	private func updateRouteCache() -> [MKPolyline] {
-		let res: [MKPolyline] = []
+	func loadAdditionalData(completion: @escaping (Bool) -> Void) {
+		let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+		let filter = HKQuery.predicateForObjects(from: raw)
+		let type = HealthKitManager.routeType
+		let routeQuery = HKSampleQuery(sampleType: type, predicate: filter, limit: 1, sortDescriptors: [sortDescriptor]) { (_, r, err) in
+			guard let route = r?.first as? HKWorkoutRoute else {
+				completion(false)
+				return
+			}
+			
+			self.rawRoute = route
+			self.route = []
+			let locQuery = HKWorkoutRouteQuery(route: route) { (q, loc, isDone, _) in
+				guard let locations = loc else {
+					completion(false)
+					HealthKitManager.healthStore.stop(q)
+					return
+				}
+				
+				if self.startPosition == nil, let start = locations.first {
+					self.startPosition = self.annotation(for: start, isStart: true)
+				}
+				
+				if isDone, let end = locations.last {
+					self.endPosition = self.annotation(for: end, isStart: false)
+				}
+				
+				self.route.append(MKPolyline(coordinates: locations.map { $0.coordinate }, count: locations.count))
+				
+				if isDone {
+					completion(true)
+				}
+			}
+			
+			HealthKitManager.healthStore.execute(locQuery)
+		}
 		
-		// FIXME: Implement me :(
-		
-		cachedRoute = res
-		return res
+		HealthKitManager.healthStore.execute(routeQuery)
 	}
 	
 }

@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -101,10 +100,10 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4S6-vD-jl5">
-                                        <rect key="frame" x="70.5" y="140" width="180" height="32"/>
+                                        <rect key="frame" x="54.5" y="140" width="212" height="32"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <state key="normal" title="Check My Previous Runs">
+                                        <state key="normal" title="Check My Previous Workouts">
                                             <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -378,7 +377,7 @@
             </objects>
             <point key="canvasLocation" x="6250" y="-186"/>
         </scene>
-        <!--Past Tracks-->
+        <!--Past Workouts-->
         <scene sceneID="GcD-CL-ywu">
             <objects>
                 <tableViewController id="WdQ-3Y-MJo" customClass="PastRunsListController" customModule="InfinityTracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -423,7 +422,7 @@
                             <outlet property="delegate" destination="WdQ-3Y-MJo" id="l4R-VM-EfY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Past Tracks" id="sgr-Te-P5z"/>
+                    <navigationItem key="navigationItem" title="Past Workouts" id="sgr-Te-P5z"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcP-8D-iut" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -567,6 +566,6 @@
         <image name="infinityLogo" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BGH-gN-Sl0"/>
+        <segue reference="qTK-as-LHc"/>
     </inferredMetricsTieBreakers>
 </document>

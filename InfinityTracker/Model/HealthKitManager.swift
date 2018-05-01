@@ -43,7 +43,7 @@ class HealthKitManager {
 	}
 	
 	static func canSaveWorkout() -> HealthWritePermission {
-		if healthStore.authorizationStatus(for: .workoutType()) == .sharingAuthorized && healthStore.authorizationStatus(for: routeType) == .sharingAuthorized {
+		if HKHealthStore.isHealthDataAvailable() && healthStore.authorizationStatus(for: .workoutType()) == .sharingAuthorized && healthStore.authorizationStatus(for: routeType) == .sharingAuthorized {
 			if healthStore.authorizationStatus(for: distanceType) == .sharingAuthorized && healthStore.authorizationStatus(for: calorieType) == .sharingAuthorized {
 				return .full
 			} else {

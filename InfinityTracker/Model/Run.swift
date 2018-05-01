@@ -25,6 +25,9 @@ protocol Run {
 	var route: [MKPolyline] { get }
 	var startPosition: MKPointAnnotation? { get }
 	var endPosition: MKPointAnnotation? { get }
+	
+	/// Load all additional data such as the workout route. If all data is already loaded this method may not be implemented.
+	func loadAdditionalData(completion: @escaping (Bool) -> Void)
 
 }
 
@@ -39,6 +42,10 @@ extension Run {
 		ann.coordinate = location.coordinate
 		
 		return ann
+	}
+	
+	func loadAdditionalData(completion: @escaping (Bool) -> Void) {
+		completion(true)
 	}
 	
 }

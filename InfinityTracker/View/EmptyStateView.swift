@@ -21,7 +21,7 @@ class EmptyStateView: UIView {
     
     lazy var descriptionTextView: UITextView = {
         var descriptionTextView = UITextView()
-        descriptionTextView.text = "It's time to start Running!"
+        descriptionTextView.text = "It's time to start moving!"
         descriptionTextView.backgroundColor = UIColor.clear
         descriptionTextView.isScrollEnabled = false
         descriptionTextView.textAlignment = .center

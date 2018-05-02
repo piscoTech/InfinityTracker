@@ -22,6 +22,9 @@
 "NEW_RUN" = "New Run";
 "NEW_WALK" = "New Walk";
 
+"LONG_PRESS_CHANGE_RUN" = "Long press to track runs";
+"LONG_PRESS_CHANGE_WALK" = "Long press to track walks";
+
 // MARK: - Location Permissions
 
 "LOCATION_REQUIRED" = "Location Required";

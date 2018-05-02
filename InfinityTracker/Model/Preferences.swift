@@ -6,13 +6,14 @@
 //  Copyright © 2016 Marco Boschi. All rights reserved.
 //
 
-import Foundation
+import HealthKit
 import MBLibrary
 
 fileprivate enum PreferenceKeys: String, KeyValueStoreKey {
 	case authorized = "authorized"
 	case authVersion = "authVersion"
-	// TODO: Add activity type
+	
+	case activityType = "activityType"
 	
 	var description: String {
 		return rawValue
@@ -41,6 +42,22 @@ class Preferences {
 		}
 		set {
 			appSpecific.set(newValue, forKey: PreferenceKeys.authVersion)
+			appSpecific.synchronize()
+		}
+	}
+	
+	static var activityType: Activity {
+		get {
+			let def = Activity.running
+			guard let rawAct = UInt(exactly: appSpecific.integer(forKey: PreferenceKeys.activityType)),
+				let act = HKWorkoutActivityType(rawValue: rawAct) else {
+				return def
+			}
+			
+			return Activity.fromHealthKitEquivalent(act) ?? def
+		}
+		set {
+			appSpecific.set(newValue.healthKitEquivalent.rawValue, forKey: PreferenceKeys.activityType)
 			appSpecific.synchronize()
 		}
 	}

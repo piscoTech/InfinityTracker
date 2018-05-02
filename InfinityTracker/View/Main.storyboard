@@ -160,6 +160,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="caloriesLabel" destination="8IW-xK-CEY" id="8o9-Yd-HqQ"/>
+                        <outlet property="changeActivityLbl" destination="qFh-lI-9pH" id="2KM-wc-ZLU"/>
                         <outlet property="distanceLabel" destination="NqQ-mu-yOC" id="7NF-GB-X5y"/>
                         <outlet property="logoImageView" destination="dNY-Fa-U63" id="e9Q-LF-guH"/>
                         <outlet property="newRunButton" destination="N4a-xm-Tob" id="Fpm-f5-aiJ"/>
@@ -339,38 +340,58 @@
         <scene sceneID="GcD-CL-ywu">
             <objects>
                 <tableViewController id="WdQ-3Y-MJo" customClass="PastRunsListController" customModule="InfinityTracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="VCd-3g-3gR">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="VCd-3g-3gR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="separatorColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RunTableCell" textLabel="RHC-gU-ks9" detailTextLabel="Bai-om-fnL" style="IBUITableViewCellStyleValue1" id="Ngl-z7-MHY" customClass="RunTableCell" customModule="InfinityTracker" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="RunTableCell" id="Ngl-z7-MHY" customClass="RunTableCell" customModule="InfinityTracker" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ngl-z7-MHY" id="raR-0i-XHk">
                                     <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Walk 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RHC-gU-ks9">
-                                            <rect key="frame" x="16" y="12" width="49" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="1" green="0.53333333333333333" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="June, 26 2017" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Bai-om-fnL">
-                                            <rect key="frame" x="232" y="12" width="108" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6Ja-te-aXF">
+                                            <rect key="frame" x="16" y="0.0" width="325" height="43.5"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="XJU-1x-GHd">
+                                                    <rect key="frame" x="0.0" y="4.5" width="174.5" height="35"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOc-S6-1Fl">
+                                                            <rect key="frame" x="0.0" y="0.0" width="43.5" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                            <color key="textColor" red="1" green="0.4941176471" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5US-7j-vZg">
+                                                            <rect key="frame" x="0.0" y="20.5" width="31" height="14.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGM-oJ-l2y">
+                                                    <rect key="frame" x="174.5" y="13" width="150.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="6Ja-te-aXF" secondAttribute="bottom" id="AMZ-SI-4Xl"/>
+                                        <constraint firstItem="6Ja-te-aXF" firstAttribute="leading" secondItem="raR-0i-XHk" secondAttribute="leadingMargin" id="Dey-xO-Ved"/>
+                                        <constraint firstItem="6Ja-te-aXF" firstAttribute="top" secondItem="raR-0i-XHk" secondAttribute="top" id="NPt-Le-u5J"/>
+                                        <constraint firstAttribute="trailing" secondItem="6Ja-te-aXF" secondAttribute="trailing" id="uek-nr-duE"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="distanceLbl" destination="Bai-om-fnL" id="zgO-UF-qAl"/>
-                                    <outlet property="nameLbl" destination="RHC-gU-ks9" id="K7Y-XS-Cmq"/>
+                                    <outlet property="dateLbl" destination="5US-7j-vZg" id="ZAs-bK-DRk"/>
+                                    <outlet property="distanceLbl" destination="sGM-oJ-l2y" id="chT-U5-FxB"/>
+                                    <outlet property="nameLbl" destination="tOc-S6-1Fl" id="5xi-Ox-fSg"/>
                                     <segue destination="BWu-8Z-jNk" kind="show" identifier="PastTrackDetailSegueIdentifier" id="qTK-as-LHc"/>
                                 </connections>
                             </tableViewCell>

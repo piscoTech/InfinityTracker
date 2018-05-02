@@ -64,4 +64,8 @@ enum Activity: Double {
 		return (self.met + factor * 0.5) * weight * time / 3600
 	}
 	
+	var nextActivity: Activity {
+		return self == .running ? .walking : .running
+	}
+	
 }

@@ -119,6 +119,10 @@ class NewRunController: UIViewController {
 		
 		run = RunBuilder(start: Date(), activityType: activityType, weight: weight)
 		timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
+		if let prev = previousLocation {
+			self.locationManager(locationManager, didUpdateLocations: [prev])
+			previousLocation = nil
+		}
 	}
 	
 	// MARK: - Manage Run Stop
@@ -278,15 +282,7 @@ extension NewRunController: CLLocationManagerDelegate {
 		}
 		
 		if didStart {
-			let locList: [CLLocation]
-			if let prev = previousLocation {
-				locList = [prev] + locations
-				previousLocation = nil
-			} else {
-				locList = locations
-			}
-			
-			mapView.addOverlays(run.add(locations: locList), level: Appearance.overlayLevel)
+			mapView.addOverlays(run.add(locations: locations), level: Appearance.overlayLevel)
 		} else if let loc = locations.last {
 			previousLocation = loc
 		}

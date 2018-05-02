@@ -16,11 +16,19 @@ class HomeController: UIViewController {
 	@IBOutlet weak var logoImageView: UIImageView!
 	@IBOutlet weak var runHistoryButton: UIButton!
 	@IBOutlet weak var newRunButton: UIButton!
+	@IBOutlet weak var changeActivityLbl: UILabel!
 	
 	private let newRunSegueIdentifier = "NewRunSegueIdentifier"
-	private var locationEnabled = false
+	private var activityType = Preferences.activityType
 	
+	private var locationEnabled = false
 	private var locManager: CLLocationManager!
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		updateNewRunButton()
+	}
 	
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
@@ -35,6 +43,8 @@ class HomeController: UIViewController {
 		setupViews()
 		setupNavigationBar()
 	}
+	
+	// MARK: - Permission Management
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
@@ -68,6 +78,8 @@ class HomeController: UIViewController {
 		}
 	}
 	
+	// MARK: - UI Management
+	
 	private func setupBackgroundGradient() {
 		let gradientLayer = CAGradientLayer()
 		gradientLayer.colors = [Appearance.orangeDark.cgColor, Appearance.orangeLight.cgColor]
@@ -77,7 +89,7 @@ class HomeController: UIViewController {
 		gradientLayer.frame = view.bounds
 	}
 	
-	fileprivate func setupViews() {
+	private func setupViews() {
 		logoImageView.layer.masksToBounds = true
 		logoImageView.layer.cornerRadius = logoImageView.frame.width/2
 		
@@ -97,11 +109,24 @@ class HomeController: UIViewController {
 		navigationController?.setNavigationBarHidden(true, animated: false)
 	}
 	
-	@IBAction func toggleActivityType(_ sender: UILongPressGestureRecognizer) {
-		if sender.state == .ended {
-			print("Toggle")
-		}
+	private func updateNewRunButton() {
+		newRunButton.setTitle(NSLocalizedString("NEW_\(activityType.localizable)", comment: "New run/walk"), for: [])
+		changeActivityLbl.text = NSLocalizedString("LONG_PRESS_CHANGE_\(activityType.nextActivity.localizable)", comment: "Long press to change")
 	}
+	
+	// MARK: - Activity Type
+	
+	@IBAction func toggleActivityType(_ sender: UILongPressGestureRecognizer) {
+		guard sender.state == .ended else {
+			return
+		}
+		
+		activityType = activityType.nextActivity
+		Preferences.activityType = self.activityType
+		updateNewRunButton()
+	}
+	
+	// MARK: - Navigation
 	
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
 		if identifier == newRunSegueIdentifier && !locationEnabled {
@@ -127,8 +152,7 @@ class HomeController: UIViewController {
 			}
 			
 			destinationController.newRunDismissDelegate = self
-			// FIXME: Make changeable from UI
-			destinationController.activityType = .walking
+			destinationController.activityType = activityType
 		}
 	}
 	

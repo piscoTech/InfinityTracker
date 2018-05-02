@@ -25,11 +25,11 @@ class HealthKitManager {
 	static let averageWeight = HKQuantity(unit: .gramUnit(with: .kilo), doubleValue: 62)
 	
 	///Keep track of the version of health authorization required, increase this number to automatically display an authorization request.
-	static private let authRequired = 1
+	static private let authRequired = 2
 	///List of health data to require read access to.
 	static private let healthReadData: Set<HKObjectType> = [.workoutType(), distanceType, calorieType, routeType, weightType]
 	///List of health data to require write access to.
-	static private let healthWriteData: Set<HKSampleType> = [.workoutType(), distanceType, calorieType, routeType]
+	static private let healthWriteData: Set<HKSampleType> = [.workoutType(), distanceType, calorieType, routeType, weightType]
 	
 	static func requestAuthorization() {
 		guard HKHealthStore.isHealthDataAvailable() else {
@@ -58,9 +58,20 @@ class HealthKitManager {
 		}
 	}
 	
-	static func getWeight(completion: (HKQuantity) -> Void) {
-		// FIXME: Implement me :(
-		completion(averageWeight)
+	/// Get the weight to use in calories computation.
+	static func getWeight(completion: @escaping (HKQuantity) -> Void) {
+		getRealWeight { completion($0 ?? averageWeight) }
+	}
+	
+	/// Get the real weight of the user.
+	static func getRealWeight(completion: @escaping (HKQuantity?) -> Void) {
+		let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+		let type = weightType
+		let weightQuery = HKSampleQuery(sampleType: type, predicate: nil, limit: 1, sortDescriptors: [sortDescriptor]) { (_, r, err) in
+			completion((r?.first as? HKQuantitySample)?.quantity)
+		}
+		
+		HealthKitManager.healthStore.execute(weightQuery)
 	}
 	
 	/// Get the total distance (in meters) and calories burned (in kilocalories) saved by the app.

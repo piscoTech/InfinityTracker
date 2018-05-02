@@ -7,6 +7,7 @@
 */
 
 "CANCEL" = "Cancel";
+"ERROR" = "Error";
 
 "START" = "Start";
 "END" = "End";
@@ -24,6 +25,10 @@
 
 "LONG_PRESS_CHANGE_RUN" = "Long press to track runs";
 "LONG_PRESS_CHANGE_WALK" = "Long press to track walks";
+
+// MARK: - Errors
+
+"WEIGHT_SAVE_ERROR" = "Unable to save weight";
 
 // MARK: - Location Permissions
 

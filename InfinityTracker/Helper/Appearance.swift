@@ -58,6 +58,10 @@ class Appearance: NSObject, MKMapViewDelegate {
 		return formatter
 	}()
 	
+	static var weightF: NumberFormatter {
+		return caloriesF
+	}
+	
 	/// Format a distance in kilometers.
 	/// - parameter distance: The distance to format, in meters.
 	/// - parameter addUnit: Whether or not to add the unit, i.e. `km`.
@@ -96,6 +100,19 @@ class Appearance: NSObject, MKMapViewDelegate {
 	/// - parameter pace: The pace to format, in seconds per kilometer.
 	static func format(pace: Double?) -> String {
 		return (pace ?? 0).getDuration(hideHours: true) + "/km"
+	}
+	
+	/// Format a weight in kilograms.
+	/// - parameter weight: The distance to format, in kilograms.
+	static func format(weight: Double?) -> String {
+		let num: String
+		if let w = weight, let raw = weightF.string(from: NSNumber(value: w)) {
+			num = raw
+		} else {
+			num = missingNumber
+		}
+		
+		return num + " kg"
 	}
 	
 	// MARK: - MKMapViewDelegate

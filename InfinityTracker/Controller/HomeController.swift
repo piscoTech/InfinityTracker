@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import MBLibrary
 
 class HomeController: UIViewController {
 	
@@ -150,13 +151,28 @@ class HomeController: UIViewController {
 	}
 	
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		if segue.identifier == newRunSegueIdentifier {
+		guard let segueID = segue.identifier else {
+			return
+		}
+		
+		switch segueID {
+		case newRunSegueIdentifier:
 			guard let navigationController = segue.destination as? UINavigationController, let destinationController = navigationController.viewControllers.first as? NewRunController  else {
 				return
 			}
 			
 			destinationController.newRunDismissDelegate = self
 			destinationController.activityType = activityType
+			
+		case "updateWeight":
+			let dest = segue.destination
+			PopoverController.preparePresentation(for: dest)
+			dest.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 0, height: 0)
+			dest.popoverPresentationController?.sourceView = self.view
+			dest.popoverPresentationController?.canOverlapSourceViewRect = true
+			
+		default:
+			break
 		}
 	}
 	

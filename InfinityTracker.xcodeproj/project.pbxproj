@@ -14,6 +14,7 @@
 		7A4FF61F209202A00054FED0 /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A4FF61E2092029F0054FED0 /* Activity.swift */; };
 		7A4FF62520920A620054FED0 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A4FF62420920A620054FED0 /* HealthKit.framework */; };
 		7AA024BF2090E77E007AA704 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7AA024BE2090E77E007AA704 /* Localizable.strings */; };
+		7AA62F48209A3F0600568315 /* WeightUpdateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA62F47209A3F0600568315 /* WeightUpdateController.swift */; };
 		7AB4F3E42091A9AA00D528E7 /* Run.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB4F3E22091A9AA00D528E7 /* Run.swift */; };
 		7AB4F3E92091AA0500D528E7 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB4F3E82091AA0500D528E7 /* HealthKitManager.swift */; };
 		7AB4F3EC2091AE3400D528E7 /* SavedRun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB4F3EB2091AE3400D528E7 /* SavedRun.swift */; };
@@ -95,6 +96,7 @@
 		7A4FF62320920A620054FED0 /* InfinityTracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = InfinityTracker.entitlements; sourceTree = "<group>"; };
 		7A4FF62420920A620054FED0 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		7AA024BE2090E77E007AA704 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		7AA62F47209A3F0600568315 /* WeightUpdateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightUpdateController.swift; sourceTree = "<group>"; };
 		7AB4F3E22091A9AA00D528E7 /* Run.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Run.swift; sourceTree = "<group>"; };
 		7AB4F3E82091AA0500D528E7 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		7AB4F3EB2091AE3400D528E7 /* SavedRun.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedRun.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				FA0FE3D41F580742002B84D7 /* HomeController.swift */,
+				7AA62F47209A3F0600568315 /* WeightUpdateController.swift */,
 				FA0FE3D01F5806E8002B84D7 /* NewRunController.swift */,
 				FA0FE3D61F580763002B84D7 /* PastRunsListController.swift */,
 				FA0FE3D81F580787002B84D7 /* RunDetailController.swift */,
@@ -372,6 +375,7 @@
 			files = (
 				FA0FE3D71F580763002B84D7 /* PastRunsListController.swift in Sources */,
 				FA0FE3D11F5806E8002B84D7 /* NewRunController.swift in Sources */,
+				7AA62F48209A3F0600568315 /* WeightUpdateController.swift in Sources */,
 				FA0FE3D91F580787002B84D7 /* RunDetailController.swift in Sources */,
 				FA3F0A1A1F580E9000DCA109 /* RunTableCell.swift in Sources */,
 				FA0FE3F01F5808D3002B84D7 /* Protocols.swift in Sources */,

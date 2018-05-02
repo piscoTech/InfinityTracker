@@ -99,7 +99,7 @@ class RunBuilder {
 					calories.append(HKQuantitySample(type: HealthKitManager.calorieType, quantity: HKQuantity(unit: .kilocalorie(), doubleValue: deltaC), start: prev.timestamp, end: loc.timestamp))
 				}
 				
-				polylines.append(MKPolyline(coordinates: [prev, loc].map { $0.coordinate }, count: 2))
+				polylines.append(MKPolyline(coordinates: [prev, smoothLoc].map { $0.coordinate }, count: 2))
 			} else {
 				// Saving the first location
 				markPosition(loc, isStart: true)

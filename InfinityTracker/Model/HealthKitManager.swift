@@ -32,6 +32,10 @@ class HealthKitManager {
 	static private let healthWriteData: Set<HKSampleType> = [.workoutType(), distanceType, calorieType, routeType]
 	
 	static func requestAuthorization() {
+		guard HKHealthStore.isHealthDataAvailable() else {
+			return
+		}
+		
 		if !Preferences.authorized || Preferences.authVersion < authRequired {
 			healthStore.requestAuthorization(toShare: healthWriteData, read: healthReadData) { success, _ in
 				if success {
@@ -59,36 +63,22 @@ class HealthKitManager {
 		completion(averageWeight)
 	}
 	
-	/// Get the total distance saved by the app in meters.
-	public static func getDistanceTotal() -> Double {
-		// FIXME: Implement me :(
-		return 0
-//
-//		var totalDistance: Double = 0.0
-//
-//		let runs = fetchObjects(entity: Run.self, context: context)
-//
-//		for run in runs {
-//			totalDistance += run.distance
-//		}
-//
-//		return totalDistance
-	}
-	
-	/// Get the total energy burned saved by the app in kilocalories.
-	public static func getCaloriesTotal() -> Double {
-		// FIXME: Implement me :(
-		return 0
-//
-//		var caloriesTotal: Double = 0.0
-//
-//		let runs = fetchObjects(entity: Run.self, context: context)
-//
-//		for run in runs {
-//			caloriesTotal += run.calories
-//		}
-//
-//		return caloriesTotal
+	/// Get the total distance (in meters) and calories burned (in kilocalories) saved by the app.
+	public static func getStatistics(completion: @escaping (Double, Double) -> Void) {
+		let filter = HKQuery.predicateForObjects(from: HKSource.default())
+		let type = HKObjectType.workoutType()
+		let workoutQuery = HKSampleQuery(sampleType: type, predicate: filter, limit: HKObjectQueryNoLimit, sortDescriptors: []) { (_, r, err) in
+			let stats = (r as? [HKWorkout] ?? []).reduce((distance: 0.0, calories: 0.0)) { (res, wrkt) in
+				let d = res.distance + (wrkt.totalDistance?.doubleValue(for: .meter()) ?? 0)
+				let c = res.calories + (wrkt.totalEnergyBurned?.doubleValue(for: .kilocalorie()) ?? 0)
+				
+				return (d, c)
+			}
+			
+			completion(stats.distance, stats.calories)
+		}
+		
+		HealthKitManager.healthStore.execute(workoutQuery)
 	}
 	
 }

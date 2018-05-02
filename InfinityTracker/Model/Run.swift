@@ -39,7 +39,7 @@ extension Run {
 	
 	/// The average pace in seconds per kilometer.
 	var pace: TimeInterval {
-		return totalDistance > 0 ? duration / totalDistance : 0
+		return totalDistance > 0 ? duration / totalDistance * 1000 : 0
 	}
 	
 	func annotation(for location: CLLocation, isStart: Bool) -> MKPointAnnotation {

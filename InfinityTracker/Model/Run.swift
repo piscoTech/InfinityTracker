@@ -21,6 +21,8 @@ protocol Run {
 	var start: Date { get }
 	var end: Date { get }
 	var duration: TimeInterval { get }
+	/// The average pace in seconds per kilometer.
+	var pace: TimeInterval { get }
 	
 	var route: [MKPolyline] { get }
 	var startPosition: MKPointAnnotation? { get }
@@ -37,7 +39,6 @@ extension Run {
 		return start.getFormattedDateTime()
 	}
 	
-	/// The average pace in seconds per kilometer.
 	var pace: TimeInterval {
 		return totalDistance > 0 ? duration / totalDistance * 1000 : 0
 	}

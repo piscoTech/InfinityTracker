@@ -67,10 +67,10 @@ class RunBuilder {
 			let smoothLoc: CLLocation
 			
 			if let prev = previousLocation {
-				/// Distance reduction considering accuracy, in meters.
-				let deltaAcc = loc.horizontalAccuracy * accuracyInfluence
 				/// Real distance between the points, in meters.
 				let deltaD = loc.distance(from: prev)
+				/// Distance reduction considering accuracy, in meters.
+				let deltaAcc = min(loc.horizontalAccuracy * accuracyInfluence, deltaD)
 				/// Logical distance between the points before location smoothing, in meters.
 				let delta = deltaD - deltaAcc
 				/// Temporal distance between the points, in seconds.
@@ -79,7 +79,9 @@ class RunBuilder {
 				var smoothWeight: Double?
 				/// Logical speed of the movement between the points before location smoothing, in m/s.
 				let speed = delta / deltaT
+				
 				if speed > thresholdSpeed || delta < dropThreshold {
+					rawRun.setPace(time: deltaT, distance: delta)
 					continue
 				} else if let (_, locAvgWeight) = moveCloserThreshold.first(where: { $0.range.contains(delta) }) {
 					smoothWeight = locAvgWeight
@@ -91,6 +93,7 @@ class RunBuilder {
 				/// Logical distance between the points after location smoothing, in meters.
 				let smoothDelta = smoothLoc.distance(from: prev)
 				
+				rawRun.setPace(time: deltaT, distance: smoothDelta)
 				rawRun.totalDistance += smoothDelta
 				distance.append(HKQuantitySample(type: HealthKitManager.distanceType, quantity: HKQuantity(unit: .meter(), doubleValue: smoothDelta), start: prev.timestamp, end: loc.timestamp))
 				if smoothDelta > 0 {
@@ -232,6 +235,7 @@ fileprivate class CompletedRun: Run {
 	var duration: TimeInterval {
 		return end.timeIntervalSince(start)
 	}
+	private(set) var pace: TimeInterval = 0
 	
 	var route: [MKPolyline] = []
 	var startPosition: MKPointAnnotation?
@@ -242,6 +246,11 @@ fileprivate class CompletedRun: Run {
 	fileprivate init(type: Activity, start: Date) {
 		self.type = type
 		self.start = start
+	}
+	
+	/// Update the current by the distance, in meters, covered in a given time interval.
+	fileprivate func setPace(time: TimeInterval, distance: Double) {
+		pace = distance > 0 ? time / distance * 1000 : 0
 	}
 	
 }

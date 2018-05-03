@@ -23,7 +23,7 @@ class HealthKitManager {
 	static let routeType = HKQuantityType.seriesType(forIdentifier: HKWorkoutRouteTypeIdentifier)!
 	static let weightType = HKQuantityType.quantityType(forIdentifier: .bodyMass)!
 	
-	// https://en.wikipedia.org/wiki/Human_body_weight @ 29/04/2018
+	// https://en.wikipedia.org/wiki/Human_body_weight on 29/04/2018
 	static let averageWeight = HKQuantity(unit: .gramUnit(with: .kilo), doubleValue: 62)
 	
 	///Keep track of the version of health authorization required, increase this number to automatically display an authorization request.

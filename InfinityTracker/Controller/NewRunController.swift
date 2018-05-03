@@ -71,7 +71,7 @@ class NewRunController: UIViewController {
 		
 		DispatchQueue.main.async {
 			if HealthKitManager.canSaveWorkout() != .full {
-				// TODO: If no health write permission, show alert no data will be saved
+				self.present(HealthKitManager.healthPermissionAlert, animated: true)
 				self.cannotSaveAlertDisplayed = true
 			}
 		}
@@ -262,7 +262,7 @@ class NewRunController: UIViewController {
 		
 		destinationController.run = run
 		destinationController.runDetailDismissDelegate = self
-		destinationController.displayCannotSaveAlert = HealthKitManager.canSaveWorkout() != .full
+		destinationController.displayCannotSaveAlert = !cannotSaveAlertDisplayed && HealthKitManager.canSaveWorkout() != .full
 	}
 	
 }

@@ -36,7 +36,7 @@ class RunDetailController: UIViewController {
 		
 		if displayCannotSaveAlert {
 			DispatchQueue.main.async {
-				// TODO: Dispaly alert
+				self.present(HealthKitManager.healthPermissionAlert, animated: true)
 			}
 		}
 		

@@ -7,6 +7,8 @@
 //
 
 import HealthKit
+import UIKit
+import MBLibrary
 
 enum HealthWritePermission {
 	case none, partial, full
@@ -75,7 +77,7 @@ class HealthKitManager {
 	}
 	
 	/// Get the total distance (in meters) and calories burned (in kilocalories) saved by the app.
-	public static func getStatistics(completion: @escaping (Double, Double) -> Void) {
+	static func getStatistics(completion: @escaping (Double, Double) -> Void) {
 		let filter = HKQuery.predicateForObjects(from: HKSource.default())
 		let type = HKObjectType.workoutType()
 		let workoutQuery = HKSampleQuery(sampleType: type, predicate: filter, limit: HKObjectQueryNoLimit, sortDescriptors: []) { (_, r, err) in
@@ -90,6 +92,10 @@ class HealthKitManager {
 		}
 		
 		HealthKitManager.healthStore.execute(workoutQuery)
+	}
+	
+	static var healthPermissionAlert: UIAlertController {
+		return UIAlertController(simpleAlert: NSLocalizedString("WARN_HEALTH_ACCESS_MISSING", comment: "Missing health access"), message: NSLocalizedString("WARN_HEALTH_ACCESS_MISSING_BODY", comment: "Missing health access"))
 	}
 	
 }

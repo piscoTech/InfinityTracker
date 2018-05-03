@@ -28,7 +28,7 @@
 
 // MARK: - Errors
 
-"WEIGHT_SAVE_ERROR" = "Unable to save weight";
+"WEIGHT_SAVE_ERROR" = "Cannot save weight";
 "WARN_HEALTH_ACCESS_MISSING" = "Health Permission Missing";
 "WARN_HEALTH_ACCESS_MISSING_BODY" = "Your workout will not be fully or partially saved because some pemission are missing for Health access.";
 

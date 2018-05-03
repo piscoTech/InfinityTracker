@@ -21,26 +21,19 @@ class PastRunsListController: UITableViewController {
         emptyStateView.contentMode = .scaleAspectFit
         return emptyStateView
     }()
-    
-    override func viewWillAppear(_ animated: Bool) {
+	
+	override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         setupNavigationBar()
-        
-        runs = []
-		let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
-		let filter = HKQuery.predicateForObjects(from: HKSource.default())
-		let type = HKObjectType.workoutType()
-		let workoutQuery = HKSampleQuery(sampleType: type, predicate: filter, limit: displayLimit, sortDescriptors: [sortDescriptor]) { (_, r, err) in
-			self.runs = (r as? [HKWorkout] ?? []).compactMap { SavedRun(raw: $0) }
-			
-			DispatchQueue.main.async {
-				self.tableView.reloadData()
-			}
-		}
-		
-		HealthKitManager.healthStore.execute(workoutQuery)
+		loadData()
     }
+	
+	// MARK: - Table View
+	
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return 1
+	}
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if runs.count > 0 {
@@ -63,6 +56,39 @@ class PastRunsListController: UITableViewController {
         return cell
     }
 	
+	// MARK: - UI
+	
+	private func setupNavigationBar() {
+		Appearance.setupNavigationBar(navigationController)
+		navigationController?.setNavigationBarHidden(false, animated: true)
+	}
+	
+	private func showEmptyState() {
+		tableView.backgroundView = emptyStateView
+	}
+	
+	private func hideEmptyState() {
+		tableView.backgroundView = nil
+	}
+	
+	private func loadData() {
+		runs = []
+		let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+		let filter = HKQuery.predicateForObjects(from: HKSource.default())
+		let type = HKObjectType.workoutType()
+		let workoutQuery = HKSampleQuery(sampleType: type, predicate: filter, limit: displayLimit, sortDescriptors: [sortDescriptor]) { (_, r, err) in
+			self.runs = (r as? [HKWorkout] ?? []).compactMap { SavedRun(raw: $0) }
+			
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
+			}
+		}
+		
+		HealthKitManager.healthStore.execute(workoutQuery)
+	}
+	
+	// MARK: - Navigation
+	
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let destinationController = segue.destination as? RunDetailController {
 			guard let selectedCell = sender as? RunTableCell, let selectedIndex = tableView.indexPath(for: selectedCell) else {
@@ -71,19 +97,6 @@ class PastRunsListController: UITableViewController {
 			
             destinationController.run = runs[selectedIndex.row]
         }
-    }
-    
-    private func setupNavigationBar() {
-		Appearance.setupNavigationBar(navigationController)
-        navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
-    private func showEmptyState() {
-        tableView.backgroundView = emptyStateView
-    }
-    
-    private func hideEmptyState() {
-        tableView.backgroundView = nil
     }
 	
 }

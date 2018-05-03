@@ -56,6 +56,27 @@ class PastRunsListController: UITableViewController {
         return cell
     }
 	
+	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+		return true
+	}
+	
+	override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+		guard editingStyle == .delete, let wrkt = runs[indexPath.row].healthKitWorkout else {
+			return
+		}
+		
+		HealthKitManager.healthStore.delete(wrkt) { res, _ in
+			DispatchQueue.main.sync {
+				if res {
+					self.loadData()
+				} else {
+					let alert = UIAlertController(simpleAlert: NSLocalizedString("ERROR", comment: "Error"), message: NSLocalizedString("WRKT_DEL_ERROR", comment: "Cannot delete"))
+					self.present(alert, animated: true)
+				}
+			}
+		}
+	}
+	
 	// MARK: - UI
 	
 	private func setupNavigationBar() {

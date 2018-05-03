@@ -12,6 +12,9 @@ import MapKit
 class SavedRun: Run {
 	
 	private let raw: HKWorkout
+	var healthKitWorkout: HKWorkout? {
+		return raw
+	}
 	
 	let type: Activity
 	

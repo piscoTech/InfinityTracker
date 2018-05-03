@@ -8,10 +8,12 @@
 //
 
 import MapKit
+import HealthKit
 
 protocol Run {
 	
 	var type: Activity { get }
+	var healthKitWorkout: HKWorkout? { get }
 	
 	///The total amount of energy burned in kilocalories
 	var totalCalories: Double { get }
@@ -34,6 +36,10 @@ protocol Run {
 }
 
 extension Run {
+	
+	var healthKitWorkout: HKWorkout? {
+		return nil
+	}
 	
 	var name: String {
 		return start.getFormattedDateTime()

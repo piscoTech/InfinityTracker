@@ -29,6 +29,7 @@
 // MARK: - Errors
 
 "WEIGHT_SAVE_ERROR" = "Cannot save weight";
+"WRKT_DEL_ERROR" = "Cannot delete workout";
 "WARN_HEALTH_ACCESS_MISSING" = "Health Permission Missing";
 "WARN_HEALTH_ACCESS_MISSING_BODY" = "Your workout will not be fully or partially saved because some pemission are missing for Health access.";
 

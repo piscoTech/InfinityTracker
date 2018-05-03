@@ -19,6 +19,8 @@ class RunBuilder {
 	let thresholdSpeed = 6.5
 	/// The percentage of horizontal accuracy to subtract from the distance between two points.
 	let accuracyInfluence = 0.6
+	/// The maximum time interval between two points of the workout route.
+	let routeTimeAccuracy: TimeInterval = 2
 	
 	var run: Run {
 		return rawRun
@@ -31,7 +33,8 @@ class RunBuilder {
 	/// Weight for calories calculation, in kg.
 	private let weight: Double
 	
-	private var previousLocation: CLLocation?
+	/// The previous logical location processed and last real timestamp processed.
+	private var previousLocation: (location: CLLocation, realtTimestamp: Date)?
 	private var distance: [HKQuantitySample] = []
 	private var calories: [HKQuantitySample] = []
 	
@@ -63,10 +66,12 @@ class RunBuilder {
 		var smoothLocations: [CLLocation] = []
 		
 		for loc in locations {
-			/// The logical position after location smoothing.
+			/// The last logical position after location smoothing.
 			let smoothLoc: CLLocation
+			/// The logical positions after location smoothing to save to the workout route.
+			var routeSmoothLoc: [CLLocation]?
 			
-			if let prev = previousLocation {
+			if let (prev, realTime) = previousLocation {
 				/// Real distance between the points, in meters.
 				let deltaD = loc.distance(from: prev)
 				/// Distance reduction considering accuracy, in meters.
@@ -81,7 +86,8 @@ class RunBuilder {
 				let speed = delta / deltaT
 				
 				if speed > thresholdSpeed || delta < dropThreshold {
-					rawRun.setPace(time: deltaT, distance: delta)
+					previousLocation?.realtTimestamp = loc.timestamp
+					rawRun.setPace(time: loc.timestamp.timeIntervalSince(realTime), distance: delta)
 					continue
 				} else if let (_, locAvgWeight) = moveCloserThreshold.first(where: { $0.range.contains(delta) }) {
 					smoothWeight = locAvgWeight
@@ -102,22 +108,25 @@ class RunBuilder {
 					calories.append(HKQuantitySample(type: HealthKitManager.calorieType, quantity: HKQuantity(unit: .kilocalorie(), doubleValue: deltaC), start: prev.timestamp, end: loc.timestamp))
 				}
 				
-				polylines.append(MKPolyline(coordinates: [prev, smoothLoc].map { $0.coordinate }, count: 2))
+				let routePositions = prev.interpolateRoute(to: smoothLoc, maximumTimeInterval: routeTimeAccuracy)
+				polylines.append(MKPolyline(coordinates: routePositions.map { $0.coordinate }, count: routePositions.count))
+				// Drop the first location as it is the last added location
+				routeSmoothLoc = Array(routePositions[1...])
 			} else {
 				// Saving the first location
 				markPosition(loc, isStart: true)
 				smoothLoc = loc
 			}
 			
-			smoothLocations.append(smoothLoc)
-			previousLocation = smoothLoc
+			smoothLocations.append(contentsOf: routeSmoothLoc ?? [smoothLoc])
+			previousLocation = (smoothLoc, loc.timestamp)
 		}
 		
 		rawRun.route += polylines
 		if !smoothLocations.isEmpty {
 			DispatchQueue.main.async {
 				self.pendingLocationInsertion += 1
-				self.route.insertRouteData(locations) { res, _ in
+				self.route.insertRouteData(smoothLocations) { res, _ in
 					DispatchQueue.main.async {
 						self.pendingLocationInsertion -= 1
 					}
@@ -144,7 +153,7 @@ class RunBuilder {
 		precondition(!invalidated, "This run builder has completed his job")
 		
 		rawRun.end = end
-		if let prev = previousLocation {
+		if let (prev, _) = previousLocation {
 			if rawRun.route.isEmpty {
 				// If the run has a single position create a dot polyline
 				rawRun.route.append(MKPolyline(coordinates: [prev.coordinate], count: 1))

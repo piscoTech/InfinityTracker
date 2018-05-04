@@ -21,6 +21,10 @@ class RunBuilder {
 	let accuracyInfluence = 0.6
 	/// The maximum time interval between two points of the workout route.
 	let routeTimeAccuracy: TimeInterval = 2
+	/// The time interval covered by each details saved to HealthKit.
+	let detailsTimePrecision: TimeInterval = 15
+	/// The time interval before the last added position to use to calculate the current pace.
+	let paceTimePrecision: TimeInterval = 30
 	
 	var run: Run {
 		return rawRun
@@ -33,10 +37,15 @@ class RunBuilder {
 	/// Weight for calories calculation, in kg.
 	private let weight: Double
 	
-	/// The previous logical location processed and last real timestamp processed.
-	private var previousLocation: (location: CLLocation, realtTimestamp: Date)?
-	private var distance: [HKQuantitySample] = []
-	private var calories: [HKQuantitySample] = []
+	// FIXME: This must be set to nil when pausing the workout
+	/// The previous logical location processed.
+	private var previousLocation: CLLocation?
+	/// Every other samples to provide additional details to the workout to be saved to HealthKit.
+	private var details: [HKQuantitySample] = []
+	/// Additional details for the workout. Each added position create a raw detail.
+	private var rawDetails: [(distance: Double, calories: Double, start: Date, end: Date)] = []
+	/// The number of raw details yet to be compacted. This details are lcoated at the end of `rawDetails`.
+	private var uncompactedRawDetails = 0
 	
 	private var pendingLocationInsertion = 0 {
 		didSet {
@@ -66,12 +75,10 @@ class RunBuilder {
 		var smoothLocations: [CLLocation] = []
 		
 		for loc in locations {
-			/// The last logical position after location smoothing.
-			let smoothLoc: CLLocation
 			/// The logical positions after location smoothing to save to the workout route.
-			var routeSmoothLoc: [CLLocation]?
+			let routeSmoothLoc: [CLLocation]
 			
-			if let (prev, realTime) = previousLocation {
+			if let prev = previousLocation {
 				/// Real distance between the points, in meters.
 				let deltaD = loc.distance(from: prev)
 				/// Distance reduction considering accuracy, in meters.
@@ -86,8 +93,6 @@ class RunBuilder {
 				let speed = delta / deltaT
 				
 				if speed > thresholdSpeed || delta < dropThreshold {
-					previousLocation?.realtTimestamp = loc.timestamp
-					rawRun.setPace(time: loc.timestamp.timeIntervalSince(realTime), distance: delta)
 					continue
 				} else if let (_, locAvgWeight) = moveCloserThreshold.first(where: { $0.range.contains(delta) }) {
 					smoothWeight = locAvgWeight
@@ -95,18 +100,12 @@ class RunBuilder {
 				
 				// Correct the weight of the origin to move the other point closer by deltaAcc
 				let locAvgWeight = 1 - (1 - (smoothWeight ?? 0)) * (1 - deltaAcc / deltaD)
-				smoothLoc = prev.moveCloser(loc, withOriginWeight: locAvgWeight)
+				/// The last logical position after location smoothing.
+				let smoothLoc = prev.moveCloser(loc, withOriginWeight: locAvgWeight)
 				/// Logical distance between the points after location smoothing, in meters.
 				let smoothDelta = smoothLoc.distance(from: prev)
 				
-				rawRun.setPace(time: deltaT, distance: smoothDelta)
-				rawRun.totalDistance += smoothDelta
-				distance.append(HKQuantitySample(type: HealthKitManager.distanceType, quantity: HKQuantity(unit: .meter(), doubleValue: smoothDelta), start: prev.timestamp, end: loc.timestamp))
-				if smoothDelta > 0 {
-					let deltaC = activityType.caloriesFor(time: deltaT, distance: smoothDelta, weight: weight)
-					rawRun.totalCalories += deltaC
-					calories.append(HKQuantitySample(type: HealthKitManager.calorieType, quantity: HKQuantity(unit: .kilocalorie(), doubleValue: deltaC), start: prev.timestamp, end: loc.timestamp))
-				}
+				addRawDetail(distance: smoothDelta, start: prev.timestamp, end: smoothLoc.timestamp)
 				
 				let routePositions = prev.interpolateRoute(to: smoothLoc, maximumTimeInterval: routeTimeAccuracy)
 				polylines.append(MKPolyline(coordinates: routePositions.map { $0.coordinate }, count: routePositions.count))
@@ -115,11 +114,11 @@ class RunBuilder {
 			} else {
 				// Saving the first location
 				markPosition(loc, isStart: true)
-				smoothLoc = loc
+				routeSmoothLoc = [loc]
 			}
 			
-			smoothLocations.append(contentsOf: routeSmoothLoc ?? [smoothLoc])
-			previousLocation = (smoothLoc, loc.timestamp)
+			smoothLocations.append(contentsOf: routeSmoothLoc)
+			previousLocation = routeSmoothLoc.last
 		}
 		
 		rawRun.route += polylines
@@ -149,11 +148,82 @@ class RunBuilder {
 		}
 	}
 	
+	/// Compact (if necessary) the raw details still not compacted in a single (one per each data type) HealthKit sample.
+	/// - parameter flush: If set to `true` forces the uncompacted details to be compacted even if they don't cover the time interval specified by `detailsTimePrecision`. The default value is `false`.
+	private func compactLastDetails(flush: Bool = false) {
+		guard let end = rawDetails.last?.end, let lastCompactedEnd = details.last?.endDate ?? rawDetails.first?.start else {
+			return
+		}
+		
+		if !flush {
+			guard end.timeIntervalSince(lastCompactedEnd) >= detailsTimePrecision else {
+				return
+			}
+		}
+		
+		if let index = rawDetails.index(where: { $0.start >= lastCompactedEnd }) {
+			let range = rawDetails.suffix(from: index)
+			uncompactedRawDetails = 0
+			guard let start = range.first?.start else {
+				return
+			}
+			
+			let detCalories = range.reduce(0) { $0 + $1.calories }
+			let detDistance = range.reduce(0) { $0 + $1.distance }
+			// This two samples must have same start and end.
+			details.append(HKQuantitySample(type: HealthKitManager.distanceType, quantity: HKQuantity(unit: .meter(), doubleValue: detDistance), start: start, end: end))
+			details.append(HKQuantitySample(type: HealthKitManager.calorieType, quantity: HKQuantity(unit: .kilocalorie(), doubleValue: detCalories), start: start, end: end))
+		}
+	}
+	
+	/// Save a raw retails.
+	/// - parameter distance: The distance to add, in meters.
+	/// - parameter start: The start of the time interval of the when the distance was run/walked.
+	/// - parameter start: The end of the time interval of the when the distance was run/walked.
+	private func addRawDetail(distance: Double, start: Date, end: Date) {
+		rawRun.totalDistance += distance
+		let calories: Double
+		if distance > 0 {
+			calories = activityType.caloriesFor(time: end.timeIntervalSince(start), distance: distance, weight: weight)
+		} else {
+			calories = 0
+		}
+		rawRun.totalCalories += calories
+		
+		rawDetails.append((distance: distance, calories: calories, start: start, end: end))
+		uncompactedRawDetails += 1
+		
+		rawRun.pace = 0
+		var paceDetailsCount = 0
+		if let index = rawDetails.index(where: { end.timeIntervalSince($0.start) < paceTimePrecision }) {
+			let range = rawDetails.suffix(from: index)
+			paceDetailsCount = range.count
+			if let s = range.first?.start {
+				let d = range.reduce(0) { $0 + $1.distance }
+				if d > 0 {
+					rawRun.pace = end.timeIntervalSince(s) * 1000 / d
+				}
+			}
+		}
+		
+		compactLastDetails()
+		
+		details = Array(details.suffix(max(paceDetailsCount, uncompactedRawDetails)))
+	}
+	
+	/// Compacts all remaining raw details in samples for HealthKit.
+	private func flushDetails() {
+		// TODO: Also call when pausing the workout
+		compactLastDetails(flush: true)
+		details = []
+	}
+	
 	func finishRun(end: Date, completion: @escaping (Run?) -> Void) {
 		precondition(!invalidated, "This run builder has completed his job")
 		
+		flushDetails()
 		rawRun.end = end
-		if let (prev, _) = previousLocation {
+		if let prev = previousLocation {
 			if rawRun.route.isEmpty {
 				// If the run has a single position create a dot polyline
 				rawRun.route.append(MKPolyline(coordinates: [prev.coordinate], count: 1))
@@ -194,12 +264,11 @@ class RunBuilder {
 					if success {
 						// Save the route only if workout has been saved
 						self.route.finishRoute(with: workout, metadata: nil) { route, _ in
-							let linkData = self.calories + self.distance
-							if linkData.isEmpty {
+							if self.details.isEmpty {
 								completion(self.rawRun)
 							} else {
 								// This also save the samples
-								HealthKitManager.healthStore.add(linkData, to: workout) { _, _ in
+								HealthKitManager.healthStore.add(self.details, to: workout) { _, _ in
 									completion(self.rawRun)
 								}
 							}
@@ -244,7 +313,8 @@ fileprivate class CompletedRun: Run {
 	var duration: TimeInterval {
 		return end.timeIntervalSince(start)
 	}
-	private(set) var pace: TimeInterval = 0
+	// FIXME: Pace must be set to 0 when pausing the workout
+	var pace: TimeInterval = 0
 	
 	var route: [MKPolyline] = []
 	var startPosition: MKPointAnnotation?
@@ -255,11 +325,6 @@ fileprivate class CompletedRun: Run {
 	fileprivate init(type: Activity, start: Date) {
 		self.type = type
 		self.start = start
-	}
-	
-	/// Update the current by the distance, in meters, covered in a given time interval.
-	fileprivate func setPace(time: TimeInterval, distance: Double) {
-		pace = distance > 0 ? time / distance * 1000 : 0
 	}
 	
 }

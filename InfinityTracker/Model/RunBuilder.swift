@@ -29,7 +29,7 @@ class RunBuilder {
 	var run: Run {
 		return rawRun
 	}
-	private let rawRun: CompletedRun
+	private let rawRun: InProgressRun
 	private let activityType: Activity
 	private(set) var completed = false
 	private(set) var invalidated = false
@@ -63,7 +63,7 @@ class RunBuilder {
 	/// - parameter activityType: The type of activity being tracked
 	/// - parameter weight: The weight to use to calculate calories
 	init(start: Date, activityType: Activity, weight: HKQuantity) {
-		rawRun = CompletedRun(type: activityType, start: start)
+		rawRun = InProgressRun(type: activityType, start: start)
 		self.weight = weight.doubleValue(for: .gramUnit(with: .kilo))
 		self.activityType = activityType
 	}
@@ -193,7 +193,7 @@ class RunBuilder {
 		rawDetails.append((distance: distance, calories: calories, start: start, end: end))
 		uncompactedRawDetails += 1
 		
-		rawRun.pace = 0
+		rawRun.currentPace = 0
 		var paceDetailsCount = 0
 		if let index = rawDetails.index(where: { end.timeIntervalSince($0.start) < paceTimePrecision }) {
 			let range = rawDetails.suffix(from: index)
@@ -201,7 +201,7 @@ class RunBuilder {
 			if let s = range.first?.start {
 				let d = range.reduce(0) { $0 + $1.distance }
 				if d > 0 {
-					rawRun.pace = end.timeIntervalSince(s) * 1000 / d
+					rawRun.currentPace = end.timeIntervalSince(s) * 1000 / d
 				}
 			}
 		}
@@ -223,6 +223,7 @@ class RunBuilder {
 		
 		flushDetails()
 		rawRun.end = end
+		rawRun.currentPace = nil
 		if let prev = previousLocation {
 			if rawRun.route.isEmpty {
 				// If the run has a single position create a dot polyline
@@ -295,7 +296,7 @@ class RunBuilder {
 	
 }
 
-fileprivate class CompletedRun: Run {
+fileprivate class InProgressRun: Run {
 	
 	let type: Activity
 	
@@ -314,7 +315,7 @@ fileprivate class CompletedRun: Run {
 		return end.timeIntervalSince(start)
 	}
 	// FIXME: Pace must be set to 0 when pausing the workout
-	var pace: TimeInterval = 0
+	var currentPace: TimeInterval? = 0
 	
 	var route: [MKPolyline] = []
 	var startPosition: MKPointAnnotation?

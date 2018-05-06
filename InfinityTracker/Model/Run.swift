@@ -23,6 +23,8 @@ protocol Run {
 	var duration: TimeInterval { get }
 	/// The average pace in seconds per kilometer.
 	var pace: TimeInterval { get }
+	/// The current pace in seconds per kilometer when relevant, `nil` otherwise.
+	var currentPace: TimeInterval? { get }
 	
 	var route: [MKPolyline] { get }
 	var startPosition: MKPointAnnotation? { get }
@@ -41,6 +43,10 @@ extension Run {
 	
 	var pace: TimeInterval {
 		return totalDistance > 0 ? duration / totalDistance * 1000 : 0
+	}
+	
+	var currentPace: TimeInterval? {
+		return nil
 	}
 	
 	func annotation(for location: CLLocation, isStart: Bool) -> MKPointAnnotation {

@@ -111,7 +111,7 @@ class DetailView: UIView {
 		distanceLbl.text = Appearance.format(distance: run?.totalDistance)
 		timeLbl.text = Appearance.format(duration: run?.duration)
 		caloriesLbl.text = Appearance.format(calories: run?.totalCalories)
-		paceLbl.text = Appearance.format(pace: run?.pace)
+		paceLbl.text = Appearance.format(pace: run?.currentPace ?? run?.pace)
 	}
 
 }

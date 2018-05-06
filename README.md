@@ -22,5 +22,7 @@ General behaviour of the app can be configured via properties of `HealthKitManag
 
 * `authRequired`, `healthReadData` and `healthWriteData`: Used to save the latest authorization requested in `UserDefaults`, when `authRequired` is greater than the saved value the user will be promped for authorization upon next launch, increment this value when adding new data to be read or write to `healthReadData` or `healthWriteData`.
 
+The algorithm that takes care of tracking workout route, distance, calories burned and pace can be tweaked via the properties `dropThreshold`, `moveCloserThreshold`, `thresholdSpeed`, `accuracyInfluence`, `routeTimeAccuracy`, `detailsTimePrecision` and `paceTimePrecision` of `RunBuilder` class. For additional details refer to in-code documentation.
+
 ## Acknowledgements
 Original work and core logic of the app by [Alexandre Linares](https://github.com/alekszilla/InfinityTracker).

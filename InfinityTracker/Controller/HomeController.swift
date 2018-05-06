@@ -122,7 +122,7 @@ class HomeController: UIViewController {
 	// MARK: - Activity Type
 	
 	@IBAction func toggleActivityType(_ sender: UILongPressGestureRecognizer) {
-		guard sender.state == .ended else {
+		guard sender.state == .began else {
 			return
 		}
 		

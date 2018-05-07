@@ -24,7 +24,7 @@ class RunBuilder {
 	/// The time interval covered by each details saved to HealthKit.
 	let detailsTimePrecision: TimeInterval = 15
 	/// The time interval before the last added position to use to calculate the current pace.
-	let paceTimePrecision: TimeInterval = 30
+	let paceTimePrecision: TimeInterval = 45
 	
 	var run: Run {
 		return rawRun
@@ -208,14 +208,14 @@ class RunBuilder {
 		
 		compactLastDetails()
 		
-		details = Array(details.suffix(max(paceDetailsCount, uncompactedRawDetails)))
+		rawDetails = Array(rawDetails.suffix(max(paceDetailsCount, uncompactedRawDetails)))
 	}
 	
 	/// Compacts all remaining raw details in samples for HealthKit.
 	private func flushDetails() {
 		// TODO: Also call when pausing the workout
 		compactLastDetails(flush: true)
-		details = []
+		rawDetails = []
 	}
 	
 	func finishRun(end: Date, completion: @escaping (Run?) -> Void) {

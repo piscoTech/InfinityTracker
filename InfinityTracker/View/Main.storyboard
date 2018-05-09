@@ -262,7 +262,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="handleStopTapped" destination="SHz-c9-6Uc" eventType="touchUpInside" id="0Ow-uV-pzR"/>
+                                    <action selector="handleStopTapped" destination="SHz-c9-6Uc" eventType="primaryActionTriggered" id="roa-aP-cMv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mq6-tB-9ZQ" customClass="GradientButton" customModule="InfinityTracker" customModuleProvider="target">
@@ -276,7 +276,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="handleStartTapped" destination="SHz-c9-6Uc" eventType="touchUpInside" id="X4w-2B-w6d"/>
+                                    <action selector="handleStartPauseResumeTapped" destination="SHz-c9-6Uc" eventType="primaryActionTriggered" id="GlW-w8-bIk"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="gNz-CM-8Hv" customClass="DetailView" customModule="InfinityTracker" customModuleProvider="target">
@@ -300,7 +300,7 @@
                             <constraint firstItem="lIx-ce-8MX" firstAttribute="leading" secondItem="mq6-tB-9ZQ" secondAttribute="trailing" constant="20" id="sfn-G9-NdV"/>
                             <constraint firstItem="UUN-9p-riM" firstAttribute="top" secondItem="RIZ-rL-LgE" secondAttribute="bottom" constant="10" id="u0L-VN-ukW"/>
                             <constraint firstAttribute="trailing" secondItem="UUN-9p-riM" secondAttribute="trailing" constant="10" id="xoK-vE-FpD"/>
-                            <constraint firstItem="zUz-gf-ihh" firstAttribute="top" secondItem="2GN-0I-X3K" secondAttribute="bottom" id="zcy-zr-e8Z"/>
+                            <constraint firstAttribute="bottom" secondItem="2GN-0I-X3K" secondAttribute="bottom" id="zcy-zr-e8Z"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Rhx-9W-GkK"/>
@@ -562,7 +562,7 @@ You can update your weight from below or any other app that works with Health, c
                             <constraint firstItem="Lcf-ai-XRU" firstAttribute="trailing" secondItem="ALr-ZD-thO" secondAttribute="trailingMargin" id="VLV-2d-zZw"/>
                             <constraint firstItem="Kxa-w4-U9p" firstAttribute="top" secondItem="Zkn-AY-8VP" secondAttribute="bottom" id="YDr-VN-7c1"/>
                             <constraint firstItem="Kxa-w4-U9p" firstAttribute="leading" secondItem="ALr-ZD-thO" secondAttribute="leading" id="Zj3-4a-9OW"/>
-                            <constraint firstItem="IzX-Sh-cK4" firstAttribute="top" secondItem="Kxa-w4-U9p" secondAttribute="bottom" id="oRl-mc-0WL"/>
+                            <constraint firstAttribute="bottom" secondItem="Kxa-w4-U9p" secondAttribute="bottom" id="oRl-mc-0WL"/>
                             <constraint firstItem="IzX-Sh-cK4" firstAttribute="top" secondItem="Lcf-ai-XRU" secondAttribute="bottom" constant="20" id="uhY-SK-hkY"/>
                         </constraints>
                     </view>

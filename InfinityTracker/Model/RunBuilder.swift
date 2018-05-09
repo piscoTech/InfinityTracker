@@ -31,13 +31,15 @@ class RunBuilder {
 	}
 	private let rawRun: InProgressRun
 	private let activityType: Activity
+	var paused: Bool {
+		return rawRun.paused
+	}
 	private(set) var completed = false
 	private(set) var invalidated = false
 	
 	/// Weight for calories calculation, in kg.
 	private let weight: Double
 	
-	// FIXME: This must be set to nil when pausing the workout
 	/// The previous logical location processed.
 	private var previousLocation: CLLocation?
 	/// Every other samples to provide additional details to the workout to be saved to HealthKit.
@@ -68,8 +70,36 @@ class RunBuilder {
 		self.activityType = activityType
 	}
 	
+	func pause(_ date: Date) {
+		guard rawRun.setPaused(true, date: date) else {
+			return
+		}
+		
+		flushDetails()
+		rawRun.currentPace = 0
+	}
+	
+	func resume(_ date: Date) -> [MKPolyline] {
+		guard rawRun.setPaused(false, date: date) else {
+			return []
+		}
+		
+		if let cur = previousLocation {
+			// Set the previous position to nil so a new separate track is started
+			previousLocation = nil
+			return add(locations: [cur])
+		}
+		
+		return []
+	}
+	
 	func add(locations: [CLLocation]) -> [MKPolyline] {
 		precondition(!invalidated, "This run builder has completed his job")
+		
+		guard !paused else {
+			previousLocation = locations.last
+			return []
+		}
 		
 		var polylines = [MKPolyline]()
 		var smoothLocations: [CLLocation] = []
@@ -113,7 +143,10 @@ class RunBuilder {
 				routeSmoothLoc = Array(routePositions[1...])
 			} else {
 				// Saving the first location
-				markPosition(loc, isStart: true)
+				if rawRun.startPosition == nil {
+					// This can be reached also after every resume action, but the position must be marked only at the start
+					markPosition(loc, isStart: true)
+				}
 				routeSmoothLoc = [loc]
 			}
 			
@@ -213,11 +246,11 @@ class RunBuilder {
 	
 	/// Compacts all remaining raw details in samples for HealthKit.
 	private func flushDetails() {
-		// TODO: Also call when pausing the workout
 		compactLastDetails(flush: true)
 		rawDetails = []
 	}
 	
+	/// Completes the run and saves it to HealthKit.
 	func finishRun(end: Date, completion: @escaping (Run?) -> Void) {
 		precondition(!invalidated, "This run builder has completed his job")
 		
@@ -252,10 +285,11 @@ class RunBuilder {
 			if HealthKitManager.canSaveWorkout() != .none {
 				let totalCalories = HKQuantity(unit: .kilocalorie(), doubleValue: self.rawRun.totalCalories)
 				let totalDistance = HKQuantity(unit: .meter(), doubleValue: self.rawRun.totalDistance)
+
 				let workout = HKWorkout(activityType: self.activityType.healthKitEquivalent,
 										start: self.rawRun.start,
 										end: self.rawRun.end,
-										duration: self.rawRun.duration,
+										workoutEvents: self.rawRun.workoutEvents,
 										totalEnergyBurned: totalCalories,
 										totalDistance: totalDistance,
 										device: HKDevice.local(),
@@ -311,11 +345,36 @@ fileprivate class InProgressRun: Run {
 			realEnd = newValue
 		}
 	}
+	
+	/// The list of workouts event. The list is guaranteed to start with a pause event and alternate with a resume event. If the run has ended, i.e. setEnd(_:) has been called, the last event is a resume.
+	private(set) var workoutEvents: [HKWorkoutEvent] = []
+	
 	var duration: TimeInterval {
-		return end.timeIntervalSince(start)
+		var events = self.workoutEvents
+		var duration: TimeInterval = 0
+		var intervalStart = self.start
+		
+		while !events.isEmpty {
+			let pause = events.removeFirst()
+			duration += pause.dateInterval.start.timeIntervalSince(intervalStart)
+			
+			if !events.isEmpty {
+				let resume = events.removeFirst()
+				intervalStart = resume.dateInterval.start
+			} else {
+				// Run currently paused
+				return duration
+			}
+		}
+		
+		return duration + end.timeIntervalSince(intervalStart)
 	}
-	// FIXME: Pace must be set to 0 when pausing the workout
+	
 	var currentPace: TimeInterval? = 0
+	
+	var paused: Bool {
+		return (workoutEvents.last?.type ?? .resume) == .pause
+	}
 	
 	var route: [MKPolyline] = []
 	var startPosition: MKPointAnnotation?
@@ -326,6 +385,18 @@ fileprivate class InProgressRun: Run {
 	fileprivate init(type: Activity, start: Date) {
 		self.type = type
 		self.start = start
+	}
+	
+	/// Create an appropriate event for the run. Setting the pause state to the current state will do nothing.
+	/// - returns: Whether the requested event has been added.
+	func setPaused(_ paused: Bool, date: Date) -> Bool {
+		guard self.paused != paused else {
+			return false
+		}
+		
+		workoutEvents.append(HKWorkoutEvent(type: paused ? .pause : .resume, dateInterval: DateInterval(start: date, duration: 0), metadata: nil))
+		
+		return true
 	}
 	
 }

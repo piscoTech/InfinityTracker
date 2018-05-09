@@ -11,6 +11,8 @@
 
 "START" = "Start";
 "END" = "End";
+"PAUSE" = "Pause";
+"RESUME" = "Resume";
 
 "DISTANCE" = "Distance";
 "DURATION" = "Duration";

@@ -44,7 +44,9 @@ class NewRunController: UIViewController {
 	private var didStart: Bool {
 		return run != nil
 	}
-	private var didEnd = false
+	private var didEnd: Bool {
+		return run?.invalidated ?? false
+	}
 	private var cannotSaveAlertDisplayed = false
 	
 	// MARK: Delegates
@@ -91,8 +93,14 @@ class NewRunController: UIViewController {
 	
 	// MARK: - Manage Run Start
 	
-	@IBAction func handleStartTapped() {
-		startRun()
+	@IBAction func handleStartPauseResumeTapped() {
+		if !didStart {
+			startRun()
+		} else if run.paused {
+			resumeRun()
+		} else {
+			pauseRun()
+		}
 	}
 	
 	private func startRun() {
@@ -100,29 +108,32 @@ class NewRunController: UIViewController {
 			return
 		}
 		
-		// Remove next lines, and change Start to Pause
-		startButton.isEnabled = false
-		startButton.alpha = 1.0
-		
-		//		startButtonCenterXConstraint.constant -= 300
-		//		stopButtonCenterXConstraint.constant = 0
-		
 		UIView.animate(withDuration: 0.60, animations: {
 			self.view.layoutIfNeeded()
-			// FIXME: Remove next line, Start should remain enabled as Pause
-			self.startButton.alpha = Appearance.disabledAlpha
 			self.stopButton.alpha = 1.0
 		}) { (finished) in
-			//			self.startButton.removeFromSuperview()
 			self.stopButton.isEnabled = true
 		}
 		
 		run = RunBuilder(start: Date(), activityType: activityType, weight: weight)
+		updatePauseStatus()
 		timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTimer), userInfo: nil, repeats: true)
 		if let prev = previousLocation {
 			self.locationManager(locationManager, didUpdateLocations: [prev])
 			previousLocation = nil
 		}
+	}
+	
+	// MARK: - Manage Run Pause
+	
+	private func pauseRun() {
+		run.pause(Date())
+		updatePauseStatus()
+	}
+	
+	private func resumeRun() {
+		mapView.addOverlays(run.resume(Date()))
+		updatePauseStatus()
 	}
 	
 	// MARK: - Manage Run Stop
@@ -147,7 +158,6 @@ class NewRunController: UIViewController {
 			return
 		}
 		
-		self.didEnd = true
 		self.stopRun()
 		run.finishRun(end: Date()) { res in
 			DispatchQueue.main.async {
@@ -210,6 +220,14 @@ class NewRunController: UIViewController {
 	
 	@objc func updateTimer() {
 		details.update(for: run?.run)
+	}
+	
+	private func updatePauseStatus() {
+		guard didStart else {
+			return
+		}
+		
+		startButton.setTitle(NSLocalizedString(run.paused ? "RESUME" : "PAUSE", comment: "Pause/Resume"), for: [])
 	}
 	
 	private func setupViews() {

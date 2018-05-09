@@ -1,5 +1,5 @@
 //
-//  SavedRun.swift
+//  CompletedRun.swift
 //  InfinityTracker
 //
 //  Created by Marco Boschi on 26/04/2018.
@@ -9,7 +9,7 @@
 import HealthKit
 import MapKit
 
-class SavedRun: Run {
+class CompletedRun: Run {
 	
 	private let raw: HKWorkout
 	
@@ -62,6 +62,7 @@ class SavedRun: Run {
 			
 			self.rawRoute = route
 			self.route = []
+			var positions: [CLLocation] = []
 			let locQuery = HKWorkoutRouteQuery(route: route) { (q, loc, isDone, _) in
 				guard let locations = loc else {
 					completion(false)
@@ -77,9 +78,51 @@ class SavedRun: Run {
 					self.endPosition = self.annotation(for: end, isStart: false)
 				}
 				
-				self.route.append(MKPolyline(coordinates: locations.map { $0.coordinate }, count: locations.count))
+				positions.append(contentsOf: locations)
 				
 				if isDone {
+					var events = self.raw.workoutEvents ?? []
+					// Remove any event at the beginning that's not a pause event
+					if let pauseInd = events.index(where: { $0.type == .pause }) {
+						events = Array(events.suffix(from: pauseInd))
+					}
+					var intervals: [DateInterval] = []
+					var intervalStart = self.start
+					
+					// Calculate the intervals when the workout was active
+					while !events.isEmpty {
+						let pause = events.removeFirst()
+						intervals.append(DateInterval(start: intervalStart, end: pause.dateInterval.start))
+						
+						if let resume = events.index(where: { $0.type == .resume }) {
+							intervalStart = events[resume].dateInterval.start
+							let tmpEv = events.suffix(from: resume)
+							if let pause = tmpEv.index(where: { $0.type == .pause }) {
+								events = Array(tmpEv.suffix(from: pause))
+							} else {
+								// Last interval of the run
+								intervals.append(DateInterval(start: intervalStart, end: self.end))
+								break
+							}
+						} else {
+							// Run ended while paused
+							break
+						}
+					}
+					
+					// Isolate positions on active intervals
+					for i in intervals {
+						if var startPos = positions.index(where: { $0.timestamp >= i.start }) {
+							startPos = positions.index(startPos, offsetBy: -1, limitedBy: positions.startIndex) ?? startPos
+							var track = positions.suffix(from: startPos)
+							if let afterEndPos = track.index(where: { $0.timestamp > i.end }) {
+								track = track.prefix(upTo: afterEndPos)
+							}
+							
+							self.route.append(MKPolyline(coordinates: track.map { $0.coordinate }, count: track.count))
+						}
+					}
+					
 					completion(true)
 				}
 			}

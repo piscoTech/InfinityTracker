@@ -203,6 +203,7 @@ class NewRunController: UIViewController {
 		mapView.showsUserLocation = true
 		mapView.mapType = .standard
 		mapView.userTrackingMode = .follow
+		mapView.showsBuildings = true
 	}
 	
 	private func startUpdatingLocations() {

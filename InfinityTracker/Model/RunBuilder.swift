@@ -40,8 +40,14 @@ class RunBuilder {
 	/// Weight for calories calculation, in kg.
 	private let weight: Double
 	
+	/// The last location added to the builder. This location can be either processed is the workout is running or raw if added while paused.
+	private var lastCurrentLocation: CLLocation?
 	/// The previous logical location processed.
-	private var previousLocation: CLLocation?
+	private var previousLocation: CLLocation? {
+		didSet {
+			lastCurrentLocation = previousLocation
+		}
+	}
 	/// Every other samples to provide additional details to the workout to be saved to HealthKit.
 	private var details: [HKQuantitySample] = []
 	/// Additional details for the workout. Each added position create a raw detail.
@@ -84,7 +90,7 @@ class RunBuilder {
 			return []
 		}
 		
-		if let cur = previousLocation {
+		if let cur = lastCurrentLocation {
 			// Set the previous position to nil so a new separate track is started
 			previousLocation = nil
 			return add(locations: [cur])
@@ -97,7 +103,7 @@ class RunBuilder {
 		precondition(!invalidated, "This run builder has completed his job")
 		
 		guard !paused else {
-			previousLocation = locations.last
+			lastCurrentLocation = locations.last
 			return []
 		}
 		

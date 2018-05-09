@@ -100,6 +100,7 @@ class RunDetailController: UIViewController {
 		
 		mapViewDelegate.setupAppearance(for: mapView)
 		mapView.delegate = mapViewDelegate
+		mapView.showsBuildings = true
 		
 		details.update(for: run)
 	}

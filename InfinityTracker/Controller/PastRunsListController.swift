@@ -77,7 +77,7 @@ class PastRunsListController: UITableViewController {
 		let filter = HKQuery.predicateForObjects(from: HKSource.default())
 		let type = HKObjectType.workoutType()
 		let workoutQuery = HKSampleQuery(sampleType: type, predicate: filter, limit: displayLimit, sortDescriptors: [sortDescriptor]) { (_, r, err) in
-			self.runs = (r as? [HKWorkout] ?? []).compactMap { SavedRun(raw: $0) }
+			self.runs = (r as? [HKWorkout] ?? []).compactMap { CompletedRun(raw: $0) }
 			
 			DispatchQueue.main.async {
 				self.tableView.reloadData()

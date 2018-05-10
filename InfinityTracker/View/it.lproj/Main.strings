@@ -1,0 +1,34 @@
+/*
+ Main.strings
+ InfinityTracker
+ 
+ Created by Marco Boschi on 10/05/2018.
+ Copyright © 2018 Marco Boschi. All rights reserved.
+*/
+
+// MARK: Home
+
+"4AQ-QS-sC3.text" = "Statistiche";
+// "L45-HL-m86.text" = "km";
+// "CNq-2x-AIW.text" = "kcal";
+"xPn-3r-NOP.text" = "Tocca per aggiornare il tuo peso";
+"4S6-vD-jl5.normalTitle" = "Allenamenti completati";
+
+// MARK: Update Weight
+
+"6el-9q-Mzs.text" = "Aggiorna peso";
+"NDI-dM-xff.text" = "Il tuo peso è usato per calcolare le calorie bruciate e tanto più è accurato, tanto più lo sono le calorie calcolate.\nPuoi aggiornare il tuo peso qui sotto o con ogni app che usa Salute, le calorie saranno calcolate usando il peso più recente salvato su Salute.";
+
+"EhO-EC-FOT.text" = "Peso corrente:";
+"LSn-Sv-QKO.text" = "Nuovo peso:";
+// "d2j-6q-Go7.text" = "kg";
+"pf2-cY-YlX.normalTitle" = "Salva";
+
+// MARK: New Workout
+
+"mq6-tB-9ZQ.normalTitle" = "Avvia";
+"lIx-ce-8MX.normalTitle" = "Fine";
+
+// MARK: Past Runs List
+
+"sgr-Te-P5z.title" = "Allenamenti completati";

@@ -139,13 +139,12 @@ class NewRunController: UIViewController {
 	// MARK: - Manage Run Stop
 	
 	@IBAction func handleStopTapped() {
-		let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to stop?", preferredStyle: .actionSheet)
+		let actionSheet = UIAlertController(title: NSLocalizedString("END_WRKT_CONFIRM", comment: "Complete?"), message: nil, preferredStyle: .actionSheet)
 		
-		let stopAction = UIAlertAction(title: "Stop", style: .destructive) { [weak self] (action) in
+		let stopAction = UIAlertAction(title: NSLocalizedString("STOP", comment: "Stop"), style: .default) { [weak self] (action) in
 			self?.manualStop()
 		}
-		
-		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+		let cancelAction = UIAlertAction(title: NSLocalizedString("CANCEL", comment: "Cancel"), style: .cancel)
 		
 		actionSheet.addAction(stopAction)
 		actionSheet.addAction(cancelAction)
@@ -256,8 +255,8 @@ class NewRunController: UIViewController {
 	// MARK: - Navigation
 	
 	@objc func handleDismissController() {
-		let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to leave this screen?", preferredStyle: .actionSheet)
-		let stopAction = UIAlertAction(title: "Leave", style: .destructive) { [weak self] (action) in
+		let actionSheet = UIAlertController(title: NSLocalizedString("CANCEL_WRKT_CONFIRM", comment: "Confim cancel?"), message: nil, preferredStyle: .actionSheet)
+		let stopAction = UIAlertAction(title: NSLocalizedString("LEAVE", comment: "Leave"), style: .destructive) { [weak self] (action) in
 			guard self != nil else {
 				return
 			}
@@ -265,8 +264,7 @@ class NewRunController: UIViewController {
 			self?.run?.discard()
 			self?.newRunDismissDelegate?.shouldDismiss(self!)
 		}
-		
-		let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+		let cancelAction = UIAlertAction(title: NSLocalizedString("CANCEL", comment: "Cancel"), style: .cancel)
 		
 		actionSheet.addAction(stopAction)
 		actionSheet.addAction(cancelAction)

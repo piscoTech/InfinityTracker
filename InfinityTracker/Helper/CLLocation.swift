@@ -40,10 +40,7 @@ extension CLLocation {
 			h += coord.altitude * weight
 		}
 		
-		// Sum of weights is 1
-		//x = x/CGFloat(listCoords.count)
-		//y = y/CGFloat(listCoords.count)
-		//z = z/CGFloat(listCoords.count)
+		// No need to divide by the total, the sum of weights is 1
 		
 		let lon = atan2(y, x)
 		let hyp = sqrt(x*x + y*y)

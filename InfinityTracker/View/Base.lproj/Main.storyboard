@@ -527,7 +527,7 @@ You can update your weight from below or any other app that works with Health, c
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Past Workouts" id="sgr-Te-P5z">
-                        <barButtonItem key="backBarButtonItem" title=" " id="6hf-N3-t4b"/>
+                        <barButtonItem key="backBarButtonItem" title=" " id="VGf-xl-tmH"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </tableViewController>

@@ -100,6 +100,9 @@ class CompletedRun: Run {
 							let tmpEv = events.suffix(from: resume)
 							if let pause = tmpEv.index(where: { $0.type == .pause }) {
 								events = Array(tmpEv.suffix(from: pause))
+							} else {
+								// Empty the array as at the next cycle we expect the first element to be a pause
+								events = []
 							}
 						} else {
 							// Run ended while paused
@@ -113,10 +116,10 @@ class CompletedRun: Run {
 					
 					// Isolate positions on active intervals
 					for i in intervals {
-						// TODO: Use lastIndex(where: { $0.timestamp < i.start }) when Swift 4.2 is released compacting the computation of startPos in a single if let clause
-						if var startPos = positions.reversed().index(where: { $0.timestamp < i.start })?.base {
+						// TODO: Use lastIndex(where: { $0.timestamp <= i.start }) when Swift 4.2 is released compacting the computation of startPos in a single if let clause
+						if var startPos = positions.reversed().index(where: { $0.timestamp <= i.start })?.base {
 							startPos = positions.index(before: startPos)
-							startPos = positions.index(startPos, offsetBy: -1, limitedBy: positions.startIndex) ?? startPos
+//							startPos = positions.index(startPos, offsetBy: -1, limitedBy: positions.startIndex) ?? startPos
 							var track = positions.suffix(from: startPos)
 							if let afterEndPos = track.index(where: { $0.timestamp > i.end }) {
 								track = track.prefix(upTo: afterEndPos)

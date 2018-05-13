@@ -255,14 +255,19 @@ class NewRunController: UIViewController {
 	// MARK: - Navigation
 	
 	@objc func handleDismissController() {
+		let discard = {
+			self.run?.discard()
+			self.newRunDismissDelegate?.shouldDismiss(self)
+		}
+		
+		guard didStart else {
+			discard()
+			return
+		}
+		
 		let actionSheet = UIAlertController(title: NSLocalizedString("CANCEL_WRKT_CONFIRM", comment: "Confim cancel?"), message: nil, preferredStyle: .actionSheet)
-		let stopAction = UIAlertAction(title: NSLocalizedString("LEAVE", comment: "Leave"), style: .destructive) { [weak self] (action) in
-			guard self != nil else {
-				return
-			}
-			
-			self?.run?.discard()
-			self?.newRunDismissDelegate?.shouldDismiss(self!)
+		let stopAction = UIAlertAction(title: NSLocalizedString("LEAVE", comment: "Leave"), style: .destructive) { _ in
+			discard()
 		}
 		let cancelAction = UIAlertAction(title: NSLocalizedString("CANCEL", comment: "Cancel"), style: .cancel)
 		

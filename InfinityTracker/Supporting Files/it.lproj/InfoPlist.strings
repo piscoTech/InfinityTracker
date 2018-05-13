@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  InfinityTracker
+
+  Created by Marco Boschi on 13/05/2018.
+  Copyright © 2018 Marco Boschi. All rights reserved.
+*/
+
+"NSHealthShareUsageDescription" = "InfinityTracker ha bisogno di leggere dati da Salute per caricare i tuoi allenamenti completati e calcolare correttamente le calorie bruciate.";
+"NSHealthUpdateUsageDescription" = "InfinityTracker ha bisogno di scrivere dati su Salute per salvare i tuoi allenamenti completati.";
+"NSLocationWhenInUseUsageDescription" = "InfinityTracker ha bisogno di conoscere la tua posizione per monitorare i tuoi allenamenti.";

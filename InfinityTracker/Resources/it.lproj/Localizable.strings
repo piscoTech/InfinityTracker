@@ -1,0 +1,54 @@
+/*
+ Localizable.strings
+ InfinityTracker
+ 
+ Created by Marco Boschi on 25/04/2018.
+ Copyright © 2018 Marco Boschi. All rights reserved.
+ */
+
+"CANCEL" = "Annulla";
+"ERROR" = "Errore";
+
+"END_WRKT_CONFIRM" = "Sei sicuro di voler terminare e salvare il tuo allenamento?";
+"CANCEL_WRKT_CONFIRM" = "Sei sicuro di voler abbandonare il tuo allenamento e perdere i tuoi progressi?";
+"MOTIVATIONAL_TEXT" = "È ora di cominciare a muoversi!";
+
+// Annotations for displaying route
+"START" = "Inizio";
+"END" = "Fine";
+
+// Complete&Save/Cancel workout
+"STOP" = "Fine";
+"LEAVE" = "Abbandona";
+
+// Pause workout
+"PAUSE" = "Pausa";
+"RESUME" = "Riprendi";
+
+// Detail view
+"DISTANCE" = "Distanza";
+"DURATION" = "Durata";
+"CALORIES" = "Calorie";
+"PACE" = "Passo";
+
+// MARK: - Workout Types
+"RUN" = "Corsa";
+"WALK" = "Camminata";
+
+"NEW_RUN" = "Nuova corsa";
+"NEW_WALK" = "Nuova camminata";
+
+"LONG_PRESS_CHANGE_RUN" = "Premi a lungo per monitorare delle corse";
+"LONG_PRESS_CHANGE_WALK" = "Premi a lungo per monitorare delle camminate";
+
+// MARK: - Errors
+
+"WEIGHT_SAVE_ERROR" = "Impossibile salvare il peso";
+"WARN_HEALTH_ACCESS_MISSING" = "Permessi per Salute mancanti";
+"WARN_HEALTH_ACCESS_MISSING_BODY" = "Il tuo allenamento sarà salvato solo in parte o non salvato affatto perché mancano alcuni permessi per accedere a Salute.";
+
+// MARK: - Location Permissions
+
+"LOCATION_REQUIRED" = "Posizione necessaria";
+"LOCATION_REQUIRED_TEXT" = "I dati sulla posizione sono necessari per monitorare i tuoi allenamenti";
+"LOCATION_SETTINGS_OPEN" = "Impostazioni";

@@ -88,6 +88,7 @@ class CompletedRun: Run {
 					}
 					var intervals: [DateInterval] = []
 					var intervalStart = self.start
+					var fullyScanned = false
 					
 					// Calculate the intervals when the workout was active
 					while !events.isEmpty {
@@ -99,20 +100,22 @@ class CompletedRun: Run {
 							let tmpEv = events.suffix(from: resume)
 							if let pause = tmpEv.index(where: { $0.type == .pause }) {
 								events = Array(tmpEv.suffix(from: pause))
-							} else {
-								// Last interval of the run
-								intervals.append(DateInterval(start: intervalStart, end: self.end))
-								break
 							}
 						} else {
 							// Run ended while paused
+							fullyScanned = true
 							break
 						}
+					}
+					if !fullyScanned {
+						intervals.append(DateInterval(start: intervalStart, end: self.end))
 					}
 					
 					// Isolate positions on active intervals
 					for i in intervals {
-						if var startPos = positions.index(where: { $0.timestamp >= i.start }) {
+						// TODO: Use lastIndex(where: { $0.timestamp < i.start }) when Swift 4.2 is released compacting the computation of startPos in a single if let clause
+						if var startPos = positions.reversed().index(where: { $0.timestamp < i.start })?.base {
+							startPos = positions.index(before: startPos)
 							startPos = positions.index(startPos, offsetBy: -1, limitedBy: positions.startIndex) ?? startPos
 							var track = positions.suffix(from: startPos)
 							if let afterEndPos = track.index(where: { $0.timestamp > i.end }) {

@@ -4,8 +4,6 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
-	<key>CFBundleDisplayName</key>
-	<string>InfinityTracker</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -23,13 +21,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSHealthShareUsageDescription</key>
-	<string>This app needs to read data from Health to load your completed workouts and properly calculate burned calories.</string>
+	<string>InfinityTracker needs to read data from Health to load your completed workouts and properly calculate burned calories.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>This app needs to write data to Health to save your completed workouts.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs to know your location to track your workouts.</string>
+	<string>InfinityTracker needs to write data to Health to save your completed workouts.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs to know your location to track your workouts.</string>
+	<string>InfinityTracker needs to know your location to track your workouts.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

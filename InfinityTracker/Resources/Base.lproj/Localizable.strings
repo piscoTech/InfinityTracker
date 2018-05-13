@@ -9,22 +9,29 @@
 "CANCEL" = "Cancel";
 "ERROR" = "Error";
 
-"END_WRKT_CONFIRM" = "Are you sure you want to stop and complete your workout?";
-"CANCEL_WRKT_CONFIRM" = "Are you sure you want to abandon the workout and lose all your progress?";
+"END_WRKT_CONFIRM" = "Are you sure you want to stop and save your workout?";
+"CANCEL_WRKT_CONFIRM" = "Are you sure you want to abandon your workout and lose all your progress?";
 "MOTIVATIONAL_TEXT" = "It's time to start moving!";
 
+// Annotations for displaying route
 "START" = "Start";
 "END" = "End";
+
+// Complete&Save/Cancel workout
 "STOP" = "Stop";
-"PAUSE" = "Pause";
-"RESUME" = "Resume";
 "LEAVE" = "Leave";
 
+// Pause workout
+"PAUSE" = "Pause";
+"RESUME" = "Resume";
+
+// Detail view
 "DISTANCE" = "Distance";
 "DURATION" = "Duration";
 "CALORIES" = "Calories";
 "PACE" = "Pace";
 
+// MARK: - Workout Types
 "RUN" = "Run";
 "WALK" = "Walk";
 
@@ -38,7 +45,7 @@
 
 "WEIGHT_SAVE_ERROR" = "Cannot save weight";
 "WARN_HEALTH_ACCESS_MISSING" = "Health Permission Missing";
-"WARN_HEALTH_ACCESS_MISSING_BODY" = "Your workout will not be fully or partially saved because some pemission are missing for Health access.";
+"WARN_HEALTH_ACCESS_MISSING_BODY" = "Your workout will be saved only partially or not saved at all because some pemission are missing for Health access.";
 
 // MARK: - Location Permissions
 

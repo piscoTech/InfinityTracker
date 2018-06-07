@@ -12,9 +12,9 @@ import MapKit
 /// Contains all constants representing the appearance of the app. An instance can be used as `MKMapViewDelegate` to uniform the appearance of the maps.
 class Appearance: NSObject, MKMapViewDelegate {
 	
-	static let orangeLight = #colorLiteral(red: 0.9137254902, green: 0.7725490196, blue: 0.2901960784, alpha: 1)
-    static let orangeDark = UIColor.orange
-	static let detailsColor = #colorLiteral(red: 1, green: 0.4941176471, blue: 0.3803921569, alpha: 1)
+	static let orangeLight = UIColor(named: "Orange Light")!
+    static let orangeDark = UIColor(named: "Orange Dark")!
+	static let detailsColor = UIColor(named: "Orange Detail")!
 	
 	static let appLogo: UIImage = #imageLiteral(resourceName: "infinityLogo")
 	static let emptyState: UIImage = #imageLiteral(resourceName: "emptyState")

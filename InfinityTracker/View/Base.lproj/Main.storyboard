@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="aDj-Kq-MJ8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="aDj-Kq-MJ8">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -8,6 +8,7 @@
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -145,7 +146,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.53388129340000001" blue="0.33246527780000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="Orange Detail"/>
                         <constraints>
                             <constraint firstItem="dNY-Fa-U63" firstAttribute="centerX" secondItem="exj-AN-ov9" secondAttribute="centerX" id="5Q0-Td-AqA"/>
                             <constraint firstItem="nIy-QE-Mj3" firstAttribute="centerX" secondItem="exj-AN-ov9" secondAttribute="centerX" id="8Vf-ns-aYd"/>
@@ -235,7 +236,7 @@
                                 <subviews>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.55000001192092896" minValue="0.10000000149011612" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="UHy-RL-tVu">
                                         <rect key="frame" x="14" y="5" width="133" height="39"/>
-                                        <color key="tintColor" red="1" green="0.53388129340000001" blue="0.33246527780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="tintColor" name="Orange Detail"/>
                                         <connections>
                                             <action selector="sliderDidChangeValue" destination="SHz-c9-6Uc" eventType="valueChanged" id="44p-eX-Shc"/>
                                         </connections>
@@ -398,7 +399,7 @@ You can update your weight from below or any other app that works with Health, c
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="0.4941176471" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="Orange Detail"/>
                         <constraints>
                             <constraint firstItem="NDI-dM-xff" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="q0q-xu-Uaj" secondAttribute="leadingMargin" id="3i0-pT-U7C"/>
                             <constraint firstItem="vuH-UV-I9y" firstAttribute="centerX" secondItem="q0q-xu-Uaj" secondAttribute="centerX" id="Iwq-c0-ez1"/>
@@ -486,7 +487,7 @@ You can update your weight from below or any other app that works with Health, c
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tOc-S6-1Fl">
                                                             <rect key="frame" x="0.0" y="0.0" width="43.5" height="20.5"/>
                                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                                            <color key="textColor" red="1" green="0.4941176471" blue="0.3803921569" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="textColor" name="Orange Detail"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5US-7j-vZg">
@@ -579,6 +580,9 @@ You can update your weight from below or any other app that works with Health, c
     </scenes>
     <resources>
         <image name="infinityLogo" width="512" height="512"/>
+        <namedColor name="Orange Detail">
+            <color red="1" green="0.49411764705882355" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="qTK-as-LHc"/>

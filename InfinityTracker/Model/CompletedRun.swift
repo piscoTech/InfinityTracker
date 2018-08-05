@@ -116,9 +116,8 @@ class CompletedRun: Run {
 					
 					// Isolate positions on active intervals
 					for i in intervals {
-						// TODO: Use lastIndex(where: { $0.timestamp <= i.start }) when Swift 4.2 is released compacting the computation of startPos in a single if let clause
-						if var startPos = positions.reversed().index(where: { $0.timestamp <= i.start })?.base {
-							startPos = positions.index(before: startPos)
+						#warning("Test me")
+						if let startPos = positions.lastIndex(where: { $0.timestamp <= i.start }) {
 							var track = positions.suffix(from: startPos)
 							if let afterEndPos = track.index(where: { $0.timestamp > i.end }) {
 								track = track.prefix(upTo: afterEndPos)

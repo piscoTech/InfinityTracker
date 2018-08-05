@@ -50,7 +50,7 @@ class RunDetailController: UIViewController {
 				var rect: MKMapRect?
 				for p in self.run.route {
 					if let r = rect {
-						rect = MKMapRectUnion(r, p.boundingMapRect)
+						rect = r.union(p.boundingMapRect)
 					} else {
 						rect = p.boundingMapRect
 					}

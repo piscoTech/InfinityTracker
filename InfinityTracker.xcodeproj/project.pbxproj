@@ -291,7 +291,7 @@
 					FA0FE3A41F58059F002B84D7 = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = C8D57YLUAC;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -568,7 +568,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Marco-Boschi.ios.InfinityTracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -586,7 +586,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Marco-Boschi.ios.InfinityTracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

@@ -137,7 +137,7 @@ class HomeController: UIViewController {
 		if identifier == newRunSegueIdentifier && !locationEnabled {
 			let alert = UIAlertController(title: NSLocalizedString("LOCATION_REQUIRED", comment: "Need gps"), message: NSLocalizedString("LOCATION_REQUIRED_TEXT", comment: "Need gps desc"), preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: NSLocalizedString("LOCATION_SETTINGS_OPEN", comment: "Open settings"), style: .default) { _ in
-				if let bundleID = Bundle.main.bundleIdentifier, let settingsURL = URL(string: UIApplicationOpenSettingsURLString + bundleID) {
+				if let bundleID = Bundle.main.bundleIdentifier, let settingsURL = URL(string: UIApplication.openSettingsURLString + bundleID) {
 					UIApplication.shared.open(settingsURL)
 				}
 			})

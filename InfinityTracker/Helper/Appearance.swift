@@ -26,7 +26,7 @@ class Appearance: NSObject, MKMapViewDelegate {
 		UINavigationBar.appearance().isTranslucent = true
 		UINavigationBar.appearance().barTintColor = UIColor.white
 		UINavigationBar.appearance().tintColor = Appearance.orangeDark
-		UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor: Appearance.detailsColor]
+		UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: Appearance.detailsColor]
 	}
 	
 	static func setupNavigationBar(_ navigationController: UINavigationController?) {

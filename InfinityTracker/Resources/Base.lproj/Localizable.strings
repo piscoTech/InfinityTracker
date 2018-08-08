@@ -48,7 +48,7 @@
 
 "WEIGHT_SAVE_ERROR" = "Cannot save weight";
 "WARN_HEALTH_ACCESS_MISSING" = "Health Permission Missing";
-"WARN_HEALTH_ACCESS_MISSING_BODY" = "Your workout will be saved only partially or not saved at all because some pemission are missing for Health access.";
+"WARN_HEALTH_ACCESS_MISSING_BODY" = "Your workout will be saved only partially or not saved at all because some pemissions are missing for Health access. Go to the Health app, Sources tab to change them.";
 
 // MARK: - Location Permissions
 

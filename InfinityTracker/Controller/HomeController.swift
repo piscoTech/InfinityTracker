@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import MBLibrary
+import StoreKit
 
 class HomeController: UIViewController {
 	
@@ -51,6 +52,14 @@ class HomeController: UIViewController {
 		super.viewDidAppear(animated)
 		
 		HealthKitManager.requestAuthorization()
+		
+		if #available(iOS 10.3, *) {
+			guard Preferences.reviewRequestCounter >= Preferences.reviewRequestThreshold else {
+				return
+			}
+			
+			SKStoreReviewController.requestReview()
+		}
 	}
 	
 	func setupLocationPermission(updateView: Bool = false) {

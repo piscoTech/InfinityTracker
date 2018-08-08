@@ -116,7 +116,6 @@ class CompletedRun: Run {
 					
 					// Isolate positions on active intervals
 					for i in intervals {
-						#warning("Test me")
 						if let startPos = positions.lastIndex(where: { $0.timestamp <= i.start }) {
 							var track = positions.suffix(from: startPos)
 							if let afterEndPos = track.index(where: { $0.timestamp > i.end }) {

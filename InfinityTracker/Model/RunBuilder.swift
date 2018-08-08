@@ -303,6 +303,8 @@ class RunBuilder {
 				)
 				HealthKitManager.healthStore.save(workout) { success, _ in
 					if success {
+						Preferences.reviewRequestCounter += 1
+						
 						// Save the route only if workout has been saved
 						self.route.finishRoute(with: workout, metadata: nil) { route, _ in
 							if self.details.isEmpty {

@@ -48,7 +48,7 @@
 
 "WEIGHT_SAVE_ERROR" = "Impossibile salvare il peso";
 "WARN_HEALTH_ACCESS_MISSING" = "Permessi per Salute mancanti";
-"WARN_HEALTH_ACCESS_MISSING_BODY" = "Il tuo allenamento sarà salvato solo in parte o non salvato affatto perché mancano alcuni permessi per accedere a Salute.";
+"WARN_HEALTH_ACCESS_MISSING_BODY" = "Il tuo allenamento sarà salvato solo in parte o non salvato affatto perché mancano alcuni permessi per accedere a Salute. Apri l'app Salute, scheda Fonti per cambiarli.";
 
 // MARK: - Location Permissions
 

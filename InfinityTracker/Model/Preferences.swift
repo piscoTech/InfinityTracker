@@ -15,6 +15,8 @@ fileprivate enum PreferenceKeys: String, KeyValueStoreKey {
 	
 	case activityType = "activityType"
 	
+	case reviewRequestCounter = "reviewRequestCounter"
+	
 	var description: String {
 		return rawValue
 	}
@@ -25,6 +27,19 @@ class Preferences {
 	
 	private static let appSpecific = KeyValueStore(userDefaults: UserDefaults.standard)
 	private init() {}
+	
+	static var reviewRequestThreshold: Int {
+		return 3
+	}
+	static var reviewRequestCounter: Int {
+		get {
+			return appSpecific.integer(forKey: PreferenceKeys.reviewRequestCounter)
+		}
+		set {
+			appSpecific.set(newValue, forKey: PreferenceKeys.reviewRequestCounter)
+			appSpecific.synchronize()
+		}
+	}
 	
 	static var authorized: Bool {
 		get {

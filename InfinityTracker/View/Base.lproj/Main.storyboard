@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="aDj-Kq-MJ8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14306.4" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aDj-Kq-MJ8">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14278.2"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,10 +16,6 @@
         <scene sceneID="R02-lz-uXg">
             <objects>
                 <viewController id="u7X-Os-Fjy" customClass="HomeController" customModule="InfinityTracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="sVn-1a-ov2"/>
-                        <viewControllerLayoutGuide type="bottom" id="eNM-m7-FpJ"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="exj-AN-ov9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -116,7 +111,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4S6-vD-jl5">
-                                        <rect key="frame" x="82" y="144" width="212" height="32"/>
+                                        <rect key="frame" x="81.5" y="144" width="212" height="32"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.0" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <state key="normal" title="Check My Previous Workouts">
@@ -145,29 +140,39 @@
                                     <constraint firstItem="N4a-xm-Tob" firstAttribute="centerX" secondItem="I9U-vT-rCf" secondAttribute="centerX" id="xvf-4B-5Su"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-MP-g35">
+                                <rect key="frame" x="16" y="20" width="22" height="22"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <segue destination="NGE-h3-Hb0" kind="presentation" id="hZj-Zz-7gV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" name="Orange Detail"/>
                         <constraints>
-                            <constraint firstItem="dNY-Fa-U63" firstAttribute="centerX" secondItem="exj-AN-ov9" secondAttribute="centerX" id="5Q0-Td-AqA"/>
-                            <constraint firstItem="nIy-QE-Mj3" firstAttribute="centerX" secondItem="exj-AN-ov9" secondAttribute="centerX" id="8Vf-ns-aYd"/>
-                            <constraint firstItem="xPn-3r-NOP" firstAttribute="centerX" secondItem="exj-AN-ov9" secondAttribute="centerX" id="9QV-zZ-JZe"/>
+                            <constraint firstItem="dNY-Fa-U63" firstAttribute="centerX" secondItem="aT5-JU-h0I" secondAttribute="centerX" id="5Q0-Td-AqA"/>
+                            <constraint firstItem="nIy-QE-Mj3" firstAttribute="centerX" secondItem="aT5-JU-h0I" secondAttribute="centerX" id="8Vf-ns-aYd"/>
+                            <constraint firstItem="xPn-3r-NOP" firstAttribute="centerX" secondItem="aT5-JU-h0I" secondAttribute="centerX" id="9QV-zZ-JZe"/>
                             <constraint firstItem="nIy-QE-Mj3" firstAttribute="top" secondItem="Twc-MB-njj" secondAttribute="bottom" constant="8" id="AdJ-YO-v8r"/>
-                            <constraint firstItem="ajx-ig-atm" firstAttribute="centerX" secondItem="exj-AN-ov9" secondAttribute="centerX" id="DFx-wH-Qvi"/>
+                            <constraint firstItem="ajx-ig-atm" firstAttribute="centerX" secondItem="aT5-JU-h0I" secondAttribute="centerX" id="DFx-wH-Qvi"/>
                             <constraint firstItem="xPn-3r-NOP" firstAttribute="top" secondItem="nIy-QE-Mj3" secondAttribute="bottom" id="HWS-O6-UIt"/>
-                            <constraint firstAttribute="trailing" secondItem="I9U-vT-rCf" secondAttribute="trailing" id="MVN-wb-rgb"/>
-                            <constraint firstItem="rWv-N2-tlE" firstAttribute="centerX" secondItem="exj-AN-ov9" secondAttribute="centerX" id="Pdf-LA-SXm"/>
-                            <constraint firstItem="Twc-MB-njj" firstAttribute="centerX" secondItem="exj-AN-ov9" secondAttribute="centerX" id="Q4H-w5-eJb"/>
-                            <constraint firstItem="4AQ-QS-sC3" firstAttribute="centerX" secondItem="exj-AN-ov9" secondAttribute="centerX" id="WtQ-zX-eNR"/>
+                            <constraint firstItem="aT5-JU-h0I" firstAttribute="trailing" secondItem="I9U-vT-rCf" secondAttribute="trailing" id="MVN-wb-rgb"/>
+                            <constraint firstItem="rWv-N2-tlE" firstAttribute="centerX" secondItem="aT5-JU-h0I" secondAttribute="centerX" id="Pdf-LA-SXm"/>
+                            <constraint firstItem="Twc-MB-njj" firstAttribute="centerX" secondItem="aT5-JU-h0I" secondAttribute="centerX" id="Q4H-w5-eJb"/>
+                            <constraint firstItem="WTo-MP-g35" firstAttribute="leading" secondItem="exj-AN-ov9" secondAttribute="leadingMargin" constant="4" id="TNb-ZT-RkJ"/>
+                            <constraint firstItem="4AQ-QS-sC3" firstAttribute="centerX" secondItem="aT5-JU-h0I" secondAttribute="centerX" id="WtQ-zX-eNR"/>
                             <constraint firstItem="rWv-N2-tlE" firstAttribute="top" secondItem="xPn-3r-NOP" secondAttribute="bottom" id="Yfi-Z5-Txi"/>
                             <constraint firstItem="4AQ-QS-sC3" firstAttribute="top" secondItem="ajx-ig-atm" secondAttribute="bottom" id="kks-vm-4b9"/>
                             <constraint firstItem="ajx-ig-atm" firstAttribute="height" secondItem="rWv-N2-tlE" secondAttribute="height" multiplier="0.5" priority="750" id="lUI-Xj-kMf"/>
                             <constraint firstItem="Twc-MB-njj" firstAttribute="top" secondItem="4AQ-QS-sC3" secondAttribute="bottom" constant="16" id="oQS-5T-zYD"/>
                             <constraint firstAttribute="bottom" secondItem="I9U-vT-rCf" secondAttribute="bottom" id="ozk-dm-zEu"/>
+                            <constraint firstItem="WTo-MP-g35" firstAttribute="top" secondItem="aT5-JU-h0I" secondAttribute="top" constant="14" id="r9c-29-XTV"/>
                             <constraint firstItem="I9U-vT-rCf" firstAttribute="top" secondItem="rWv-N2-tlE" secondAttribute="bottom" id="sx9-3v-3aD"/>
-                            <constraint firstItem="dNY-Fa-U63" firstAttribute="top" secondItem="sVn-1a-ov2" secondAttribute="bottom" priority="750" constant="25" id="tbv-WI-NHg"/>
+                            <constraint firstItem="dNY-Fa-U63" firstAttribute="top" secondItem="aT5-JU-h0I" secondAttribute="top" priority="750" constant="25" id="tbv-WI-NHg"/>
                             <constraint firstItem="ajx-ig-atm" firstAttribute="top" secondItem="dNY-Fa-U63" secondAttribute="bottom" id="vef-7e-pUG"/>
-                            <constraint firstItem="I9U-vT-rCf" firstAttribute="leading" secondItem="exj-AN-ov9" secondAttribute="leading" id="wni-G3-m7Z"/>
+                            <constraint firstItem="I9U-vT-rCf" firstAttribute="leading" secondItem="aT5-JU-h0I" secondAttribute="leading" id="wni-G3-m7Z"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="aT5-JU-h0I"/>
                     </view>
                     <navigationItem key="navigationItem" id="11G-vw-bXz">
                         <barButtonItem key="backBarButtonItem" title=" " id="fnM-eD-W5P"/>
@@ -220,10 +225,6 @@
         <scene sceneID="j6b-q6-It7">
             <objects>
                 <viewController id="SHz-c9-6Uc" customClass="NewRunController" customModule="InfinityTracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="RIZ-rL-LgE"/>
-                        <viewControllerLayoutGuide type="bottom" id="zUz-gf-ihh"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="EN4-U5-yty">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -290,19 +291,20 @@
                             <constraint firstAttribute="trailingMargin" secondItem="lIx-ce-8MX" secondAttribute="trailing" id="7JQ-dF-7DR"/>
                             <constraint firstItem="lIx-ce-8MX" firstAttribute="top" secondItem="gNz-CM-8Hv" secondAttribute="bottom" constant="20" id="BOJ-AH-fEV"/>
                             <constraint firstItem="gNz-CM-8Hv" firstAttribute="leading" secondItem="EN4-U5-yty" secondAttribute="leadingMargin" id="CTZ-yK-UL5"/>
-                            <constraint firstAttribute="trailing" secondItem="2GN-0I-X3K" secondAttribute="trailing" id="GRo-dd-2VS"/>
-                            <constraint firstItem="2GN-0I-X3K" firstAttribute="leading" secondItem="EN4-U5-yty" secondAttribute="leading" id="T5a-kx-ApS"/>
+                            <constraint firstItem="9BG-J0-h10" firstAttribute="trailing" secondItem="2GN-0I-X3K" secondAttribute="trailing" id="GRo-dd-2VS"/>
+                            <constraint firstItem="2GN-0I-X3K" firstAttribute="leading" secondItem="9BG-J0-h10" secondAttribute="leading" id="T5a-kx-ApS"/>
                             <constraint firstItem="lIx-ce-8MX" firstAttribute="width" secondItem="mq6-tB-9ZQ" secondAttribute="width" id="aJq-ts-MJd"/>
-                            <constraint firstItem="zUz-gf-ihh" firstAttribute="top" secondItem="lIx-ce-8MX" secondAttribute="bottom" constant="20" id="dTE-jU-s8C"/>
-                            <constraint firstItem="zUz-gf-ihh" firstAttribute="top" secondItem="mq6-tB-9ZQ" secondAttribute="bottom" constant="20" id="gsQ-JX-hn6"/>
+                            <constraint firstItem="9BG-J0-h10" firstAttribute="bottom" secondItem="lIx-ce-8MX" secondAttribute="bottom" constant="20" id="dTE-jU-s8C"/>
+                            <constraint firstItem="9BG-J0-h10" firstAttribute="bottom" secondItem="mq6-tB-9ZQ" secondAttribute="bottom" constant="20" id="gsQ-JX-hn6"/>
                             <constraint firstItem="mq6-tB-9ZQ" firstAttribute="leading" secondItem="EN4-U5-yty" secondAttribute="leadingMargin" id="j56-sR-ZTB"/>
                             <constraint firstItem="gNz-CM-8Hv" firstAttribute="trailing" secondItem="EN4-U5-yty" secondAttribute="trailingMargin" id="k0v-lg-P1M"/>
-                            <constraint firstItem="2GN-0I-X3K" firstAttribute="top" secondItem="RIZ-rL-LgE" secondAttribute="bottom" id="nFJ-qk-Pvq"/>
+                            <constraint firstItem="2GN-0I-X3K" firstAttribute="top" secondItem="9BG-J0-h10" secondAttribute="top" id="nFJ-qk-Pvq"/>
                             <constraint firstItem="lIx-ce-8MX" firstAttribute="leading" secondItem="mq6-tB-9ZQ" secondAttribute="trailing" constant="20" id="sfn-G9-NdV"/>
-                            <constraint firstItem="UUN-9p-riM" firstAttribute="top" secondItem="RIZ-rL-LgE" secondAttribute="bottom" constant="10" id="u0L-VN-ukW"/>
-                            <constraint firstAttribute="trailing" secondItem="UUN-9p-riM" secondAttribute="trailing" constant="10" id="xoK-vE-FpD"/>
+                            <constraint firstItem="UUN-9p-riM" firstAttribute="top" secondItem="9BG-J0-h10" secondAttribute="top" constant="10" id="u0L-VN-ukW"/>
+                            <constraint firstItem="9BG-J0-h10" firstAttribute="trailing" secondItem="UUN-9p-riM" secondAttribute="trailing" constant="10" id="xoK-vE-FpD"/>
                             <constraint firstAttribute="bottom" secondItem="2GN-0I-X3K" secondAttribute="bottom" id="zcy-zr-e8Z"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="9BG-J0-h10"/>
                     </view>
                     <navigationItem key="navigationItem" id="Rhx-9W-GkK"/>
                     <connections>
@@ -317,16 +319,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dbK-HA-pQ7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5436" y="-185.75712143928038"/>
+            <point key="canvasLocation" x="5436" y="14"/>
         </scene>
         <!--Weight Update Controller-->
         <scene sceneID="otV-vZ-4za">
             <objects>
                 <viewController id="942-op-GKI" customClass="WeightUpdateController" customModule="InfinityTracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="6I6-ew-9z1"/>
-                        <viewControllerLayoutGuide type="bottom" id="bKT-aK-Hg5"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="q0q-xu-Uaj">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="280"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -338,7 +336,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NDI-dM-xff">
-                                <rect key="frame" x="16" y="59" width="269" height="117"/>
+                                <rect key="frame" x="16" y="59.5" width="268" height="117"/>
                                 <string key="text">Your weight is used to calculate calories burned and the more accurate it is the more precise the calories are.
 You can update your weight from below or any other app that works with Health, calories will be calculated using the most recent entry saved to Health.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -402,15 +400,16 @@ You can update your weight from below or any other app that works with Health, c
                         <color key="backgroundColor" name="Orange Detail"/>
                         <constraints>
                             <constraint firstItem="NDI-dM-xff" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="q0q-xu-Uaj" secondAttribute="leadingMargin" id="3i0-pT-U7C"/>
-                            <constraint firstItem="vuH-UV-I9y" firstAttribute="centerX" secondItem="q0q-xu-Uaj" secondAttribute="centerX" id="Iwq-c0-ez1"/>
+                            <constraint firstItem="vuH-UV-I9y" firstAttribute="centerX" secondItem="GXl-3Z-YWO" secondAttribute="centerX" id="Iwq-c0-ez1"/>
                             <constraint firstItem="vuH-UV-I9y" firstAttribute="top" secondItem="zdv-gY-dcY" secondAttribute="bottom" constant="12" id="TU6-48-qTf"/>
-                            <constraint firstItem="NDI-dM-xff" firstAttribute="centerX" secondItem="q0q-xu-Uaj" secondAttribute="centerX" id="ajv-CX-ckC"/>
-                            <constraint firstItem="6el-9q-Mzs" firstAttribute="centerX" secondItem="q0q-xu-Uaj" secondAttribute="centerX" id="f2X-rE-uBR"/>
-                            <constraint firstItem="zdv-gY-dcY" firstAttribute="centerX" secondItem="q0q-xu-Uaj" secondAttribute="centerX" id="gq7-BD-HCR"/>
-                            <constraint firstItem="bKT-aK-Hg5" firstAttribute="top" secondItem="vuH-UV-I9y" secondAttribute="bottom" constant="20" id="qI6-uy-a5j"/>
+                            <constraint firstItem="NDI-dM-xff" firstAttribute="centerX" secondItem="GXl-3Z-YWO" secondAttribute="centerX" id="ajv-CX-ckC"/>
+                            <constraint firstItem="6el-9q-Mzs" firstAttribute="centerX" secondItem="GXl-3Z-YWO" secondAttribute="centerX" id="f2X-rE-uBR"/>
+                            <constraint firstItem="zdv-gY-dcY" firstAttribute="centerX" secondItem="GXl-3Z-YWO" secondAttribute="centerX" id="gq7-BD-HCR"/>
+                            <constraint firstItem="GXl-3Z-YWO" firstAttribute="bottom" secondItem="vuH-UV-I9y" secondAttribute="bottom" constant="20" id="qI6-uy-a5j"/>
                             <constraint firstItem="NDI-dM-xff" firstAttribute="top" secondItem="6el-9q-Mzs" secondAttribute="bottom" constant="8" id="uyH-ae-LuJ"/>
-                            <constraint firstItem="6el-9q-Mzs" firstAttribute="top" secondItem="6I6-ew-9z1" secondAttribute="bottom" constant="20" id="ytR-PW-uzD"/>
+                            <constraint firstItem="6el-9q-Mzs" firstAttribute="top" secondItem="GXl-3Z-YWO" secondAttribute="top" constant="20" id="ytR-PW-uzD"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="GXl-3Z-YWO"/>
                     </view>
                     <value key="contentSizeForViewInPopover" type="size" width="300" height="280"/>
                     <size key="freeformSize" width="300" height="280"/>
@@ -439,7 +438,7 @@ You can update your weight from below or any other app that works with Health, c
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e5y-td-fwA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4660" y="-184"/>
+            <point key="canvasLocation" x="4660" y="14"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="cFs-L9-6t7">
@@ -460,7 +459,7 @@ You can update your weight from below or any other app that works with Health, c
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j9b-7q-1P4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6250" y="-186"/>
+            <point key="canvasLocation" x="6249" y="13"/>
         </scene>
         <!--Past Workouts-->
         <scene sceneID="GcD-CL-ywu">
@@ -534,16 +533,12 @@ You can update your weight from below or any other app that works with Health, c
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wcP-8D-iut" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4660" y="-899"/>
+            <point key="canvasLocation" x="6249" y="-675"/>
         </scene>
         <!--[Track Date]-->
         <scene sceneID="Fe7-9p-C93">
             <objects>
                 <viewController id="BWu-8Z-jNk" customClass="RunDetailController" customModule="InfinityTracker" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Zkn-AY-8VP"/>
-                        <viewControllerLayoutGuide type="bottom" id="IzX-Sh-cK4"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ALr-ZD-thO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -558,14 +553,15 @@ You can update your weight from below or any other app that works with Health, c
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Kxa-w4-U9p" secondAttribute="trailing" id="C3r-PA-SQq"/>
+                            <constraint firstItem="HG9-BW-hNE" firstAttribute="trailing" secondItem="Kxa-w4-U9p" secondAttribute="trailing" id="C3r-PA-SQq"/>
                             <constraint firstItem="Lcf-ai-XRU" firstAttribute="leading" secondItem="ALr-ZD-thO" secondAttribute="leadingMargin" id="Dik-wl-1eH"/>
                             <constraint firstItem="Lcf-ai-XRU" firstAttribute="trailing" secondItem="ALr-ZD-thO" secondAttribute="trailingMargin" id="VLV-2d-zZw"/>
-                            <constraint firstItem="Kxa-w4-U9p" firstAttribute="top" secondItem="Zkn-AY-8VP" secondAttribute="bottom" id="YDr-VN-7c1"/>
-                            <constraint firstItem="Kxa-w4-U9p" firstAttribute="leading" secondItem="ALr-ZD-thO" secondAttribute="leading" id="Zj3-4a-9OW"/>
+                            <constraint firstItem="Kxa-w4-U9p" firstAttribute="top" secondItem="HG9-BW-hNE" secondAttribute="top" id="YDr-VN-7c1"/>
+                            <constraint firstItem="Kxa-w4-U9p" firstAttribute="leading" secondItem="HG9-BW-hNE" secondAttribute="leading" id="Zj3-4a-9OW"/>
                             <constraint firstAttribute="bottom" secondItem="Kxa-w4-U9p" secondAttribute="bottom" id="oRl-mc-0WL"/>
-                            <constraint firstItem="IzX-Sh-cK4" firstAttribute="top" secondItem="Lcf-ai-XRU" secondAttribute="bottom" constant="20" id="uhY-SK-hkY"/>
+                            <constraint firstItem="HG9-BW-hNE" firstAttribute="bottom" secondItem="Lcf-ai-XRU" secondAttribute="bottom" constant="20" id="uhY-SK-hkY"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="HG9-BW-hNE"/>
                     </view>
                     <navigationItem key="navigationItem" title="[Track Date]" id="irO-YM-7on"/>
                     <connections>
@@ -575,7 +571,103 @@ You can update your weight from below or any other app that works with Health, c
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MeO-v4-AO0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7380" y="-900"/>
+            <point key="canvasLocation" x="7162" y="-547"/>
+        </scene>
+        <!--InfinityTracker-->
+        <scene sceneID="uxc-nG-iLj">
+            <objects>
+                <tableViewController id="Bw7-Zv-uBj" customClass="AboutController" customModule="InfinityTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="OtB-Cf-XHd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection id="QvF-XD-jle">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="sourceCode" textLabel="WEd-8r-4ac" style="IBUITableViewCellStyleDefault" id="OMG-PQ-Sjd">
+                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OMG-PQ-Sjd" id="te2-I3-Iai">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Source Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WEd-8r-4ac">
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="contact" textLabel="FqQ-ew-22O" style="IBUITableViewCellStyleDefault" id="k2t-u0-QeG">
+                                        <rect key="frame" x="0.0" y="79" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k2t-u0-QeG" id="J8v-yN-Kp8">
+                                            <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Contact Me" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FqQ-ew-22O">
+                                                    <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="mcW-wh-zqP" kind="presentation" identifier="contact" id="Mp9-gU-9Wb"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="Bw7-Zv-uBj" id="Kpy-0A-AzE"/>
+                            <outlet property="delegate" destination="Bw7-Zv-uBj" id="rK3-th-bpc"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="InfinityTracker" id="ncn-dO-ajS">
+                        <barButtonItem key="backBarButtonItem" title=" " id="j6F-JB-nQO"/>
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="mZ3-mr-HOG">
+                            <connections>
+                                <action selector="done:" destination="Bw7-Zv-uBj" id="6Gu-CL-UYz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ECA-2N-Diz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5436" y="-1073"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="4ak-WG-oGA">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NGE-h3-Hb0" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DLt-HX-Yg5">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Bw7-Zv-uBj" kind="relationship" relationship="rootViewController" id="BHA-MM-Zpp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bDE-4Q-tet" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4660" y="-1073"/>
+        </scene>
+        <!--Contact Me-->
+        <scene sceneID="v1f-l2-DRA">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Contact Me" bundleIdentifier="Marco-Boschi.ios.MBLibrary" id="mcW-wh-zqP" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t2L-DT-owD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6030" y="-1074"/>
         </scene>
     </scenes>
     <resources>

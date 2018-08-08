@@ -31,6 +31,9 @@
 "CALORIES" = "Calories";
 "PACE" = "Pace";
 
+// About
+"REPORT_TEXT" = "Report any problem also on Twitter @piscoTech or at GitHub tapping Source Code.";
+
 // MARK: - Workout Types
 "RUN" = "Run";
 "WALK" = "Walk";

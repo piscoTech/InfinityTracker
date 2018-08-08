@@ -10,6 +10,7 @@
 		7A083E6120A47DEA008A125B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A083E6320A47DEA008A125B /* Main.storyboard */; };
 		7A0D8504208CD0D300340670 /* MBLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0D84FB208CCEBD00340670 /* MBLibrary.framework */; };
 		7A0D8505208CD0D300340670 /* MBLibrary.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7A0D84FB208CCEBD00340670 /* MBLibrary.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		7A2EA639211ADD56003C56C2 /* AboutController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A2EA638211ADD56003C56C2 /* AboutController.swift */; };
 		7A323C1B208E645D00B6E4A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7A323C19208E645C00B6E4A7 /* LaunchScreen.storyboard */; };
 		7A48997A20A8736A0032C340 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A48997C20A8736A0032C340 /* Localizable.strings */; };
 		7A48998F20A882FE0032C340 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7A48999120A882FE0032C340 /* InfoPlist.strings */; };
@@ -93,6 +94,7 @@
 		7A083E6220A47DEA008A125B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7A083E6720A47E06008A125B /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
 		7A0D84F3208CCEBD00340670 /* MBLibrary.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MBLibrary.xcodeproj; path = ../MBLibrary/MBLibrary.xcodeproj; sourceTree = "<group>"; };
+		7A2EA638211ADD56003C56C2 /* AboutController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutController.swift; sourceTree = "<group>"; };
 		7A323C19208E645C00B6E4A7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7A48998020A873FA0032C340 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7A48998120A8743A0032C340 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -207,6 +209,7 @@
 			children = (
 				FA0FE3D41F580742002B84D7 /* HomeController.swift */,
 				7AA62F47209A3F0600568315 /* WeightUpdateController.swift */,
+				7A2EA638211ADD56003C56C2 /* AboutController.swift */,
 				FA0FE3D01F5806E8002B84D7 /* NewRunController.swift */,
 				FA0FE3D61F580763002B84D7 /* PastRunsListController.swift */,
 				FA0FE3D81F580787002B84D7 /* RunDetailController.swift */,
@@ -385,6 +388,7 @@
 				7AA62F48209A3F0600568315 /* WeightUpdateController.swift in Sources */,
 				FA0FE3D91F580787002B84D7 /* RunDetailController.swift in Sources */,
 				FA3F0A1A1F580E9000DCA109 /* RunTableCell.swift in Sources */,
+				7A2EA639211ADD56003C56C2 /* AboutController.swift in Sources */,
 				FA0FE3F01F5808D3002B84D7 /* Protocols.swift in Sources */,
 				FA0FE3E61F5807F9002B84D7 /* GradientButton.swift in Sources */,
 				7ABC5C9420934CF400460CF8 /* Preferences.swift in Sources */,

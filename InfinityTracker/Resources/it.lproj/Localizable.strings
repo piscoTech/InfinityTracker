@@ -31,6 +31,9 @@
 "CALORIES" = "Calorie";
 "PACE" = "Passo";
 
+// About
+"REPORT_TEXT" = "Segnala qualunque problema anche via Twitter @piscoTech o su GitHub selezionando Codice sorgente.";
+
 // MARK: - Workout Types
 "RUN" = "Corsa";
 "WALK" = "Camminata";

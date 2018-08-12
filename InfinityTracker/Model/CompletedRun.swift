@@ -11,7 +11,7 @@ import MapKit
 
 class CompletedRun: Run {
 	
-	private let raw: HKWorkout
+	let raw: HKWorkout
 	
 	let type: Activity
 	

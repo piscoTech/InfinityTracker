@@ -141,7 +141,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WTo-MP-g35">
-                                <rect key="frame" x="16" y="20" width="22" height="22"/>
+                                <rect key="frame" x="20" y="34" width="22" height="22"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <segue destination="NGE-h3-Hb0" kind="presentation" id="hZj-Zz-7gV"/>
@@ -520,6 +520,39 @@ You can update your weight from below or any other app that works with Health, c
                                     <segue destination="BWu-8Z-jNk" kind="show" identifier="PastTrackDetailSegueIdentifier" id="qTK-as-LHc"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="loadMore" id="Jqj-fW-eVL" customClass="LoadMoreCell" customModule="InfinityTracker" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="99.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jqj-fW-eVL" id="WLc-E2-YYg">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="TI1-8Q-1IF">
+                                            <rect key="frame" x="137" y="6" width="101" height="32"/>
+                                            <subviews>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="L0k-hd-ziS">
+                                                    <rect key="frame" x="0.0" y="6" width="20" height="20"/>
+                                                    <color key="color" name="Orange Light"/>
+                                                </activityIndicatorView>
+                                                <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lpO-F5-ZYg">
+                                                    <rect key="frame" x="24" y="0.0" width="77" height="32"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="tintColor" name="Orange Dark"/>
+                                                    <state key="normal" title="Load More"/>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="TI1-8Q-1IF" firstAttribute="centerX" secondItem="WLc-E2-YYg" secondAttribute="centerX" id="CIu-rW-f3E"/>
+                                        <constraint firstItem="TI1-8Q-1IF" firstAttribute="centerY" secondItem="WLc-E2-YYg" secondAttribute="centerY" id="alz-HL-v6f"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="loadBtn" destination="lpO-F5-ZYg" id="OrA-7f-yu5"/>
+                                    <outlet property="loadIndicator" destination="L0k-hd-ziS" id="OKg-K8-h2k"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="WdQ-3Y-MJo" id="9f8-vQ-ZZQ"/>
@@ -672,8 +705,14 @@ You can update your weight from below or any other app that works with Health, c
     </scenes>
     <resources>
         <image name="infinityLogo" width="512" height="512"/>
+        <namedColor name="Orange Dark">
+            <color red="1" green="0.5" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="Orange Detail">
             <color red="1" green="0.49411764705882355" blue="0.38039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="Orange Light">
+            <color red="0.9137254901960784" green="0.77254901960784317" blue="0.29019607843137257" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
     <inferredMetricsTieBreakers>
